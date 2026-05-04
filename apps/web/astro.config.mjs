@@ -1,15 +1,14 @@
 import { defineConfig } from "astro/config";
-import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
+import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [react({
-    experimentalReactChildren: true,
-  })],
-  // Uncomment if there are issues during the build process related to the @repo/ui package
-  // vite: {
-  //   ssr: {
-  //     noExternal: ["@repo/ui"]
-  //   }
-  // }
+  integrations: [vue()],
+  vite: {
+    plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ["@repo/ui"]
+    }
+  }
 });
