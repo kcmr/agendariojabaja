@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, userEvent, within } from "storybook/test";
-import Pagination from "../components/Pagination.vue";
+import Pagination from "../../components/ui/Pagination.vue";
 
 const meta = {
-  title: "Components/Pagination",
+  title: "ui/Pagination",
   component: Pagination,
   tags: ["autodocs"],
   args: { currentPage: 2, totalPages: 5 },

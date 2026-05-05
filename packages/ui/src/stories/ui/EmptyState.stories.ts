@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import EmptyState from "../components/EmptyState.vue";
+import EmptyState from "../../components/features/EmptyState.vue";
 
 const meta = {
-  title: "Components/EmptyState",
+  title: "ui/EmptyState",
   component: EmptyState,
   tags: ["autodocs"],
   args: {

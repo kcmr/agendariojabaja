@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, userEvent, within } from "storybook/test";
-import LocalityChip from "../components/LocalityChip.vue";
+import LocalityChip from "../../components/ui/LocalityChip.vue";
 
 const meta = {
-  title: "Components/LocalityChip",
+  title: "ui/LocalityChip",
   component: LocalityChip,
   tags: ["autodocs"],
   args: {

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import AdSpace from "../components/AdSpace.vue";
-import Grid from "../components/Grid.vue";
+import AdSpace from "../../components/features/AdSpace.vue";
+import Grid from "../../components/layout/Grid.vue";
 
 const MockCard = {
   props: ["title"],
@@ -23,7 +23,7 @@ const TITLES = [
 ];
 
 const meta = {
-  title: "Components/Grid",
+  title: "layout/Grid",
   component: Grid,
   tags: ["autodocs"],
   argTypes: {

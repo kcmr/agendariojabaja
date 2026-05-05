@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, userEvent, within } from "storybook/test";
 import { ref } from "vue";
-import Tabs from "../components/Tabs.vue";
+import Tabs from "../../components/ui/Tabs.vue";
 
 const SEGMENT_TABS = [
   { value: "upcoming", label: "Próximos planes" },
@@ -14,7 +14,7 @@ const TOGGLE_TABS = [
 ];
 
 const meta = {
-  title: "Components/Tabs",
+  title: "ui/Tabs",
   component: Tabs,
   tags: ["autodocs"],
   argTypes: {

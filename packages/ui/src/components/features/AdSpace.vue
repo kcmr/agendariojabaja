@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { Megaphone } from "lucide-vue-next";
+
 withDefaults(
   defineProps<{
     /** Layout variant: horizontal (728×90) or vertical (300×250) */
@@ -51,21 +53,7 @@ withDefaults(
           focus-visible:opacity-100 focus-visible:ring-2
           focus-visible:outline-none"
       >
-        <!-- Megaphone icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          aria-hidden="true"
-        >
-          <path d="m3 11 19-9-9 19-2-8-8-2z" />
-        </svg>
+        <Megaphone :size="14" aria-hidden="true" />
         Anúnciate aquí
       </button>
     </slot>

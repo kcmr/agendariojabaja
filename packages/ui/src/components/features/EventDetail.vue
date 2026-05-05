@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import Badge from "./Badge.vue";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  ExternalLink,
+  MapPin,
+  Ticket,
+} from "lucide-vue-next";
+import Badge from "../ui/Badge.vue";
 
 export interface EventDetailData {
   id: number | string;
@@ -40,22 +48,7 @@ onMounted(() => {
         cursor-pointer items-center gap-2 font-medium transition-colors"
       @click="emit('back')"
     >
-      <!-- ArrowLeft icon -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        aria-hidden="true"
-      >
-        <path d="m12 19-7-7 7-7" />
-        <path d="M19 12H5" />
-      </svg>
+      <ArrowLeft :size="20" aria-hidden="true" />
       Volver a la agenda
     </button>
 
@@ -90,26 +83,7 @@ onMounted(() => {
           <Badge variant="category">{{ event.category }}</Badge>
           <Badge variant="price">
             <template #icon>
-              <!-- Ticket icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"
-                />
-                <path d="M13 5v2" />
-                <path d="M13 17v2" />
-                <path d="M13 11v2" />
-              </svg>
+              <Ticket :size="14" aria-hidden="true" />
             </template>
             {{ event.price }}
           </Badge>
@@ -133,24 +107,7 @@ onMounted(() => {
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <!-- Calendar icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M8 2v4" />
-                <path d="M16 2v4" />
-                <rect width="18" height="18" x="3" y="4" rx="2" />
-                <path d="M3 10h18" />
-              </svg>
+              <Calendar :size="24" aria-hidden="true" />
             </div>
             <div>
               <p class="text-content-muted text-sm font-medium">Fecha y Hora</p>
@@ -164,22 +121,7 @@ onMounted(() => {
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <!-- MapPin icon -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
+              <MapPin :size="24" aria-hidden="true" />
             </div>
             <div>
               <p class="text-content-muted text-sm font-medium">Ubicación</p>
@@ -209,22 +151,7 @@ onMounted(() => {
             gap-4 border-t pt-8 sm:flex-row"
         >
           <p class="text-content-muted flex items-center gap-2 text-sm">
-            <!-- Clock icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
+            <Clock :size="16" aria-hidden="true" />
             Publicado originalmente en
             {{ event.sourceName ?? "Facebook" }}
           </p>
@@ -236,23 +163,7 @@ onMounted(() => {
               bg-[#3b5998] px-6 py-3 font-semibold text-white shadow-sm
               transition-colors hover:bg-[#2d4373] sm:w-auto"
           >
-            <!-- ExternalLink icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <path
-                d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-              />
-            </svg>
+            <ExternalLink :size="18" aria-hidden="true" />
             Ver fuente original
           </a>
         </div>

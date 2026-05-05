@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import AdSpace from "../components/AdSpace.vue";
+import AdSpace from "../../components/features/AdSpace.vue";
 
 const meta = {
-  title: "Components/AdSpace",
+  title: "features/AdSpace",
   component: AdSpace,
   tags: ["autodocs"],
   argTypes: {

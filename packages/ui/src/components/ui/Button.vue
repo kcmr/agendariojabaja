@@ -4,7 +4,7 @@ import {
   useButtonClasses,
   type ButtonVariant,
   type ButtonSize,
-} from "../composables/useButtonClasses";
+} from "../../composables/useButtonClasses";
 
 const props = withDefaults(
   defineProps<{

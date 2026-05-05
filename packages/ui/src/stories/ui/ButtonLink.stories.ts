@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import ButtonLink from "../components/ButtonLink.vue";
+import ButtonLink from "../../components/ui/ButtonLink.vue";
+import { ExternalLinkIcon } from "lucide-vue-next";
 
 const meta = {
-  title: "Components/ButtonLink",
+  title: "ui/ButtonLink",
   component: ButtonLink,
   tags: ["autodocs"],
   argTypes: {
@@ -36,13 +37,11 @@ export const ExternalLink: Story = {
     external: true,
   },
   render: (args) => ({
-    components: { ButtonLink },
+    components: { ButtonLink, ExternalLinkIcon },
     setup: () => ({ args }),
     template: `
       <ButtonLink v-bind="args">
-        <template #icon-left>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-        </template>
+        <ExternalLinkIcon size="16" #icon-left />
         Ver fuente original
       </ButtonLink>
     `,

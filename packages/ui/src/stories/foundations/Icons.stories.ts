@@ -90,7 +90,7 @@ const IconsShowcase = defineComponent({
 });
 
 const meta = {
-  title: "Foundation/Icons",
+  title: "foundations/Icons",
   component: IconsShowcase,
   tags: ["autodocs"],
   parameters: {

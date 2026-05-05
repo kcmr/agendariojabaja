@@ -45,6 +45,7 @@ defineProps<{
     </div>
 
     <div
+      v-if="$slots.footer"
       class="border-border-subtle mt-auto flex items-center justify-between
         border-t px-5 pt-4 pb-5"
     >

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import AdSpace from "../components/AdSpace.vue";
-import EventDetail from "../components/EventDetail.vue";
+import AdSpace from "../../components/features/AdSpace.vue";
+import EventDetail from "../../components/features/EventDetail.vue";
 
 const SAMPLE_EVENT = {
   id: 1,
@@ -19,7 +19,7 @@ const SAMPLE_EVENT = {
 };
 
 const meta = {
-  title: "Components/EventDetail",
+  title: "features/EventDetail",
   component: EventDetail,
   tags: ["autodocs"],
   parameters: {

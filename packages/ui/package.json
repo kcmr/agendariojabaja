@@ -5,7 +5,9 @@
   "type": "module",
   "exports": {
     "./theme.css": "./src/theme.css",
-    "./*": "./src/components/*.vue"
+    "./ui/*": "./src/components/ui/*.vue",
+    "./features/*": "./src/components/features/*.vue",
+    "./layout/*": "./src/components/layout/*.vue"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",

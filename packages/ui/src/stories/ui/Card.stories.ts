@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
+import { MapPin } from "lucide-vue-next";
 
-import Badge from "../components/Badge.vue";
-import Card from "../components/Card.vue";
+import Badge from "../../components/ui/Badge.vue";
+import Card from "../../components/ui/Card.vue";
 
 const meta = {
-  title: "Components/Card",
+  title: "ui/Card",
   component: Card,
   tags: ["autodocs"],
   args: {
@@ -50,7 +51,7 @@ export const WithTagSlot: Story = {
 /** Card with all slots populated – tag, footer with location and "Ver más" link */
 export const WithFooter: Story = {
   render: (args) => ({
-    components: { Card, Badge },
+    components: { Card, Badge, MapPin },
     setup() {
       return { args };
     },
@@ -65,8 +66,7 @@ export const WithFooter: Story = {
         </template>
         <template #footer>
           <div class="flex items-center gap-2 text-sm text-gray-600">
-            <!-- MapPin icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-brand"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <MapPin :size="14" aria-hidden="true" class="text-brand" />
             <span class="font-medium">Quel</span>
           </div>
           <span class="text-brand text-sm font-semibold opacity-0 transition-opacity group-hover:opacity-100">
