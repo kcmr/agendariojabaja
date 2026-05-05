@@ -8,39 +8,32 @@ import {
 
 const props = withDefaults(
   defineProps<{
+    /** URL to navigate to */
+    href: string;
     /** Visual style variant */
     variant?: ButtonVariant;
     /** Size of the button */
     size?: ButtonSize;
-    /** Disabled state */
-    disabled?: boolean;
+    /** Opens link in new tab with rel="noopener noreferrer" */
+    external?: boolean;
   }>(),
-  { variant: "brand", size: "md", disabled: false }
+  { variant: "brand", size: "md", external: false }
 );
-
-const emit = defineEmits<{
-  (e: "click", event: MouseEvent): void;
-}>();
 
 const classes = computed(() =>
-  useButtonClasses({
-    variant: props.variant,
-    size: props.size,
-    disabled: props.disabled,
-  })
+  useButtonClasses({ variant: props.variant, size: props.size })
 );
-
-const onClick = (event: MouseEvent) => {
-  if (!props.disabled) {
-    emit("click", event);
-  }
-};
 </script>
 
 <template>
-  <button type="button" :class="classes" :disabled="disabled" @click="onClick">
+  <a
+    :href="href"
+    :class="classes"
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noopener noreferrer' : undefined"
+  >
     <slot name="icon-left" />
     <slot />
     <slot name="icon-right" />
-  </button>
+  </a>
 </template>

@@ -19,10 +19,6 @@
   --color-highlight-tint-border: var(--color-yellow-100);
   --color-highlight-text: var(--color-yellow-800);
 
-  /* Facebook */
-  --color-facebook: #3b5998;
-  --color-facebook-hover: #2d4373;
-
   /* === Semantic Colors === */
   /* ================================= */
 
@@ -49,9 +45,6 @@
   --color-surface-category-tint: var(--color-category-tint);
   --color-surface-highlight: var(--color-highlight);
   --color-surface-highlight-tint: var(--color-highlight-tint);
-  --color-surface-facebook: var(--color-facebook);
-  --color-surface-facebook-hover: var(--color-facebook-hover);
-
   /* Borders */
   --color-border-subtle: var(--color-gray-100);
   --color-border-default: var(--color-gray-200);
@@ -62,4 +55,11 @@
 
   /* Focus rings */
   --color-ring-brand: var(--color-brand);
+
+  /* Ad spaces */
+  --color-surface-ad: var(--color-gray-100);
+  --color-border-ad: var(--color-gray-200);
+  --color-content-ad-label: var(--color-gray-400);
+  --color-content-ad-body: var(--color-gray-500);
+  --color-content-ad-cta: var(--color-gray-700);
 }

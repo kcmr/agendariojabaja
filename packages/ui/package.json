@@ -5,22 +5,7 @@
   "type": "module",
   "exports": {
     "./theme.css": "./src/theme.css",
-    "./button": {
-      "types": "./src/components/Button.vue",
-      "default": "./src/components/Button.vue"
-    },
-    "./link": {
-      "types": "./src/components/Link.vue",
-      "default": "./src/components/Link.vue"
-    },
-    "./card": {
-      "types": "./src/components/Card.vue",
-      "default": "./src/components/Card.vue"
-    },
-    "./tag": {
-      "types": "./src/components/Tag.vue",
-      "default": "./src/components/Tag.vue"
-    }
+    "./*": "./src/components/*.vue"
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
