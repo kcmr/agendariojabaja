@@ -28,9 +28,8 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     cols: { control: "select", options: [undefined, 1, 2, 3, 4] },
-    gap: { control: "radio", options: ["sm", "md", "lg"] },
   },
-  args: { gap: "md" },
+  args: {},
 } satisfies Meta<typeof Grid>;
 
 export default meta;

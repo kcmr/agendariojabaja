@@ -1,7 +1,7 @@
 ---
 import Button from '@repo/ui/button';
 import Card from '@repo/ui/card';
-import Tag from '@repo/ui/tag';
+import Badge from '@repo/ui/badge';
 import people from '../data/person.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -19,7 +19,9 @@ const data = await res.json();
       alt: 'Card image',
     }}
   >
-    <Tag slot='tag'><time datetime='2026-05-25'>2026-05-25</time></Tag>
+    <Badge slot='tag' variant='brand' shape='square'
+      ><time datetime='2026-05-25'>2026-05-25</time></Badge
+    >
   </Card>
 
   <div slot='experiments'>

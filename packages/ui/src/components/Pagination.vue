@@ -30,9 +30,9 @@ const next = () => {
       :disabled="currentPage === 1"
       :aria-disabled="currentPage === 1"
       aria-label="Página anterior"
-      class="rounded-lg border border-border-strong p-2
-        transition-colors hover:bg-surface-subtle
-        disabled:cursor-not-allowed disabled:opacity-50"
+      class="border-border-strong hover:bg-surface-subtle cursor-pointer
+        rounded-lg border p-2 transition-colors disabled:cursor-not-allowed
+        disabled:opacity-50"
       @click="prev"
     >
       <!-- ChevronLeft -->
@@ -55,7 +55,7 @@ const next = () => {
     <span
       aria-current="page"
       aria-live="polite"
-      class="text-sm font-medium text-content-muted"
+      class="text-content-muted text-sm font-medium"
     >
       Página {{ currentPage }} de {{ totalPages }}
     </span>
@@ -65,9 +65,9 @@ const next = () => {
       :disabled="currentPage === totalPages"
       :aria-disabled="currentPage === totalPages"
       aria-label="Página siguiente"
-      class="rounded-lg border border-border-strong p-2
-        transition-colors hover:bg-surface-subtle
-        disabled:cursor-not-allowed disabled:opacity-50"
+      class="border-border-strong hover:bg-surface-subtle cursor-pointer
+        rounded-lg border p-2 transition-colors disabled:cursor-not-allowed
+        disabled:opacity-50"
       @click="next"
     >
       <!-- ChevronRight -->

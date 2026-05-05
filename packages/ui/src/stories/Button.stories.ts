@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, fn, userEvent, within } from "storybook/test";
 import Button from "../components/Button.vue";
 
 const meta = {
@@ -11,7 +11,7 @@ const meta = {
       control: "select",
       options: ["brand", "outline", "ghost"],
     },
-    size: { control: "select", options: ["sm", "md", "lg"] },
+    size: { control: "select", options: ["md", "lg"] },
   },
   args: { variant: "brand", size: "md", disabled: false },
   render: (args) => ({
@@ -29,8 +29,6 @@ export const Brand: Story = { args: { variant: "brand" } };
 export const Outline: Story = { args: { variant: "outline" } };
 
 export const Ghost: Story = { args: { variant: "ghost" } };
-
-export const Small: Story = { args: { size: "sm" } };
 
 export const Large: Story = { args: { size: "lg" } };
 
@@ -62,11 +60,12 @@ export const WithIconLeft: Story = {
 };
 
 export const ClickEmitsEvent: Story = {
-  args: { variant: "brand" },
-  play: async ({ canvasElement }) => {
+  args: { variant: "brand", onClick: fn() },
+  play: async ({ canvasElement, args }) => {
     const canvas = within(canvasElement);
     const btn = canvas.getByRole("button");
     expect(btn).not.toBeDisabled();
     await userEvent.click(btn);
+    expect(args.onClick).toHaveBeenCalledOnce();
   },
 };

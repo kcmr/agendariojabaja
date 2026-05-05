@@ -25,7 +25,7 @@
   /* Content (text) */
   --color-content-heading: var(--color-gray-900);
   --color-content-body: var(--color-gray-600);
-  --color-content-muted: var(--color-gray-500);
+  --color-content-muted: var(--color-gray-600);
   --color-content-subtle: var(--color-gray-400);
   --color-content-brand: var(--color-brand);
   --color-content-category: var(--color-category);
@@ -59,7 +59,7 @@
   /* Ad spaces */
   --color-surface-ad: var(--color-gray-100);
   --color-border-ad: var(--color-gray-200);
-  --color-content-ad-label: var(--color-gray-400);
-  --color-content-ad-body: var(--color-gray-500);
+  --color-content-ad-label: var(--color-gray-500);
+  --color-content-ad-body: var(--color-gray-600);
   --color-content-ad-cta: var(--color-gray-700);
 }

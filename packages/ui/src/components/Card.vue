@@ -46,7 +46,7 @@ defineProps<{
 
     <div
       class="border-border-subtle mt-auto flex items-center justify-between
-        border-t pt-4"
+        border-t px-5 pt-4 pb-5"
     >
       <slot name="footer" />
     </div>

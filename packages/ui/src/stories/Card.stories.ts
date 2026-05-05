@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 
+import Badge from "../components/Badge.vue";
 import Card from "../components/Card.vue";
-import Tag from "../components/Tag.vue";
 
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta = {
-  title: "ARB/Card",
+  title: "Components/Card",
   component: Card,
   tags: ["autodocs"],
   args: {
@@ -32,16 +31,47 @@ export const LongHeading: Story = {
 
 export const WithTagSlot: Story = {
   render: (args) => ({
-    components: { Card, Tag },
+    components: { Card, Badge },
     setup() {
       return { args };
     },
     template: `
       <Card v-bind="args">
         <template #tag>
-          <Tag>
+          <Badge variant="brand" shape="square">
             <time datetime="2026-05-25">2026-05-25</time>
-          </Tag>
+          </Badge>
+        </template>
+      </Card>
+    `,
+  }),
+};
+
+/** Card with all slots populated – tag, footer with location and "Ver más" link */
+export const WithFooter: Story = {
+  render: (args) => ({
+    components: { Card, Badge },
+    setup() {
+      return { args };
+    },
+    template: `
+      <Card v-bind="args">
+        <template #tag>
+          <Badge variant="brand" shape="square">
+            <time datetime="2026-05-25">2026-05-25</time>
+          </Badge>
+          <span>•</span>
+          <span>Todo el día</span>
+        </template>
+        <template #footer>
+          <div class="flex items-center gap-2 text-sm text-gray-600">
+            <!-- MapPin icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="text-brand"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span class="font-medium">Quel</span>
+          </div>
+          <span class="text-brand text-sm font-semibold opacity-0 transition-opacity group-hover:opacity-100">
+            Ver más →
+          </span>
         </template>
       </Card>
     `,
