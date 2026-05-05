@@ -1,17 +1,44 @@
 ---
-import '../styles/global.css';
-import Button from '@repo/ui/Button';
+import Button from '@repo/ui/button';
+import Card from '@repo/ui/card';
+import Tag from '@repo/ui/tag';
+import people from '../data/person.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+const data = await res.json();
 ---
 
-<html lang='es'>
-  <head>
-    <meta charset='UTF-8' />
-    <title>Astro Starter Kit: Basics</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-  </head>
-  <body>
-    <h1>Astro Starter Kit: Basics</h1>
-    <p>Welcome to your new Astro project!</p>
-    <Button primary>Click me</Button>
-  </body>
-</html>
+<BaseLayout title='Home'>
+  <Button primary>Click me</Button>
+  <Card
+    heading='Card Title'
+    text='This is a card description.'
+    image={{
+      src: '//wsrv.nl/?url=wsrv.nl/lichtenstein.jpg&w=300',
+      alt: 'Card image',
+    }}
+  >
+    <Tag slot='tag'><time datetime='2026-05-25'>2026-05-25</time></Tag>
+  </Card>
+
+  <div slot='experiments'>
+    <p>Estás en al página <strong>Home</strong></p>
+    <p class='text-2xl'>Todo: {data.title}</p>
+
+    <ul class='list-inside list-disc'>
+      {
+        people.map((person) => (
+          <li>
+            {person.name} - {person.age} years old - {person.email}
+            <ul class='list-inside list-disc ml-3'>
+              {person.hobbies.map((hobby) => (
+                <li>{hobby}</li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

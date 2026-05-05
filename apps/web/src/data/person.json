@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Kus",
+    "age": 46,
+    "alive": true,
+    "email": "kus.camara@gmail.com",
+    "hobbies": ["coding", "gaming", "cooking"]
+  },
+  {
+    "name": "Alice",
+    "age": 30,
+    "alive": true,
+    "email": "alice@gmail.com",
+    "hobbies": ["reading", "traveling", "painting"]
+  },
+  {
+    "name": "Bob",
+    "age": 25,
+    "alive": true,
+    "email": "bob@gmail.com",
+    "hobbies": ["sports", "music", "hiking"]
+  }
+]

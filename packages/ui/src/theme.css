@@ -1,0 +1,65 @@
+@theme {
+  /* === Color Palette === */
+  /* ================================= */
+
+  /* Red – primary brand color */
+  --color-brand: #da121a;
+  --color-brand-hover: var(--color-red-700);
+  --color-brand-tint: var(--color-red-50);
+  --color-brand-tint-border: var(--color-red-100);
+
+  /* Green – category badges */
+  --color-category: #0b8043;
+  --color-category-tint: var(--color-green-50);
+  --color-category-tint-border: var(--color-green-100);
+
+  /* Yellow – price / highlight badges */
+  --color-highlight: #f3cc22;
+  --color-highlight-tint: var(--color-yellow-50);
+  --color-highlight-tint-border: var(--color-yellow-100);
+  --color-highlight-text: var(--color-yellow-800);
+
+  /* Facebook */
+  --color-facebook: #3b5998;
+  --color-facebook-hover: #2d4373;
+
+  /* === Semantic Colors === */
+  /* ================================= */
+
+  /* Content (text) */
+  --color-content-heading: var(--color-gray-900);
+  --color-content-body: var(--color-gray-600);
+  --color-content-muted: var(--color-gray-500);
+  --color-content-subtle: var(--color-gray-400);
+  --color-content-brand: var(--color-brand);
+  --color-content-category: var(--color-category);
+  --color-content-highlight: var(--color-highlight-text);
+  --color-content-on-brand: var(--color-white);
+  --color-content-on-highlight: var(--color-gray-900);
+
+  /* Surfaces (backgrounds) */
+  --color-surface-page: var(--color-gray-50);
+  --color-surface-card: var(--color-white);
+  --color-surface-subtle: var(--color-gray-50);
+  --color-surface-muted: var(--color-gray-100);
+  --color-surface-brand: var(--color-brand);
+  --color-surface-brand-hover: var(--color-brand-hover);
+  --color-surface-brand-tint: var(--color-brand-tint);
+  --color-surface-brand-tint-hover: var(--color-brand-tint-border);
+  --color-surface-category-tint: var(--color-category-tint);
+  --color-surface-highlight: var(--color-highlight);
+  --color-surface-highlight-tint: var(--color-highlight-tint);
+  --color-surface-facebook: var(--color-facebook);
+  --color-surface-facebook-hover: var(--color-facebook-hover);
+
+  /* Borders */
+  --color-border-subtle: var(--color-gray-100);
+  --color-border-default: var(--color-gray-200);
+  --color-border-strong: var(--color-gray-300);
+  --color-border-brand-tint: var(--color-brand-tint-border);
+  --color-border-category-tint: var(--color-category-tint-border);
+  --color-border-highlight-tint: var(--color-highlight-tint-border);
+
+  /* Focus rings */
+  --color-ring-brand: var(--color-brand);
+}
