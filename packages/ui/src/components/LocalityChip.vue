@@ -22,15 +22,15 @@ const onClick = () => emit("select", props.id);
     type="button"
     :aria-pressed="selected"
     :aria-label="name"
-    class="focus-visible:ring-ring-brand relative shrink-0 cursor-pointer
-      snap-start overflow-hidden rounded-2xl transition-all duration-300
+    :class="[
+      `focus-visible:ring-ring-brand relative shrink-0 cursor-pointer snap-start
+      overflow-hidden rounded-2xl transition-all duration-300
       focus-visible:ring-2 focus-visible:ring-offset-2
-      focus-visible:outline-none"
-    :class="
+      focus-visible:outline-none`,
       selected
         ? 'ring-ring-brand scale-95 shadow-md ring-4 ring-offset-2'
-        : 'opacity-80 hover:scale-105 hover:opacity-100'
-    "
+        : 'opacity-80 hover:scale-105 hover:opacity-100',
+    ]"
     style="width: 120px; height: 120px"
     @click="onClick"
   >

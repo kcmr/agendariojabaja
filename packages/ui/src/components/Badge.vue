@@ -35,8 +35,8 @@ const variantClasses: Record<BadgeVariant, string> = {
 
 <template>
   <span
-    class="inline-flex items-center gap-1 px-3 py-1 text-sm font-bold"
     :class="[
+      'inline-flex items-center gap-1 px-3 py-1 text-sm font-bold',
       shape === 'square' ? 'rounded-md border-none' : 'rounded-full',
       variantClasses[variant ?? 'brand'],
     ]"
