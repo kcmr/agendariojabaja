@@ -7,9 +7,9 @@ import { computed } from "vue";
 
 const props = defineProps<{
   /** Event title */
-  title: string;
+  heading: string;
   /** Event summary or description */
-  description: string;
+  text: string;
   /** Event cover image */
   image: {
     src: string;
@@ -31,7 +31,7 @@ const { isoDate, humanDate } = useDateFormatting(
 </script>
 
 <template>
-  <Card :heading="title" :text="description" :image="image" :link="link">
+  <Card :heading="heading" :text="text" :image="image" :link="link">
     <template #tag>
       <Badge variant="brand" shape="square">
         <time :datetime="isoDate">{{ humanDate }}</time>
