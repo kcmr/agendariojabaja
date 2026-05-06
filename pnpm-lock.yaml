@@ -23,9 +23,9 @@ importers:
       '@astrojs/vue':
         specifier: ^6.0.1
         version: 6.0.1(@types/node@24.12.2)(astro@6.2.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4))(jiti@2.6.1)(lightningcss@1.32.0)(vue@3.5.33(typescript@6.0.3))(yaml@2.8.4)
-      '@repo/ui':
+      '@repo/components':
         specifier: workspace:^
-        version: link:../../packages/ui
+        version: link:../../packages/components
       astro:
         specifier: ^6.2.1
         version: 6.2.1(@types/node@24.12.2)(jiti@2.6.1)(lightningcss@1.32.0)(rollup@4.60.2)(typescript@6.0.3)(yaml@2.8.4)
@@ -43,7 +43,7 @@ importers:
         specifier: ^4.2.4
         version: 4.2.4
 
-  packages/ui:
+  packages/components:
     dependencies:
       lucide-vue-next:
         specifier: ^0.511.0
@@ -1602,11 +1602,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  acorn@8.15.0:
-    resolution: {integrity: sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
     engines: {node: '>=0.4.0'}
@@ -3004,11 +2999,6 @@ packages:
         optional: true
       prettier-plugin-svelte:
         optional: true
-
-  prettier@3.7.4:
-    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
-    engines: {node: '>=14'}
-    hasBin: true
 
   prettier@3.8.3:
     resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
@@ -5504,8 +5494,6 @@ snapshots:
 
   acorn@7.4.1: {}
 
-  acorn@8.15.0: {}
-
   acorn@8.16.0: {}
 
   ajv-draft-04@1.0.0(ajv@8.20.0):
@@ -7028,8 +7016,6 @@ snapshots:
     dependencies:
       prettier: 3.8.3
 
-  prettier@3.7.4: {}
-
   prettier@3.8.3: {}
 
   pretty-format@27.5.1:
@@ -7614,7 +7600,7 @@ snapshots:
   unplugin@2.3.11:
     dependencies:
       '@jridgewell/remapping': 2.3.5
-      acorn: 8.15.0
+      acorn: 8.16.0
       picomatch: 4.0.4
       webpack-virtual-modules: 0.6.2
 
@@ -7985,7 +7971,7 @@ snapshots:
       '@vscode/l10n': 0.0.18
       ajv: 8.20.0
       ajv-draft-04: 1.0.0(ajv@8.20.0)
-      prettier: 3.7.4
+      prettier: 3.8.3
       request-light: 0.5.8
       vscode-json-languageservice: 4.1.8
       vscode-languageserver: 9.0.1

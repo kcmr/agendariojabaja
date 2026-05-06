@@ -4,14 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "check-types": "astro check"
+    "check-types": "astro check",
+    "dev": "astro dev",
+    "preview": "astro preview"
   },
   "dependencies": {
     "@astrojs/vue": "^6.0.1",
-    "@repo/ui": "workspace:^",
+    "@repo/components": "workspace:^",
     "astro": "^6.2.1",
     "vue": "^3.5.33"
   },

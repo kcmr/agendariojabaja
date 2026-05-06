@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ui",
+  "name": "@repo/components",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,8 +11,8 @@
     "./utils/*": "./src/components/utils/*.vue"
   },
   "scripts": {
-    "build": "tsc -b && vite build",
     "build-storybook": "storybook build",
+    "check-types": "vue-tsc -b",
     "dev": "storybook dev -p 6006",
     "format": "prettier --write .",
     "lint": "eslint .",

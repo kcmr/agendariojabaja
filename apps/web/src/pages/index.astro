@@ -1,7 +1,7 @@
 ---
-import Button from '@repo/ui/ui/Button';
-import Card from '@repo/ui/ui/Card';
-import Badge from '@repo/ui/ui/Badge';
+import Button from '@repo/components/ui/Button';
+import EventCard from '@repo/components/features/EventCard';
+import Badge from '@repo/components/ui/Badge';
 import people from '../data/person.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -11,18 +11,22 @@ const data = await res.json();
 
 <BaseLayout title='Home'>
   <Button>Click me</Button>
-  <Card
-    heading='Card Title'
-    text='This is a card description.'
+  <EventCard
+    heading='Visita al castillo de Lichtenstein'
+    text='El castillo de Lichtenstein es una joya arquitectónica situada en el corazón de Alemania. Construido en el siglo XIX, este castillo neogótico se alza majestuosamente sobre un acantilado, ofreciendo vistas impresionantes del valle circundante. Con su diseño romántico y su rica historia, el castillo de Lichtenstein es un destino turístico popular para aquellos que buscan sumergirse en la belleza y la historia de la región.'
     image={{
       src: '//wsrv.nl/?url=wsrv.nl/lichtenstein.jpg&w=300',
       alt: 'Card image',
     }}
+    link='/about'
+    dateTime='2026-05-02'
+    hour='20:00'
+    location='Lichtenstein, Alemania'
   >
     <Badge slot='tag' variant='brand' shape='square'
       ><time datetime='2026-05-25'>2026-05-25</time></Badge
     >
-  </Card>
+  </EventCard>
 
   <div slot='experiments'>
     <p>Estás en al página <strong>Home</strong></p>
