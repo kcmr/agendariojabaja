@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import TabItem from "./TabItem.vue";
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     /** Active tab value (use with v-model) */
     modelValue: string | number;
@@ -23,13 +23,11 @@ const select = (value: string | number) => emit("update:modelValue", value);
 <template>
   <div
     role="tablist"
-    :aria-label="$attrs['aria-label'] as string | undefined"
     :class="[
       'flex p-1',
       variant === 'toggle'
-        ? `rounded-lg border border-border-default
-          bg-surface-card shadow-sm`
-        : 'rounded-lg bg-surface-muted',
+        ? 'border-border-default bg-surface-card rounded-lg border shadow-sm'
+        : 'bg-surface-muted rounded-lg',
     ]"
   >
     <TabItem

@@ -4,7 +4,7 @@ withDefaults(
     /** Number of columns override (default: responsive 1→2→3) */
     cols?: 1 | 2 | 3 | 4;
   }>(),
-  {}
+  { cols: 3 }
 );
 
 const colClasses: Record<number, string> = {

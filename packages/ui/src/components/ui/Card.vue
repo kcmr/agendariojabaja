@@ -44,8 +44,9 @@ defineProps<{
         :level="headingLevel ?? 2"
         variant="h3"
         class="group-hover:text-content-brand mb-2 transition-colors"
-        >{{ heading }}</heading
       >
+        {{ heading }}
+      </heading>
 
       <p class="text-content-body mb-4 line-clamp-2 text-sm">
         {{ text }}
