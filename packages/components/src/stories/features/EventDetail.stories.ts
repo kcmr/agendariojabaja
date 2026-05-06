@@ -51,3 +51,13 @@ export const PastEvent: Story = {
     },
   },
 };
+
+export const WithoutTags: Story = {
+  args: {
+    event: {
+      ...SAMPLE_EVENT,
+      category: undefined,
+      price: undefined,
+    },
+  },
+};
