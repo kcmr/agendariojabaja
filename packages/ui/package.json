@@ -10,11 +10,11 @@
     "./layout/*": "./src/components/layout/*.vue"
   },
   "scripts": {
-    "dev": "storybook dev -p 6006",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "format": "prettier --write .",
     "build-storybook": "storybook build",
+    "dev": "storybook dev -p 6006",
+    "format": "prettier --write .",
+    "lint": "eslint .",
     "test": "vitest --project storybook"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "@vitest/coverage-v8": "^4.1.5",
     "@vue/tsconfig": "^0.9.1",
     "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-storybook": "^10.3.6",
     "eslint-plugin-vue": "^10.9.0",
     "globals": "^17.6.0",
