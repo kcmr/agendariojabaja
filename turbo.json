@@ -20,8 +20,7 @@
       "inputs": ["$TURBO_DEFAULT$", ".prettierrc*", "prettier.config.js"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"],
-      "outputs": ["**/*.tsbuildinfo"]
+      "dependsOn": ["^check-types"]
     },
     "test": {
       "dependsOn": [],
