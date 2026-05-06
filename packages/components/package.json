@@ -22,7 +22,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "lucide-vue-next": "^0.511.0"
+    "lucide-vue-next": "^0.511.0",
+    "tailwind-merge": "^3.5.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.1.2",

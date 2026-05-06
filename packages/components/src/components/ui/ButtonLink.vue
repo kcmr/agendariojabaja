@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-import { computed } from "vue";
+import { computed, useAttrs } from "vue";
 import {
   useButtonClasses,
   type ButtonVariant,
   type ButtonSize,
 } from "../../composables/useButtonClasses";
+import { twMerge } from "tailwind-merge";
+
+defineOptions({ inheritAttrs: false });
 
 const props = withDefaults(
   defineProps<{
@@ -20,13 +23,19 @@ const props = withDefaults(
   { variant: "brand", size: "md", external: false }
 );
 
+const attrs = useAttrs();
+
 const classes = computed(() =>
-  useButtonClasses({ variant: props.variant, size: props.size })
+  twMerge(
+    useButtonClasses({ variant: props.variant, size: props.size }),
+    attrs.class as string
+  )
 );
 </script>
 
 <template>
   <a
+    v-bind="{ ...attrs, class: undefined }"
     :href="href"
     :class="classes"
     :target="external ? '_blank' : undefined"
