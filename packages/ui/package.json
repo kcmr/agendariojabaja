@@ -15,7 +15,8 @@
     "dev": "storybook dev -p 6006",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "test": "vitest --project storybook"
+    "test": "vitest run --project storybook",
+    "test:watch": "vitest --project storybook"
   },
   "dependencies": {
     "lucide-vue-next": "^0.511.0"

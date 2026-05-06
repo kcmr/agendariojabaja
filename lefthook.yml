@@ -1,0 +1,31 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://lefthook.dev/configuration/
+#
+pre-push:
+  jobs:
+    - name: test
+      run: turbo run test
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: check types
+      run: turbo run check-types
+
+    - name: format
+      glob: "*.{js,ts,jsx,tsx,json,css,md,vue}"
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+
+    - name: lint
+      glob: "*.{js,ts,jsx,tsx,vue,astro}"
+      run: pnpm exec eslint --fix {staged_files}
+      stage_fixed: true
+
+    - name: sort package.json
+      run: pnpm dlx sort-package-json {staged_files}
+      glob: '**/package.json'
+      stage_fixed: true
+

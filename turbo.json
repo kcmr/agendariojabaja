@@ -12,10 +12,25 @@
       "outputs": ["storybook-static/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", "eslint.config.js", ".eslintrc*"]
+    },
+    "format": {
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", ".prettierrc*", "prettier.config.js"]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": ["^check-types"],
+      "outputs": ["**/*.tsbuildinfo"]
+    },
+    "test": {
+      "dependsOn": [],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
     },
     "dev": {
       "cache": false,
