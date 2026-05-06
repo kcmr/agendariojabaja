@@ -1,7 +1,11 @@
 <script lang="ts" setup>
+import Heading from "./Heading.vue";
+
 defineProps<{
   /** Card heading */
   heading: string;
+  /** Heading level for accessibility (default: h2) */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   /** Card content that will be rendered with ellipsis in a single paragraph */
   text: string;
   /** Image */
@@ -29,16 +33,20 @@ defineProps<{
     </div>
 
     <div class="flex grow flex-col p-5">
-      <div class="text-content-muted mb-4 flex items-center gap-2 text-sm">
+      <div
+        v-if="$slots.tag"
+        class="text-content-muted mb-4 flex items-center gap-2 text-sm"
+      >
         <slot name="tag" />
       </div>
 
-      <h2
-        class="text-content-heading group-hover:text-content-brand mb-2 text-xl
-          leading-tight font-bold transition-colors"
+      <heading
+        :level="headingLevel ?? 2"
+        variant="h3"
+        class="group-hover:text-content-brand mb-2 transition-colors"
+        >{{ heading }}</heading
       >
-        {{ heading }}
-      </h2>
+
       <p class="text-content-body mb-4 line-clamp-2 text-sm">
         {{ text }}
       </p>
