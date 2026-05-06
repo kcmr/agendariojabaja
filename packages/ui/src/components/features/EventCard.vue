@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { MapPin } from "lucide-vue-next";
+import { useDateFormatting } from "../../composables/useDateFormatting";
 import Card from "../ui/Card.vue";
 import Badge from "../ui/Badge.vue";
 
-defineProps<{
+const props = defineProps<{
   /** Event title */
   title: string;
   /** Event summary or description */
@@ -13,26 +15,28 @@ defineProps<{
     src: string;
     alt?: string;
   };
-  /** Formatted date string */
-  date: string;
-  /** ISO date for the time element */
-  dateTime?: string;
+  /** ISO date for the time element (e.g., "2026-05-25") */
+  dateTime: string;
+  /** Formatted hour string (e.g., "14:00", "11:00, 13:00, 15:30") */
+  hour?: string;
   /** Event location (city, venue, etc.) */
   location: string;
-  /** Whether it's an all-day event */
-  isAllDay?: boolean;
 }>();
+
+const { isoDate, humanDate } = useDateFormatting(
+  computed(() => props.dateTime)
+);
 </script>
 
 <template>
   <Card :heading="title" :text="description" :image="image">
     <template #tag>
       <Badge variant="brand" shape="square">
-        <time :datetime="dateTime ?? date">{{ date }}</time>
+        <time :datetime="isoDate">{{ humanDate }}</time>
       </Badge>
-      <template v-if="isAllDay">
+      <template v-if="hour">
         <span class="text-content-muted mx-1">•</span>
-        <span>Todo el día</span>
+        <span>{{ hour }}</span>
       </template>
     </template>
 

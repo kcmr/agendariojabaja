@@ -13,9 +13,8 @@ const meta = {
       src: "https://wsrv.nl/?url=https://krmwxunfqtcxqgjcngwz.supabase.co/storage/v1/object/public/event-images/1406592228168857.jpg&w=300&h=450&fit=cover",
       alt: "Cartel de las fiestas de la juventud de Quel 2026",
     },
-    date: "2026-05-25",
+    dateTime: "2026-05-02",
     location: "Quel",
-    isAllDay: true,
   },
 } satisfies Meta<typeof EventCard>;
 
@@ -24,9 +23,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const WithoutAllDay: Story = {
+export const WithHour: Story = {
   args: {
-    isAllDay: false,
+    hour: "14:00, 22:00",
   },
 };
 

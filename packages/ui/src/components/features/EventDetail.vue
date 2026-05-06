@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 import {
   ArrowLeft,
   Calendar,
@@ -9,6 +9,7 @@ import {
   Ticket,
 } from "lucide-vue-next";
 import Badge from "../ui/Badge.vue";
+import { useDateFormatting } from "../../composables/useDateFormatting";
 
 export interface EventDetailData {
   id: number | string;
@@ -29,6 +30,10 @@ export interface EventDetailData {
 const props = defineProps<{
   event: EventDetailData;
 }>();
+
+const { isoDate, humanDate } = useDateFormatting(
+  computed(() => props.event.date)
+);
 
 const emit = defineEmits<{
   (e: "back"): void;
@@ -110,9 +115,10 @@ onMounted(() => {
               <Calendar :size="24" aria-hidden="true" />
             </div>
             <div>
-              <p class="text-content-muted text-sm font-medium">Fecha y Hora</p>
+              <p class="text-content-muted text-sm font-medium">Cuándo</p>
               <p class="text-content-heading font-semibold">
-                {{ event.date }} · {{ event.time }}
+                <time :datetime="isoDate">{{ humanDate }}</time>
+                <span v-if="event.time"> · {{ event.time }}</span>
               </p>
             </div>
           </div>
@@ -124,7 +130,7 @@ onMounted(() => {
               <MapPin :size="24" aria-hidden="true" />
             </div>
             <div>
-              <p class="text-content-muted text-sm font-medium">Ubicación</p>
+              <p class="text-content-muted text-sm font-medium">Dónde</p>
               <p class="text-content-heading font-semibold">
                 {{ event.locality }}
               </p>
