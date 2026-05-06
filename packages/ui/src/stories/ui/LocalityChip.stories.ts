@@ -41,7 +41,7 @@ export const AllLocalities: Story = {
           {
             id: "all",
             name: "Toda La Rioja Baja",
-            img: "https://images.unsplash.com/photo-1596395819057-cb373310086c?auto=format&fit=crop&q=80&w=300&h=300",
+            img: "https://images.unsplash.com/photo-1660903293997-efd8ee1abf9a?auto=format&fit=crop&q=80&w=300&h=300",
           },
           {
             id: "calahorra",
