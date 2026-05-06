@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import AdSpace from "../../components/features/AdSpace.vue";
 import EventDetail from "../../components/features/EventDetail.vue";
 
 const SAMPLE_EVENT = {
@@ -45,25 +44,10 @@ export const PastEvent: Story = {
       time: "18:00",
       category: "Fiestas",
       price: "Gratis",
-      img: "https://images.unsplash.com/photo-1563810174-8848fde4f159?auto=format&fit=crop&q=80&w=1200&h=600",
+      img: "https://krmwxunfqtcxqgjcngwz.supabase.co/storage/v1/object/public/event-images/1551583753635319.jpg",
       description:
         "Desfile de carrozas y comparsas por las calles céntricas de Calahorra. Concurso de disfraces con premios en metálico para las mejores categorías individuales y grupales.",
       status: "past" as const,
     },
   },
-};
-
-/** With an AdSpace in the ad slot below the content */
-export const WithAdSlot: Story = {
-  render: (args) => ({
-    components: { EventDetail, AdSpace },
-    setup: () => ({ args }),
-    template: `
-      <EventDetail v-bind="args">
-        <template #ad>
-          <AdSpace variant="horizontal" mode="sponsor" />
-        </template>
-      </EventDetail>
-    `,
-  }),
 };
