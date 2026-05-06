@@ -45,12 +45,6 @@ const { isoDate, humanDate } = useDateFormatting(
         <MapPin :size="14" aria-hidden="true" class="text-brand" />
         <span class="font-medium">{{ location }}</span>
       </div>
-      <span
-        class="text-brand text-sm font-semibold opacity-0 transition-opacity
-          group-hover:opacity-100"
-      >
-        Ver más →
-      </span>
     </template>
   </Card>
 </template>

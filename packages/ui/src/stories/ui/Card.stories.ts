@@ -48,8 +48,14 @@ export const WithTagSlot: Story = {
   }),
 };
 
+export const WithLink: Story = {
+  args: {
+    link: "#",
+  },
+};
+
 /** Card with all slots populated – tag, footer with location and "Ver más" link */
-export const WithFooter: Story = {
+export const WithFooterSlot: Story = {
   render: (args) => ({
     components: { Card, Badge, MapPin },
     setup() {
@@ -69,9 +75,6 @@ export const WithFooter: Story = {
             <MapPin :size="14" aria-hidden="true" class="text-brand" />
             <span class="font-medium">Quel</span>
           </div>
-          <span class="text-brand text-sm font-semibold opacity-0 transition-opacity group-hover:opacity-100">
-            Ver más →
-          </span>
         </template>
       </Card>
     `,
