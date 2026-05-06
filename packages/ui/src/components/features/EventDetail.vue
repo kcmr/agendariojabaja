@@ -1,13 +1,6 @@
 <script lang="ts" setup>
-import { onMounted, computed } from "vue";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  ExternalLink,
-  MapPin,
-  Ticket,
-} from "lucide-vue-next";
+import { computed } from "vue";
+import { Calendar, Clock, ExternalLink, MapPin, Ticket } from "lucide-vue-next";
 import Badge from "../ui/Badge.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 
@@ -15,13 +8,13 @@ export interface EventDetailData {
   id: number | string;
   title: string;
   description: string;
-  category: string;
   date: string;
   time: string;
   locality: string;
-  price: string;
   img: string;
   imgAlt?: string;
+  category?: string;
+  price?: string;
   sourceLink: string;
   sourceName?: string;
   status?: "upcoming" | "past";
@@ -34,29 +27,10 @@ const props = defineProps<{
 const { isoDate, humanDate } = useDateFormatting(
   computed(() => props.event.date)
 );
-
-const emit = defineEmits<{
-  (e: "back"): void;
-}>();
-
-onMounted(() => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
 </script>
 
 <template>
   <div class="mx-auto max-w-4xl py-8">
-    <!-- Back button -->
-    <button
-      type="button"
-      class="text-content-muted hover:text-content-brand mb-6 flex
-        cursor-pointer items-center gap-2 font-medium transition-colors"
-      @click="emit('back')"
-    >
-      <ArrowLeft :size="20" aria-hidden="true" />
-      Volver a la agenda
-    </button>
-
     <div
       class="border-border-subtle bg-surface-card overflow-hidden rounded-3xl
         border shadow-sm"
@@ -84,9 +58,14 @@ onMounted(() => {
 
       <div class="p-8 sm:p-12">
         <!-- Badges row -->
-        <div class="mb-6 flex flex-wrap items-center gap-3">
-          <Badge variant="category">{{ event.category }}</Badge>
-          <Badge variant="price">
+        <div
+          v-if="event.category || event.price"
+          class="mb-6 flex flex-wrap items-center gap-3"
+        >
+          <Badge v-if="event.category" variant="category">{{
+            event.category
+          }}</Badge>
+          <Badge v-if="event.price" variant="price">
             <template #icon>
               <Ticket :size="14" aria-hidden="true" />
             </template>
@@ -175,8 +154,5 @@ onMounted(() => {
         </div>
       </div>
     </div>
-
-    <!-- Ad slot below detail -->
-    <slot name="ad" />
   </div>
 </template>
