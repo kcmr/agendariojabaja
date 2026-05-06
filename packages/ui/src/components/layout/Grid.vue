@@ -16,13 +16,7 @@ const colClasses: Record<number, string> = {
 </script>
 
 <template>
-  <ul
-    role="list"
-    :class="[
-      'grid gap-6',
-      cols ? colClasses[cols] : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-    ]"
-  >
+  <div :class="['grid gap-6', colClasses[cols] ?? colClasses[3]]">
     <slot />
-  </ul>
+  </div>
 </template>
