@@ -57,7 +57,7 @@
   --color-ring-brand: var(--color-brand);
 
   /* Ad spaces */
-  --color-surface-ad: var(--color-gray-100);
+  --color-surface-ad: var(--color-gray-50);
   --color-border-ad: var(--color-gray-200);
   --color-content-ad-label: var(--color-gray-500);
   --color-content-ad-body: var(--color-gray-600);
