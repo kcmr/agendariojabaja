@@ -12,6 +12,7 @@ pre-commit:
   parallel: true
   jobs:
     - name: check types
+      glob: "*.{ts,js,mjs,vue,astro}"
       run: turbo run check-types
 
     - name: format
