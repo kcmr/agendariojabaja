@@ -15,6 +15,8 @@ const props = defineProps<{
     src: string;
     alt?: string;
   };
+  /** Optional URL for event details */
+  link?: string;
   /** ISO date for the time element (e.g., "2026-05-25") */
   dateTime: string;
   /** Formatted hour string (e.g., "14:00", "11:00, 13:00, 15:30") */
@@ -29,7 +31,7 @@ const { isoDate, humanDate } = useDateFormatting(
 </script>
 
 <template>
-  <Card :heading="title" :text="description" :image="image">
+  <Card :heading="title" :text="description" :image="image" :link="link">
     <template #tag>
       <Badge variant="brand" shape="square">
         <time :datetime="isoDate">{{ humanDate }}</time>
