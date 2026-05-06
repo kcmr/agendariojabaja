@@ -1,15 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import AdSpace from "../../components/features/AdSpace.vue";
 import Grid from "../../components/layout/Grid.vue";
 
 const MockCard = {
   props: ["title"],
   template: `
-    <li class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
       <div class="mb-3 h-32 rounded-xl bg-gray-100"></div>
       <h3 class="font-bold text-gray-900">{{ title }}</h3>
       <p class="mt-1 text-sm text-gray-500">Descripción breve del evento.</p>
-    </li>
+    </div>
   `,
 };
 
@@ -58,20 +57,4 @@ export const TwoColumns: Story = {
       </Grid>
     `,
   }),
-};
-
-export const WithAdSpace: Story = {
-  render: (args) => ({
-    components: { Grid, MockCard, AdSpace },
-    setup: () => ({ args, titles: TITLES }),
-    template: `
-      <Grid v-bind="args">
-        <MockCard v-for="(t, i) in titles" :key="t" :title="t" />
-        <li class="col-span-1 md:col-span-2 lg:col-span-3">
-          <AdSpace variant="horizontal" />
-        </li>
-      </Grid>
-    `,
-  }),
-  args: {},
 };
