@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { MapPin } from "lucide-vue-next";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Card from "../ui/Card.vue";
 import Badge from "../ui/Badge.vue";
+import { computed } from "vue";
 
 const props = defineProps<{
   /** Event title */

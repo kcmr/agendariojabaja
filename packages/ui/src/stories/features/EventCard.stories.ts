@@ -35,3 +35,9 @@ export const LongTitle: Story = {
       "Este es un título de evento extremadamente largo para probar cómo se comporta el truncado de texto y la disposición de los elementos",
   },
 };
+
+export const IncorrectDate: Story = {
+  args: {
+    dateTime: "not-a-date",
+  },
+};
