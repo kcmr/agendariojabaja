@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+defineOptions({
+  inheritAttrs: false,
+});
+
 defineProps<{
   /** If provided, the component will render a link; otherwise, it will render the content passed through the default slot */
   href?: string;
@@ -6,6 +10,6 @@ defineProps<{
 </script>
 
 <template>
-  <a v-if="href" :href="href"><slot /></a>
-  <template v-else><slot /></template>
+  <a v-if="href" :href="href" v-bind="$attrs"><slot /></a>
+  <slot v-else />
 </template>
