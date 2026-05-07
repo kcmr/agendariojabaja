@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { MailIcon, MegaphoneIcon } from "lucide-vue-next";
-import ButtonLink from "../ui/ButtonLink.vue";
+import Button from "../ui/Button.vue";
 </script>
 
 <template>
@@ -14,23 +14,23 @@ import ButtonLink from "../ui/ButtonLink.vue";
       <nav>
         <ul class="flex items-center gap-5">
           <li>
-            <ButtonLink variant="ghost" href="/" class="px-0">
+            <Button variant="ghost" href="/" class="px-0">
               <template #icon-left>
                 <MegaphoneIcon :size="16" />
               </template>
               Patrocínanos
-            </ButtonLink>
+            </Button>
           </li>
           <li>
-            <ButtonLink variant="ghost" href="/" class="px-0">
+            <Button variant="ghost" href="/" class="px-0">
               <template #icon-left>
                 <MailIcon :size="16" />
               </template>
               Suscríbete
-            </ButtonLink>
+            </Button>
           </li>
           <li>
-            <ButtonLink variant="brand" href="/">Publicar evento</ButtonLink>
+            <Button variant="brand" href="/">Publicar evento</Button>
           </li>
         </ul>
       </nav>

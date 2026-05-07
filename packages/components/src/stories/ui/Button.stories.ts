@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import { expect, fn, userEvent, within } from "storybook/test";
 import Button from "../../components/ui/Button.vue";
-import { MailIcon } from "lucide-vue-next";
+import { ExternalLinkIcon, MailIcon } from "lucide-vue-next";
+import { expect, fn, userEvent, within } from "storybook/test";
 
 const meta = {
   title: "ui/Button",
@@ -12,9 +12,9 @@ const meta = {
       control: "select",
       options: ["brand", "outline", "ghost"],
     },
-    size: { control: "select", options: ["md", "lg"] },
+    size: { control: "select", options: ["sm", "md", "lg"] },
   },
-  args: { variant: "brand", size: "md", disabled: false },
+  args: { variant: "brand", size: "md", external: false },
   render: (args) => ({
     components: { Button },
     setup: () => ({ args }),
@@ -31,8 +31,6 @@ export const Outline: Story = { args: { variant: "outline" } };
 
 export const Ghost: Story = { args: { variant: "ghost" } };
 
-export const Large: Story = { args: { size: "lg" } };
-
 export const Disabled: Story = {
   args: { variant: "brand", disabled: true },
   play: async ({ canvasElement }) => {
@@ -48,12 +46,50 @@ export const WithIconLeft: Story = {
     setup: () => ({ args }),
     template: `
       <Button v-bind="args">
-        <MailIcon size="16" aria-hidden="true" #icon-left />
+        <template #icon-left>
+          <MailIcon size="16" aria-hidden="true" />
+        </template>
         Suscríbete
       </Button>
     `,
   }),
   args: { variant: "brand" },
+};
+
+export const WithIconRight: Story = {
+  render: (args) => ({
+    components: { Button, MailIcon },
+    setup: () => ({ args }),
+    template: `
+      <Button v-bind="args">
+        <template #icon-right>
+          <MailIcon size="16" aria-hidden="true" />
+        </template>
+        Suscríbete
+      </Button>
+    `,
+  }),
+  args: { variant: "brand" },
+};
+
+export const ExternalLink: Story = {
+  args: {
+    href: "https://facebook.com",
+    variant: "outline",
+    external: true,
+  },
+  render: (args) => ({
+    components: { Button, ExternalLinkIcon },
+    setup: () => ({ args }),
+    template: `
+      <Button v-bind="args">
+        <template #icon-left>
+          <ExternalLinkIcon size="16" aria-hidden="true" />
+        </template>
+        Ver fuente original
+      </Button>
+    `,
+  }),
 };
 
 export const ClickEmitsEvent: Story = {
