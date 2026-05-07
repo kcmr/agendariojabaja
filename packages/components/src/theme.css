@@ -34,7 +34,7 @@
   --color-content-on-highlight: var(--color-gray-900);
 
   /* Surfaces (backgrounds) */
-  --color-surface-page: var(--color-gray-50);
+  --color-surface-page: var(--color-gray-100);
   --color-surface-card: var(--color-white);
   --color-surface-subtle: var(--color-gray-50);
   --color-surface-muted: var(--color-gray-100);
