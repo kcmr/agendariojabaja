@@ -1,6 +1,19 @@
 <script lang="ts" setup>
-import { MailIcon, MegaphoneIcon } from "lucide-vue-next";
 import Button from "../ui/Button.vue";
+import type { ButtonVariant } from "../../composables/useButtonClasses";
+import type { IconName } from "../utils/Icon.vue";
+import Icon from "../utils/Icon.vue";
+
+interface NavItem {
+  label: string;
+  href: string;
+  variant?: Extract<ButtonVariant, "text" | "brand">;
+  icon?: IconName;
+}
+
+defineProps<{
+  links: NavItem[];
+}>();
 </script>
 
 <template>
@@ -13,24 +26,19 @@ import Button from "../ui/Button.vue";
 
       <nav>
         <ul class="flex items-center gap-5">
-          <li>
-            <Button variant="ghost" href="/" class="px-0">
-              <template #icon-left>
-                <MegaphoneIcon :size="16" />
+          <li
+            v-for="link in links"
+            :key="link.label"
+            class="flex"
+            :variant="link.variant"
+            :href="link.href"
+          >
+            <Button :variant="link.variant" :href="link.href">
+              <template v-if="link.icon" #icon-left>
+                <Icon :name="link.icon" :size="16" />
               </template>
-              Patrocínanos
+              {{ link.label }}
             </Button>
-          </li>
-          <li>
-            <Button variant="ghost" href="/" class="px-0">
-              <template #icon-left>
-                <MailIcon :size="16" />
-              </template>
-              Suscríbete
-            </Button>
-          </li>
-          <li>
-            <Button variant="brand" href="/">Publicar evento</Button>
           </li>
         </ul>
       </nav>

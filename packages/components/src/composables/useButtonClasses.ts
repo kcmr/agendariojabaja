@@ -1,4 +1,4 @@
-export type ButtonVariant = "brand" | "outline" | "ghost";
+export type ButtonVariant = "brand" | "outline" | "text";
 export type ButtonSize = "md" | "lg";
 
 export interface ButtonClassOptions {
@@ -20,7 +20,7 @@ export function useButtonClasses(options: ButtonClassOptions) {
       "bg-surface-brand text-content-on-brand hover:bg-surface-brand-hover shadow-md",
     outline:
       "bg-transparent border border-border-strong text-content-heading hover:bg-surface-subtle",
-    ghost: "bg-transparent text-content-muted hover:text-content-heading",
+    text: "bg-transparent text-content-muted hover:text-content-heading p-0 font-medium",
   };
 
   const sizes: Record<ButtonSize, string> = {
@@ -32,7 +32,7 @@ export function useButtonClasses(options: ButtonClassOptions) {
     ? "opacity-50 cursor-not-allowed pointer-events-none"
     : "";
 
-  return [base, variants[variant], sizes[size], disabledClasses]
+  return [base, sizes[size], disabledClasses, variants[variant]]
     .filter(Boolean)
     .join(" ");
 }

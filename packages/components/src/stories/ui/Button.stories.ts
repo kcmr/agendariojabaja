@@ -10,7 +10,7 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["brand", "outline", "ghost"],
+      options: ["brand", "outline", "text"],
     },
     size: { control: "select", options: ["sm", "md", "lg"] },
   },
@@ -29,7 +29,7 @@ export const Brand: Story = { args: { variant: "brand" } };
 
 export const Outline: Story = { args: { variant: "outline" } };
 
-export const Ghost: Story = { args: { variant: "ghost" } };
+export const Text: Story = { args: { variant: "text" } };
 
 export const Disabled: Story = {
   args: { variant: "brand", disabled: true },
@@ -47,7 +47,7 @@ export const WithIconLeft: Story = {
     template: `
       <Button v-bind="args">
         <template #icon-left>
-          <MailIcon size="16" aria-hidden="true" />
+          <MailIcon size="16" />
         </template>
         Suscríbete
       </Button>
@@ -63,7 +63,7 @@ export const WithIconRight: Story = {
     template: `
       <Button v-bind="args">
         <template #icon-right>
-          <MailIcon size="16" aria-hidden="true" />
+          <MailIcon size="16" />
         </template>
         Suscríbete
       </Button>
@@ -84,7 +84,7 @@ export const ExternalLink: Story = {
     template: `
       <Button v-bind="args">
         <template #icon-left>
-          <ExternalLinkIcon size="16" aria-hidden="true" />
+          <ExternalLinkIcon size="16" />
         </template>
         Ver fuente original
       </Button>
