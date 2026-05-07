@@ -34,15 +34,12 @@ defineProps<{
         <a :href="brand.href" aria-hidden="true" tabindex="-1">
           <img :src="brand.logoSrc" alt="" class="h-15 w-auto" />
         </a>
-        <div class="flex flex-col gap-2">
+        <a :href="brand.href" class="flex flex-col gap-2">
           <h1
             class="text-content-heading group-hover:text-content-brand text-xl
               leading-none font-bold tracking-tight transition-colors"
           >
-            <a :href="brand.href">
-              {{ brand.label }}
-              <span class="sr-only">&ndash; Home</span>
-            </a>
+            {{ brand.label }}
           </h1>
           <p
             v-if="brand.headline"
@@ -50,7 +47,8 @@ defineProps<{
           >
             {{ brand.headline }}
           </p>
-        </div>
+          <p class="sr-only">&ndash; Home</p>
+        </a>
       </div>
 
       <nav>
