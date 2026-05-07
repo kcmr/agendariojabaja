@@ -1,11 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import AppHeader from "../../components/features/AppHeader.vue";
+import Logo from "../assets/arb-instagram-profile.webp";
 
 const meta: Meta<typeof AppHeader> = {
   title: "features/AppHeader",
   component: AppHeader,
-  tags: ["autodocs"],
   args: {
+    brand: {
+      label: "Agenda Rioja Baja",
+      headline: "Eventos y ocio local",
+      href: "#",
+      logoSrc: Logo,
+    },
     links: [
       { label: "Patrocínanos", href: "#", icon: "Megaphone", variant: "text" },
       { label: "Suscríbete", href: "#", icon: "Mail", variant: "text" },

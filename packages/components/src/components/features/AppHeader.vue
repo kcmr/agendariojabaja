@@ -11,7 +11,15 @@ interface NavItem {
   icon?: IconName;
 }
 
+interface Brand {
+  label: string;
+  headline?: string;
+  href: string;
+  logoSrc?: string;
+}
+
 defineProps<{
+  brand: Brand;
   links: NavItem[];
 }>();
 </script>
@@ -22,7 +30,28 @@ defineProps<{
       class="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6
         lg:px-8"
     >
-      <h1>App Header</h1>
+      <div class="group flex items-center gap-2">
+        <a :href="brand.href" aria-hidden="true" tabindex="-1">
+          <img :src="brand.logoSrc" alt="" class="h-15 w-auto" />
+        </a>
+        <div class="flex flex-col gap-2">
+          <h1
+            class="text-content-heading group-hover:text-content-brand text-xl
+              leading-none font-bold tracking-tight transition-colors"
+          >
+            <a :href="brand.href">
+              {{ brand.label }}
+              <span class="sr-only">&ndash; Home</span>
+            </a>
+          </h1>
+          <p
+            v-if="brand.headline"
+            class="text-content-muted text-sm leading-none font-medium"
+          >
+            {{ brand.headline }}
+          </p>
+        </div>
+      </div>
 
       <nav>
         <ul class="flex items-center gap-5">
