@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { Calendar, Clock, ExternalLink, MapPin, Ticket } from "lucide-vue-next";
 import Badge from "../ui/Badge.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
+import Heading from "../ui/Heading.vue";
 
 export interface EventDetailData {
   id: number | string;
@@ -74,12 +75,9 @@ const { isoDate, humanDate } = useDateFormatting(
         </div>
 
         <!-- Title -->
-        <h1
-          class="text-content-heading mb-6 text-3xl leading-tight font-extrabold
-            sm:text-4xl"
-        >
+        <Heading :level="2" variant="h1" class="mb-6">
           {{ event.title }}
-        </h1>
+        </Heading>
 
         <!-- Date / location info grid -->
         <div
@@ -119,13 +117,8 @@ const { isoDate, humanDate } = useDateFormatting(
 
         <!-- Description -->
         <div class="mb-10">
-          <h2 class="text-content-heading mb-4 text-xl font-bold">
-            Sobre el evento
-          </h2>
-          <p
-            class="text-content-body text-lg leading-relaxed
-              whitespace-pre-line"
-          >
+          <Heading :level="3" class="mb-4">Sobre el evento</Heading>
+          <p class="text-content-body text-lg whitespace-pre-line">
             {{ event.description }}
           </p>
         </div>
@@ -136,7 +129,7 @@ const { isoDate, humanDate } = useDateFormatting(
             gap-4 border-t pt-8 sm:flex-row"
         >
           <p class="text-content-muted flex items-center gap-2 text-sm">
-            <Clock :size="16" aria-hidden="true" />
+            <Clock :size="16" />
             Publicado originalmente en
             {{ event.sourceName ?? "Facebook" }}
           </p>
@@ -148,7 +141,7 @@ const { isoDate, humanDate } = useDateFormatting(
               bg-[#3b5998] px-6 py-3 font-semibold text-white shadow-sm
               transition-colors hover:bg-[#2d4373] sm:w-auto"
           >
-            <ExternalLink :size="18" aria-hidden="true" />
+            <ExternalLink :size="18" />
             Ver fuente original
           </a>
         </div>
