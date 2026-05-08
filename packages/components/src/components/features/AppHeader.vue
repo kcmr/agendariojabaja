@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import Button from "../ui/Button.vue";
 import type { ButtonVariant } from "../../composables/useButtonClasses";
-import type { IconName } from "../utils/Icon.vue";
-import Icon from "../utils/Icon.vue";
+import Icon, { type IconName } from "../ui/Icon.vue";
 
 interface NavItem {
   label: string;

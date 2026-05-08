@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Megaphone } from "lucide-vue-next";
+import Icon from "../ui/Icon.vue";
 
 withDefaults(
   defineProps<{
@@ -53,7 +53,7 @@ withDefaults(
           focus-visible:opacity-100 focus-visible:ring-2
           focus-visible:outline-none"
       >
-        <Megaphone :size="14" />
+        <Icon name="Megaphone" :size="14" />
         Anúnciate aquí
       </button>
     </slot>

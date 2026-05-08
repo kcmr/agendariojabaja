@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ChevronLeft, ChevronRight } from "lucide-vue-next";
+import Icon from "./Icon.vue";
 
 const props = defineProps<{
   /** Current active page (1-based) */
@@ -37,7 +37,7 @@ const next = () => {
         disabled:opacity-50"
       @click="prev"
     >
-      <ChevronLeft :size="20" />
+      <Icon name="ChevronLeft" :size="20" />
     </button>
 
     <span
@@ -58,7 +58,7 @@ const next = () => {
         disabled:opacity-50"
       @click="next"
     >
-      <ChevronRight :size="20" />
+      <Icon name="ChevronRight" :size="20" />
     </button>
   </nav>
 </template>

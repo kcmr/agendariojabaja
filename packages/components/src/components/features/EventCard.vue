@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MapPin } from "lucide-vue-next";
+import Icon from "../ui/Icon.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Card from "../ui/Card.vue";
 import Badge from "../ui/Badge.vue";
@@ -44,7 +44,7 @@ const { isoDate, humanDate } = useDateFormatting(
 
     <template #footer>
       <div class="flex items-center gap-2 text-sm text-gray-600">
-        <MapPin :size="14" class="text-brand" />
+        <Icon name="MapPin" :size="14" class="text-brand" />
         <span class="font-medium">{{ location }}</span>
       </div>
     </template>

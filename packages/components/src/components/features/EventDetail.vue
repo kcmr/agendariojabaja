@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { Calendar, Clock, ExternalLink, MapPin, Ticket } from "lucide-vue-next";
+import Icon from "../ui/Icon.vue";
 import Badge from "../ui/Badge.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Heading from "../ui/Heading.vue";
@@ -68,7 +68,7 @@ const { isoDate, humanDate } = useDateFormatting(
           }}</Badge>
           <Badge v-if="event.price" variant="price">
             <template #icon>
-              <Ticket :size="14" />
+              <Icon name="Ticket" :size="14" />
             </template>
             {{ event.price }}
           </Badge>
@@ -89,7 +89,7 @@ const { isoDate, humanDate } = useDateFormatting(
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <Calendar :size="24" />
+              <Icon name="Calendar" :size="24" />
             </div>
             <div>
               <p class="text-content-muted text-sm font-medium">Cuándo</p>
@@ -104,7 +104,7 @@ const { isoDate, humanDate } = useDateFormatting(
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <MapPin :size="24" />
+              <Icon name="MapPin" :size="24" />
             </div>
             <div>
               <p class="text-content-muted text-sm font-medium">Dónde</p>
@@ -129,7 +129,7 @@ const { isoDate, humanDate } = useDateFormatting(
             gap-4 border-t pt-8 sm:flex-row"
         >
           <p class="text-content-muted flex items-center gap-2 text-sm">
-            <Clock :size="16" />
+            <Icon name="Clock" :size="16" />
             Publicado originalmente en
             {{ event.sourceName ?? "Facebook" }}
           </p>
@@ -141,7 +141,7 @@ const { isoDate, humanDate } = useDateFormatting(
               bg-[#3b5998] px-6 py-3 font-semibold text-white shadow-sm
               transition-colors hover:bg-[#2d4373] sm:w-auto"
           >
-            <ExternalLink :size="18" />
+            <Icon name="ExternalLink" :size="18" />
             Ver fuente original
           </a>
         </div>

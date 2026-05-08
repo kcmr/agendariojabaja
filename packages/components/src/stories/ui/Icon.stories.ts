@@ -1,14 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import Icon from "../../components/utils/Icon.vue";
+import Icon from "../../components/ui/Icon.vue";
 
 const meta = {
-  title: "utils/Icon",
+  title: "ui/Icon",
   component: Icon,
   tags: ["autodocs"],
   argTypes: {
     name: {
       control: "select",
-      options: ["Mail", "Megaphone"],
+      options: [
+        "Mail",
+        "Megaphone",
+        "Search",
+        "MapPin",
+        "Calendar",
+        "Clock",
+        "ExternalLink",
+        "Ticket",
+        "ChevronLeft",
+        "ChevronRight",
+      ],
     },
     size: {
       control: "number",

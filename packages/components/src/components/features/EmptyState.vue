@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Search } from "lucide-vue-next";
+import Icon from "../ui/Icon.vue";
 
 defineProps<{
   /** Main heading text */
@@ -19,7 +19,7 @@ defineProps<{
         justify-center"
     >
       <slot name="icon">
-        <Search :size="48" />
+        <Icon name="Search" :size="48" />
       </slot>
     </div>
     <h3 class="text-content-heading text-lg font-semibold">
