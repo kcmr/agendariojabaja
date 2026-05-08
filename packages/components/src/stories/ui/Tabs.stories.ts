@@ -27,15 +27,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Segment: Story = {
   args: { modelValue: "upcoming", variant: "segment", tabs: SEGMENT_TABS },
-  render: () => ({
+  render: (args) => ({
     components: { Tabs },
     setup() {
-      const active = ref("upcoming");
-      return { active, tabs: SEGMENT_TABS };
+      const active = ref(args.modelValue);
+      return { active, args };
     },
     template: `
       <div>
-        <Tabs v-model="active" variant="segment" :tabs="tabs" aria-label="Estado de eventos" />
+        <Tabs v-bind="args" v-model="active" aria-label="Estado de eventos" />
         <p class="mt-4 text-sm text-gray-500">Activo: <strong>{{ active }}</strong></p>
       </div>
     `,
@@ -51,15 +51,15 @@ export const Segment: Story = {
 
 export const Toggle: Story = {
   args: { modelValue: "list", variant: "toggle", tabs: TOGGLE_TABS },
-  render: () => ({
+  render: (args) => ({
     components: { Tabs },
     setup() {
-      const active = ref("list");
-      return { active, tabs: TOGGLE_TABS };
+      const active = ref(args.modelValue);
+      return { active, args };
     },
     template: `
       <div>
-        <Tabs v-model="active" variant="toggle" :tabs="tabs" aria-label="Vista de eventos" />
+        <Tabs v-bind="args" v-model="active" aria-label="Vista de eventos" />
         <p class="mt-4 text-sm text-gray-500">Activo: <strong>{{ active }}</strong></p>
       </div>
     `,
@@ -75,15 +75,15 @@ export const Toggle: Story = {
 
 export const ToggleWithIcons: Story = {
   args: { modelValue: "list", variant: "toggle", tabs: TOGGLE_TABS },
-  render: () => ({
+  render: (args) => ({
     components: { Tabs },
     setup() {
-      const active = ref("list");
-      return { active, tabs: TOGGLE_TABS };
+      const active = ref(args.modelValue);
+      return { active, args };
     },
     template: `
       <div>
-        <Tabs v-model="active" variant="toggle" :tabs="tabs" aria-label="Vista de eventos">
+        <Tabs v-bind="args" v-model="active" aria-label="Vista de eventos">
           <template #icon-list>
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
           </template>
