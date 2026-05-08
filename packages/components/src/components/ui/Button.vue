@@ -65,7 +65,7 @@ const onClick = (event: MouseEvent) => {
     :is="tag"
     v-bind="{ ...attrs, class: undefined }"
     :href="href"
-    :type="!href ? 'button' : undefined"
+    :type="!href ? (attrs.type ?? 'button') : undefined"
     :class="classes"
     :disabled="disabled"
     :target="external ? '_blank' : undefined"

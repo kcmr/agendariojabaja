@@ -27,11 +27,11 @@ const onClick = () => emit("select", props.id);
       overflow-hidden rounded-2xl transition-all duration-300
       focus-visible:ring-2 focus-visible:ring-offset-2
       focus-visible:outline-none`,
+      'h-30 w-30',
       selected
         ? 'ring-ring-brand scale-95 shadow-md ring-4 ring-offset-2'
         : 'opacity-80 hover:scale-105 hover:opacity-100',
     ]"
-    style="width: 120px; height: 120px"
     @click="onClick"
   >
     <!-- alt="" because the name is visible in the text overlay and the

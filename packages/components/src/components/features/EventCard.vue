@@ -37,7 +37,7 @@ const { isoDate, humanDate } = useDateFormatting(
         <time :datetime="isoDate">{{ humanDate }}</time>
       </Badge>
       <template v-if="hour">
-        <span class="text-content-muted mx-1">•</span>
+        <span class="text-content-muted mx-1" aria-hidden="true">•</span>
         <span>{{ hour }}</span>
       </template>
     </template>
