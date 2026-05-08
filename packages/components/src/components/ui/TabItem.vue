@@ -20,7 +20,6 @@ const emit = defineEmits<{
     type="button"
     role="tab"
     :aria-selected="active"
-    :tabindex="active ? 0 : -1"
     :class="[
       `flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 text-sm
       font-bold transition-all`,
