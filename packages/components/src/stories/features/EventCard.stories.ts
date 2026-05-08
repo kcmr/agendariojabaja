@@ -5,6 +5,9 @@ const meta = {
   title: "features/EventCard",
   component: EventCard,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   args: {
     heading: "Fiestas de la Juventud y de la Cruz de Mayo en Quel",
     text: "Disfruta de un fin de semana lleno de actividades, música y tradición en las fiestas de la juventud de Quel.",

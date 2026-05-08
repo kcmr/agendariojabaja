@@ -8,6 +8,9 @@ const meta = {
   title: "ui/Card",
   component: Card,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   args: {
     heading: "Fiestas de la Juventud y de la Cruz de Mayo en Quel",
     text: "Given a file name, creates an object with utilities to manage a log file. It creates a temporary log file which you can manage with the returned functions. You can then decide whether to move the log file to the users project, or remove it.",
