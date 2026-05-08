@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import Badge from "../../components/ui/Badge.vue";
+import Icon from "../../components/ui/Icon.vue";
 
 const meta = {
   title: "ui/Badge",
@@ -83,12 +84,12 @@ export const OnImage: Story = {
 export const WithIcon: Story = {
   args: { variant: "price" },
   render: (args) => ({
-    components: { Badge },
+    components: { Badge, Icon },
     setup: () => ({ args }),
     template: `
       <Badge v-bind="args">
         <template #icon>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+          <Icon name="Ticket" :size="14" />
         </template>
         25€
       </Badge>
