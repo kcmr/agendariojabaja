@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, within } from "storybook/test";
 import { ref } from "vue";
 import Tabs from "../../components/ui/Tabs.vue";
 import Icon from "../../components/ui/Icon.vue";
@@ -41,7 +41,7 @@ export const Segment: Story = {
       </div>
     `,
   }),
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const historico = canvas.getByRole("tab", { name: "Histórico" });
     expect(historico).toHaveAttribute("aria-selected", "false");
@@ -65,7 +65,7 @@ export const Toggle: Story = {
       </div>
     `,
   }),
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const calBtn = canvas.getByRole("tab", { name: "Calendario" });
     expect(calBtn).toHaveAttribute("aria-selected", "false");

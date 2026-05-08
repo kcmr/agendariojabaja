@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, within } from "storybook/test";
 import LocalityChip from "../../components/ui/LocalityChip.vue";
 
 const meta = {
@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: { selected: false },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const canvas = within(canvasElement);
     const btn = canvas.getByRole("button", { name: args.name });
     expect(btn).toHaveAttribute("aria-pressed", "false");
