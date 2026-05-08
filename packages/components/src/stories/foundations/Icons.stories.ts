@@ -18,8 +18,8 @@
  * </script>
  *
  * <template>
- *   <Calendar :size="20" aria-hidden="true" />
- *   <MapPin :size="16" class="text-content-brand" aria-hidden="true" />
+ *   <Calendar :size="20" />
+ *   <MapPin :size="16" class="text-content-brand"  />
  * </template>
  * ```
  *
@@ -80,7 +80,7 @@ const IconsShowcase = defineComponent({
                 "flex flex-col items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 text-center shadow-sm",
             },
             [
-              h(component, { size: 24, "aria-hidden": "true" }),
+              h(component, { size: 24 }),
               h("code", { class: "text-xs text-gray-600 break-all" }, name),
             ]
           )
@@ -122,23 +122,23 @@ export const Sizes: Story = {
     template: `
       <div class="flex items-end gap-6">
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="12" aria-hidden="true" />
+          <Calendar :size="12" />
           <code class="text-xs text-gray-500">:size="12"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="16" aria-hidden="true" />
+          <Calendar :size="16" />
           <code class="text-xs text-gray-500">:size="16"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="20" aria-hidden="true" />
+          <Calendar :size="20" />
           <code class="text-xs text-gray-500">:size="20"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="24" aria-hidden="true" />
+          <Calendar :size="24" />
           <code class="text-xs text-gray-500">:size="24"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="32" aria-hidden="true" />
+          <Calendar :size="32" />
           <code class="text-xs text-gray-500">:size="32"</code>
         </div>
       </div>

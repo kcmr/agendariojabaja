@@ -53,7 +53,7 @@ withDefaults(
           focus-visible:opacity-100 focus-visible:ring-2
           focus-visible:outline-none"
       >
-        <Megaphone :size="14" aria-hidden="true" />
+        <Megaphone :size="14" />
         Anúnciate aquí
       </button>
     </slot>

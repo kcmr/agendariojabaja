@@ -37,7 +37,7 @@ const next = () => {
         disabled:opacity-50"
       @click="prev"
     >
-      <ChevronLeft :size="20" aria-hidden="true" />
+      <ChevronLeft :size="20" />
     </button>
 
     <span
@@ -58,7 +58,7 @@ const next = () => {
         disabled:opacity-50"
       @click="next"
     >
-      <ChevronRight :size="20" aria-hidden="true" />
+      <ChevronRight :size="20" />
     </button>
   </nav>
 </template>

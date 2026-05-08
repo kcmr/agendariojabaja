@@ -68,7 +68,7 @@ const { isoDate, humanDate } = useDateFormatting(
           }}</Badge>
           <Badge v-if="event.price" variant="price">
             <template #icon>
-              <Ticket :size="14" aria-hidden="true" />
+              <Ticket :size="14" />
             </template>
             {{ event.price }}
           </Badge>
@@ -89,7 +89,7 @@ const { isoDate, humanDate } = useDateFormatting(
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <Calendar :size="24" aria-hidden="true" />
+              <Calendar :size="24" />
             </div>
             <div>
               <p class="text-content-muted text-sm font-medium">Cuándo</p>
@@ -104,7 +104,7 @@ const { isoDate, humanDate } = useDateFormatting(
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <MapPin :size="24" aria-hidden="true" />
+              <MapPin :size="24" />
             </div>
             <div>
               <p class="text-content-muted text-sm font-medium">Dónde</p>

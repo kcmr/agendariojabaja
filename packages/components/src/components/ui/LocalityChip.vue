@@ -46,7 +46,6 @@ const onClick = () => emit("select", props.id);
     <div
       class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30
         to-transparent"
-      aria-hidden="true"
     />
     <span
       class="absolute bottom-3 left-0 w-full px-2 text-center text-sm

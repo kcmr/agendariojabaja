@@ -44,7 +44,7 @@ const { isoDate, humanDate } = useDateFormatting(
 
     <template #footer>
       <div class="flex items-center gap-2 text-sm text-gray-600">
-        <MapPin :size="14" aria-hidden="true" class="text-brand" />
+        <MapPin :size="14" class="text-brand" />
         <span class="font-medium">{{ location }}</span>
       </div>
     </template>
