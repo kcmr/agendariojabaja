@@ -14,6 +14,7 @@ import {
   Ticket,
   ChevronLeft,
   ChevronRight,
+  List,
 } from "lucide-vue-next";
 import { computed } from "vue";
 
@@ -28,6 +29,7 @@ const icons = {
   Ticket,
   ChevronLeft,
   ChevronRight,
+  List,
 } as const;
 
 export type IconName = keyof typeof icons;

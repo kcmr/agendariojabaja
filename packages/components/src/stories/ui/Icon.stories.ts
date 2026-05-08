@@ -19,6 +19,7 @@ const meta = {
         "Ticket",
         "ChevronLeft",
         "ChevronRight",
+        "List",
       ],
     },
     size: {

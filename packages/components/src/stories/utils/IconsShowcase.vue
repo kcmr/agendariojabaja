@@ -16,6 +16,7 @@ const iconNames: IconName[] = [
   "Ticket",
   "Clock",
   "Megaphone",
+  "List",
 ];
 
 const copyToClipboard = (name: IconName, event: MouseEvent) => {
