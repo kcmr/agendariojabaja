@@ -1,15 +1,9 @@
 ---
-import Button from '@repo/components/ui/Button';
 import EventCard from '@repo/components/features/EventCard';
-import people from '../data/person.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-const res = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-const data = await res.json();
 ---
 
 <BaseLayout title='Home'>
-  <Button>Click me</Button>
   <EventCard
     heading='Visita al castillo de Lichtenstein'
     text='El castillo de Lichtenstein es una joya arquitectónica situada en el corazón de Alemania. Construido en el siglo XIX, este castillo neogótico se alza majestuosamente sobre un acantilado, ofreciendo vistas impresionantes del valle circundante. Con su diseño romántico y su rica historia, el castillo de Lichtenstein es un destino turístico popular para aquellos que buscan sumergirse en la belleza y la historia de la región.'
@@ -22,24 +16,4 @@ const data = await res.json();
     hour='20:00'
     location='Lichtenstein, Alemania'
   />
-
-  <div slot='experiments'>
-    <p>Estás en al página <strong>Home</strong></p>
-    <p class='text-2xl'>Todo: {data.title}</p>
-
-    <ul class='list-inside list-disc'>
-      {
-        people.map((person) => (
-          <li>
-            {person.name} - {person.age} years old - {person.email}
-            <ul class='list-inside list-disc ml-3'>
-              {person.hobbies.map((hobby) => (
-                <li>{hobby}</li>
-              ))}
-            </ul>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
 </BaseLayout>
