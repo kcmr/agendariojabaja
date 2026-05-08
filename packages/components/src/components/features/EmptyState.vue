@@ -19,8 +19,7 @@ defineProps<{
         justify-center"
     >
       <slot name="icon">
-        <!-- Default: search icon (decorative – the heading conveys the meaning) -->
-        <Search :size="48" aria-hidden="true" />
+        <Search :size="48" />
       </slot>
     </div>
     <h3 class="text-content-heading text-lg font-semibold">
