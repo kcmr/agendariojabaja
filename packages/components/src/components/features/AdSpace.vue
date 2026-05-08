@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Icon from "../ui/Icon.vue";
+import Button from "../ui/Button.vue";
 
 withDefaults(
   defineProps<{
@@ -15,6 +16,10 @@ withDefaults(
   }>(),
   { variant: "horizontal", mode: "sponsor" }
 );
+
+defineEmits<{
+  clickSponsor: [payload: MouseEvent];
+}>();
 </script>
 
 <template>
@@ -44,18 +49,16 @@ withDefaults(
       In "sponsor" mode a CTA to attract local sponsors is shown on hover.
     -->
     <slot v-if="mode === 'sponsor'" name="cta">
-      <button
-        type="button"
-        class="border-border-strong bg-surface-card text-content-ad-cta
-          hover:bg-surface-subtle focus-visible:ring-ring-brand flex
-          items-center gap-2 rounded-md border px-4 py-1.5 text-sm font-semibold
-          opacity-0 shadow-sm transition-opacity group-hover:opacity-100
-          focus-visible:opacity-100 focus-visible:ring-2
-          focus-visible:outline-none"
+      <Button
+        variant="outline"
+        class="bg-surface-card text-content-ad-cta rounded-md py-1.5 opacity-0
+          shadow-sm transition-opacity group-hover:opacity-100 focus:opacity-100
+          focus-visible:opacity-100"
+        @click="$emit('clickSponsor', $event)"
       >
         <Icon name="Megaphone" :size="14" />
         Anúnciate aquí
-      </button>
+      </Button>
     </slot>
   </aside>
 </template>
