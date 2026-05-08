@@ -37,6 +37,10 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * The Icon component wraps [lucide-vue-next](https://lucide.dev/guide/packages/lucide-vue-next) icons and allows other components to set icon propertys using a typed name string.
+ * Currently supports a limited set of icons only to keep the bundle size small. More icons can be added as needed.
+ */
 export const Default: Story = {
   args: {
     name: "Mail",
