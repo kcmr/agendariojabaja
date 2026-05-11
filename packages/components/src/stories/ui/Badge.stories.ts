@@ -3,7 +3,6 @@ import Badge from "../../components/ui/Badge.vue";
 import Icon from "../../components/ui/Icon.vue";
 
 const meta = {
-  title: "ui/Badge",
   component: Badge,
   tags: ["autodocs"],
   argTypes: {

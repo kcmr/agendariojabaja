@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import Icon from "../../components/ui/Icon.vue";
 
 const meta = {
-  title: "ui/Icon",
   component: Icon,
   tags: ["autodocs"],
   argTypes: {

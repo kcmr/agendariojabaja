@@ -3,7 +3,6 @@ import AdSpace from "../../components/features/AdSpace.vue";
 import { expect, fn, waitFor, within } from "storybook/test";
 
 const meta = {
-  title: "features/AdSpace",
   component: AdSpace,
   tags: ["autodocs"],
   argTypes: {

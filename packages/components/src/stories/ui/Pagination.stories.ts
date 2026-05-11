@@ -3,7 +3,6 @@ import { expect, within } from "storybook/test";
 import Pagination from "../../components/ui/Pagination.vue";
 
 const meta = {
-  title: "ui/Pagination",
   component: Pagination,
   tags: ["autodocs"],
   args: { currentPage: 2, totalPages: 5 },

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import EventCard from "../../components/features/EventCard.vue";
 
 const meta = {
-  title: "features/EventCard",
   component: EventCard,
   tags: ["autodocs"],
   parameters: {

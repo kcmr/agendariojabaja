@@ -3,7 +3,6 @@ import { expect, within } from "storybook/test";
 import LocalityChip from "../../components/ui/LocalityChip.vue";
 
 const meta = {
-  title: "ui/LocalityChip",
   component: LocalityChip,
   tags: ["autodocs"],
   args: {

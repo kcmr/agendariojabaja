@@ -3,7 +3,6 @@ import EmptyState from "../../components/features/EmptyState.vue";
 import Icon from "../../components/ui/Icon.vue";
 
 const meta = {
-  title: "ui/EmptyState",
   component: EmptyState,
   tags: ["autodocs"],
   args: {

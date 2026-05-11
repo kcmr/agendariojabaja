@@ -15,7 +15,6 @@ const TOGGLE_TABS = [
 ];
 
 const meta = {
-  title: "ui/Tabs",
   component: Tabs,
   tags: ["autodocs"],
   argTypes: {

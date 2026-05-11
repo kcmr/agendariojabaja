@@ -5,7 +5,6 @@ import Badge from "../../components/ui/Badge.vue";
 import Card from "../../components/ui/Card.vue";
 
 const meta = {
-  title: "ui/Card",
   component: Card,
   tags: ["autodocs"],
   parameters: {

@@ -27,7 +27,6 @@ import Icon from "../../components/ui/Icon.vue";
 import IconsShowcase from "../utils/IconsShowcase.vue";
 
 const meta = {
-  title: "foundations/Icons",
   component: IconsShowcase,
   tags: ["autodocs"],
   parameters: {

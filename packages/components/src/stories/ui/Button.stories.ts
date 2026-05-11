@@ -4,7 +4,6 @@ import { ExternalLinkIcon, MailIcon } from "lucide-vue-next";
 import { expect, fn, within } from "storybook/test";
 
 const meta = {
-  title: "ui/Button",
   component: Button,
   tags: ["autodocs"],
   argTypes: {
