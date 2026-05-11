@@ -8,6 +8,10 @@ defineProps<{
   active?: boolean;
   /** Visual variant inherited from parent Tabs */
   variant?: "segment" | "toggle";
+  /** Optional id used to link the tab with its tabpanel */
+  id?: string;
+  /** Optional tabpanel id controlled by this tab */
+  controls?: string;
 }>();
 
 const emit = defineEmits<{
@@ -17,9 +21,12 @@ const emit = defineEmits<{
 
 <template>
   <button
+    :id="id"
     type="button"
     role="tab"
+    :aria-controls="controls"
     :aria-selected="active"
+    :tabindex="active ? 0 : -1"
     :class="[
       `flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 text-sm
       font-bold transition-all`,
