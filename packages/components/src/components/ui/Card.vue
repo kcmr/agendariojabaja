@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import MaybeLink from "../utils/MaybeLink.vue";
-import Heading from "./Heading.vue";
+import Heading, { type HeadingLevel } from "./Heading.vue";
 
 defineProps<{
   /** Card heading */
   heading: string;
   /** Heading level for accessibility (default: h2) */
-  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  headingLevel?: HeadingLevel;
   /** Card content that will be rendered with ellipsis in a single paragraph */
   text: string;
   /** Image */
