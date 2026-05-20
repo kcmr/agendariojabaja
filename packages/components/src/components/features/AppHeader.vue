@@ -29,7 +29,7 @@ defineProps<{
       class="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6
         lg:px-8"
     >
-      <div class="group flex h-10 items-center gap-2">
+      <div class="group flex h-10 shrink-0 items-center gap-2">
         <a :href="brand.href" aria-hidden="true" tabindex="-1">
           <img :src="brand.logoSrc" alt="" class="h-14 w-auto" />
         </a>
