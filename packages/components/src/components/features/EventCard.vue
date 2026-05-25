@@ -25,6 +25,8 @@ const props = defineProps<{
   location: string;
   /** Event status */
   status?: "upcoming" | "past";
+  /** Optional stable view-transition name prefix */
+  transitionName?: string;
 }>();
 
 const { isoDate, humanDate } = useDateFormatting(
@@ -33,7 +35,13 @@ const { isoDate, humanDate } = useDateFormatting(
 </script>
 
 <template>
-  <Card :heading="heading" :text="text" :image="image" :link="link">
+  <Card
+    :heading="heading"
+    :text="text"
+    :image="image"
+    :link="link"
+    :transition-name="transitionName"
+  >
     <template v-if="status === 'past'" #image-overlay>
       <div
         class="bg-content-heading/50 pointer-events-none absolute inset-0 flex

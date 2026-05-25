@@ -21,6 +21,7 @@ const { event } = Astro.props;
 
 <BaseLayout title={event.title}>
   <EventDetail
+    transitionName={`event-${event.slug}`}
     event={{
       id: event.id,
       title: event.title,

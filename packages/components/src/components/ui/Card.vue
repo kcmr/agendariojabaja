@@ -16,6 +16,8 @@ defineProps<{
   };
   /** Link URL */
   link?: string;
+  /** Optional stable view-transition name prefix */
+  transitionName?: string;
 }>();
 </script>
 
@@ -31,6 +33,11 @@ defineProps<{
           loading="lazy"
           :src="image.src"
           :alt="image.alt ?? ''"
+          :style="
+            transitionName
+              ? { viewTransitionName: `${transitionName}-image` }
+              : undefined
+          "
           class="h-full w-full object-cover object-top
             group-has-[a]:transition-transform group-has-[a]:duration-500
             group-has-[a]:group-hover:scale-105"
@@ -51,6 +58,11 @@ defineProps<{
         <Heading
           variant="h3"
           :level="headingLevel ?? 2"
+          :style="
+            transitionName
+              ? { viewTransitionName: `${transitionName}-title` }
+              : undefined
+          "
           class="group-has-[a]:group-hover:text-content-brand mb-2
             transition-colors"
         >

@@ -24,6 +24,7 @@ export interface EventDetailData {
 
 const props = defineProps<{
   event: EventDetailData;
+  transitionName?: string;
 }>();
 
 const { isoDate, humanDate } = useDateFormatting(
@@ -49,6 +50,11 @@ const { isoDate, humanDate } = useDateFormatting(
         <img
           :src="event.img"
           :alt="event.imgAlt ?? event.title"
+          :style="
+            transitionName
+              ? { viewTransitionName: `${transitionName}-image` }
+              : undefined
+          "
           class="h-full w-full object-cover"
         />
         <!-- Past event overlay -->
@@ -77,7 +83,7 @@ const { isoDate, humanDate } = useDateFormatting(
           }}</Badge>
           <Badge v-if="event.price" variant="price">
             <template #icon>
-              <Icon name="Ticket" :size="14" />
+              <Icon name="Ticket" :size="14" role="img" aria-label="Precio" />
             </template>
             {{ event.price }}
           </Badge>
@@ -85,7 +91,15 @@ const { isoDate, humanDate } = useDateFormatting(
 
         <!-- Title -->
         <Heading :level="2" variant="h1" class="mb-6">
-          {{ event.title }}
+          <span
+            :style="
+              transitionName
+                ? { viewTransitionName: `${transitionName}-title` }
+                : undefined
+            "
+          >
+            {{ event.title }}
+          </span>
         </Heading>
 
         <!-- Date / location info grid -->

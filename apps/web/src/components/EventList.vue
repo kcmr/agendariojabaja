@@ -152,6 +152,7 @@ const onPageChange = (page: number) => {
           :hour="event.time"
           :location="event.location ?? 'La Rioja Baja'"
           :status="event.status"
+          :transition-name="`event-${event.slug}`"
         />
       </div>
 
