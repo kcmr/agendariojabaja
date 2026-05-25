@@ -43,6 +43,20 @@ export interface WebEvent {
 }
 
 const PUBLIC_EVENT_STATUSES = ["Publicado", "Caducado"] as const;
+const EMPTY_VALUE_LABELS = new Set([
+  "",
+  "no especificado",
+  "no especificada",
+  "sin especificar",
+  "n/a",
+]);
+
+const cleanOptionalText = (value: string | null): string | undefined => {
+  if (!value) return undefined;
+
+  const trimmed = value.trim();
+  return EMPTY_VALUE_LABELS.has(trimmed.toLowerCase()) ? undefined : trimmed;
+};
 
 const slugify = (value: string): string =>
   value
@@ -113,18 +127,18 @@ export const mapEventRowToWebEvent = (
     title: row.name,
     description: row.neutral_description ?? row.description ?? "",
     date: row.date,
-    time: row.time ?? undefined,
-    location: row.location ?? undefined,
-    category: row.category ?? undefined,
-    price: row.price ?? undefined,
+    time: cleanOptionalText(row.time),
+    location: cleanOptionalText(row.location),
+    category: cleanOptionalText(row.category),
+    price: cleanOptionalText(row.price),
     image: row.image_url
       ? {
           src: row.image_url,
           alt: row.name,
         }
       : undefined,
-    sourceUrl: row.link ?? undefined,
-    sourceName: row.publisher ?? row.source_type ?? undefined,
+    sourceUrl: cleanOptionalText(row.link),
+    sourceName: cleanOptionalText(row.publisher) ?? cleanOptionalText(row.source_type),
     status,
   };
 };
