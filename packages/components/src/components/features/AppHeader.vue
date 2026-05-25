@@ -24,7 +24,7 @@ defineProps<{
 </script>
 
 <template>
-  <header class="bg-surface-card sticky top-0 shadow-sm">
+  <header class="bg-surface-card sticky top-0 z-1 shadow-sm">
     <div
       class="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6
         lg:px-8"
