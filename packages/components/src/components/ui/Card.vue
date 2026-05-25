@@ -23,9 +23,9 @@ defineProps<{
 
 <template>
   <article
-    class="group border-border-subtle bg-surface-card flex h-full max-w-94
+    class="group border-border-subtle bg-surface-card flex h-full w-full
       flex-col overflow-hidden rounded-2xl border shadow-sm transition-shadow
-      has-[a]:relative has-[a]:hover:shadow-xl"
+      has-[a]:relative has-[a]:hover:shadow-xl lg:max-w-94"
   >
     <div class="relative h-91.25 overflow-hidden">
       <MaybeLink :href="link" aria-hidden="true" tabindex="-1">
