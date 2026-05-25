@@ -18,10 +18,12 @@ The site will be hosted on Vercel. n8n will call a Vercel Deploy Hook after the 
 
 The public events source is `public.events` in Supabase, typed by `apps/web/database.types.ts`.
 
-The web description must use:
+The web description must use `neutral_description` only. Events without a
+usable `neutral_description` are not published on the web because `description`
+is Instagram-specific copy.
 
 ```ts
-neutral_description ?? description ?? ""
+neutral_description
 ```
 
 Event status mapping:

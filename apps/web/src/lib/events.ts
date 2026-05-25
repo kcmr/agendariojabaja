@@ -55,8 +55,16 @@ const cleanOptionalText = (value: string | null): string | undefined => {
   if (!value) return undefined;
 
   const trimmed = value.trim();
-  return EMPTY_VALUE_LABELS.has(trimmed.toLowerCase()) ? undefined : trimmed;
+  const normalized = trimmed
+    .toLowerCase()
+    .replace(/[.,;:!?¿¡]+$/g, "")
+    .replace(/\s+/g, " ");
+
+  return EMPTY_VALUE_LABELS.has(normalized) ? undefined : trimmed;
 };
+
+const getWebDescription = (value: string | null): string | undefined =>
+  cleanOptionalText(value);
 
 const slugify = (value: string): string =>
   value
@@ -105,6 +113,9 @@ export const mapEventRowToWebEvent = (
   now = new Date()
 ): WebEvent | undefined => {
   if (!row.name || !row.date || !row.status) return undefined;
+  const description = getWebDescription(row.neutral_description);
+  if (!description) return undefined;
+
   if (!PUBLIC_EVENT_STATUSES.includes(row.status as (typeof PUBLIC_EVENT_STATUSES)[number])) {
     return undefined;
   }
@@ -125,7 +136,7 @@ export const mapEventRowToWebEvent = (
     id: row.id,
     slug: createEventSlug(row),
     title: row.name,
-    description: row.neutral_description ?? row.description ?? "",
+    description,
     date: row.date,
     time: cleanOptionalText(row.time),
     location: cleanOptionalText(row.location),
