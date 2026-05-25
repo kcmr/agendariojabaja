@@ -94,7 +94,8 @@ const onKeydown = (event: KeyboardEvent) => {
     <div
       role="tablist"
       :aria-labelledby="headingId()"
-      class="-mx-1 -my-2 flex snap-x gap-4 overflow-x-auto px-1 py-2 pb-4"
+      class="-my-2 flex snap-x scroll-px-2 gap-4 overflow-x-auto px-2 py-2 pb-4
+        md:-mx-1 md:scroll-px-1 md:px-1"
       style="scrollbar-width: none"
       @keydown="onKeydown"
     >
