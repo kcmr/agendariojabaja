@@ -4,6 +4,7 @@ import Icon from "../ui/Icon.vue";
 import Badge from "../ui/Badge.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Heading from "../ui/Heading.vue";
+import Button from "../ui/Button.vue";
 
 export interface EventDetailData {
   id: number | string;
@@ -138,17 +139,16 @@ const { isoDate, humanDate } = useDateFormatting(
             Publicado originalmente en
             {{ event.sourceName ?? "Facebook" }}
           </p>
-          <a
+          <Button
             :href="event.sourceLink"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex w-full items-center justify-center gap-2 rounded-xl
-              bg-[#3b5998] px-6 py-3 font-semibold text-white shadow-sm
-              transition-colors hover:bg-[#2d4373] sm:w-auto"
+            external
+            variant="brand"
+            size="lg"
+            class="w-full sm:w-auto"
           >
             <Icon name="ExternalLink" :size="18" />
             Ver fuente original
-          </a>
+          </Button>
         </div>
       </div>
     </div>
