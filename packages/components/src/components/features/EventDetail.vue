@@ -46,7 +46,8 @@ const { isoDate, humanDate } = useDateFormatting(
         <!-- Past event overlay -->
         <div
           v-if="event.status === 'past'"
-          class="absolute inset-0 flex items-center justify-center bg-black/50"
+          class="bg-content-heading/50 absolute inset-0 flex items-center
+            justify-center"
         >
           <span
             class="bg-surface-card text-content-heading rounded-xl px-6 py-3
