@@ -1,19 +1,8 @@
 ---
-import EventCard from '@repo/components/features/EventCard';
+import EventList from '../components/EventList.vue';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title='Home'>
-  <EventCard
-    heading='Visita al castillo de Lichtenstein'
-    text='El castillo de Lichtenstein es una joya arquitectónica situada en el corazón de Alemania. Construido en el siglo XIX, este castillo neogótico se alza majestuosamente sobre un acantilado, ofreciendo vistas impresionantes del valle circundante. Con su diseño romántico y su rica historia, el castillo de Lichtenstein es un destino turístico popular para aquellos que buscan sumergirse en la belleza y la historia de la región.'
-    image={{
-      src: '//wsrv.nl/?url=wsrv.nl/lichtenstein.jpg&w=300',
-      alt: 'Card image',
-    }}
-    link='/about'
-    dateTime='2026-05-02'
-    hour='20:00'
-    location='Lichtenstein, Alemania'
-  />
+  <EventList client:load />
 </BaseLayout>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { Search } from "lucide-vue-next";
+import Heading from "../ui/Heading.vue";
+import Icon from "../ui/Icon.vue";
 
 defineProps<{
   /** Main heading text */
@@ -19,12 +20,12 @@ defineProps<{
         justify-center"
     >
       <slot name="icon">
-        <Search :size="48" />
+        <Icon name="Search" :size="48" />
       </slot>
     </div>
-    <h3 class="text-content-heading text-lg font-semibold">
+    <Heading :level="2" variant="h4" class="mb-2 font-semibold">
       {{ title }}
-    </h3>
+    </Heading>
     <p v-if="description" class="text-content-muted mt-1 text-sm">
       {{ description }}
     </p>

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import { computed } from "vue";
-import { Calendar, Clock, ExternalLink, MapPin, Ticket } from "lucide-vue-next";
+import Icon from "../ui/Icon.vue";
 import Badge from "../ui/Badge.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Heading from "../ui/Heading.vue";
+import Button from "../ui/Button.vue";
 
 export interface EventDetailData {
   id: number | string;
@@ -46,7 +47,8 @@ const { isoDate, humanDate } = useDateFormatting(
         <!-- Past event overlay -->
         <div
           v-if="event.status === 'past'"
-          class="absolute inset-0 flex items-center justify-center bg-black/50"
+          class="bg-content-heading/50 absolute inset-0 flex items-center
+            justify-center"
         >
           <span
             class="bg-surface-card text-content-heading rounded-xl px-6 py-3
@@ -68,7 +70,7 @@ const { isoDate, humanDate } = useDateFormatting(
           }}</Badge>
           <Badge v-if="event.price" variant="price">
             <template #icon>
-              <Ticket :size="14" aria-hidden="true" />
+              <Icon name="Ticket" :size="14" />
             </template>
             {{ event.price }}
           </Badge>
@@ -80,40 +82,44 @@ const { isoDate, humanDate } = useDateFormatting(
         </Heading>
 
         <!-- Date / location info grid -->
-        <div
-          class="border-border-subtle bg-surface-subtle mb-8 grid grid-cols-1
-            gap-6 rounded-2xl border p-6 md:grid-cols-2"
+        <ul
+          class="border-border-subtle bg-surface-subtle m-0 mb-8 grid list-none
+            grid-cols-1 gap-6 rounded-2xl border p-6 md:grid-cols-2"
         >
-          <div class="flex items-center gap-4">
+          <li class="flex items-center gap-4">
             <div
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <Calendar :size="24" aria-hidden="true" />
+              <Icon name="Calendar" :size="24" />
             </div>
             <div>
-              <p class="text-content-muted text-sm font-medium">Cuándo</p>
-              <p class="text-content-heading font-semibold">
+              <strong class="text-content-muted block text-sm font-medium">
+                Cuándo
+              </strong>
+              <span class="text-content-heading block font-semibold">
                 <time :datetime="isoDate">{{ humanDate }}</time>
                 <span v-if="event.time"> · {{ event.time }}</span>
-              </p>
+              </span>
             </div>
-          </div>
-          <div class="flex items-center gap-4">
+          </li>
+          <li class="flex items-center gap-4">
             <div
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
             >
-              <MapPin :size="24" aria-hidden="true" />
+              <Icon name="MapPin" :size="24" />
             </div>
             <div>
-              <p class="text-content-muted text-sm font-medium">Dónde</p>
-              <p class="text-content-heading font-semibold">
+              <strong class="text-content-muted block text-sm font-medium">
+                Dónde
+              </strong>
+              <span class="text-content-heading block font-semibold">
                 {{ event.locality }}
-              </p>
+              </span>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
 
         <!-- Description -->
         <div class="mb-10">
@@ -129,21 +135,20 @@ const { isoDate, humanDate } = useDateFormatting(
             gap-4 border-t pt-8 sm:flex-row"
         >
           <p class="text-content-muted flex items-center gap-2 text-sm">
-            <Clock :size="16" />
+            <Icon name="Clock" :size="16" />
             Publicado originalmente en
             {{ event.sourceName ?? "Facebook" }}
           </p>
-          <a
+          <Button
             :href="event.sourceLink"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex w-full items-center justify-center gap-2 rounded-xl
-              bg-[#3b5998] px-6 py-3 font-semibold text-white shadow-sm
-              transition-colors hover:bg-[#2d4373] sm:w-auto"
+            external
+            variant="brand"
+            size="lg"
+            class="w-full sm:w-auto"
           >
-            <ExternalLink :size="18" />
+            <Icon name="ExternalLink" :size="18" />
             Ver fuente original
-          </a>
+          </Button>
         </div>
       </div>
     </div>

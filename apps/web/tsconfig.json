@@ -1,7 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "paths": {
+      "@repo/components/ui/*.vue": ["../../packages/components/src/components/ui/*.vue"],
+      "@repo/components/features/*.vue": ["../../packages/components/src/components/features/*.vue"],
+      "@repo/components/layout/*.vue": ["../../packages/components/src/components/layout/*.vue"],
+      "@repo/components/utils/*.vue": ["../../packages/components/src/components/utils/*.vue"]
+    }
   },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]

@@ -18,7 +18,6 @@ const SAMPLE_EVENT = {
 };
 
 const meta = {
-  title: "features/EventDetail",
   component: EventDetail,
   tags: ["autodocs"],
   parameters: {

@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, within } from "storybook/test";
 import Pagination from "../../components/ui/Pagination.vue";
 
 const meta = {
-  title: "ui/Pagination",
   component: Pagination,
   tags: ["autodocs"],
   args: { currentPage: 2, totalPages: 5 },
@@ -14,7 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: { currentPage: 2, totalPages: 5 },
-  play: async ({ canvasElement }) => {
+  play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
     const prevBtn = canvas.getByRole("button", { name: "Página anterior" });
     const nextBtn = canvas.getByRole("button", { name: "Página siguiente" });

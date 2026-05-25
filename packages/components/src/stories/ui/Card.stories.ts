@@ -5,9 +5,11 @@ import Badge from "../../components/ui/Badge.vue";
 import Card from "../../components/ui/Card.vue";
 
 const meta = {
-  title: "ui/Card",
   component: Card,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   args: {
     heading: "Fiestas de la Juventud y de la Cruz de Mayo en Quel",
     text: "Given a file name, creates an object with utilities to manage a log file. It creates a temporary log file which you can manage with the returned functions. You can then decide whether to move the log file to the users project, or remove it.",
@@ -72,7 +74,7 @@ export const WithFooterSlot: Story = {
         </template>
         <template #footer>
           <div class="flex items-center gap-2 text-sm text-gray-600">
-            <MapPin :size="14" aria-hidden="true" class="text-brand" />
+            <MapPin :size="14" class="text-brand" />
             <span class="font-medium">Quel</span>
           </div>
         </template>

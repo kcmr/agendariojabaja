@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ChevronLeft, ChevronRight } from "lucide-vue-next";
+import Button from "./Button.vue";
+import Icon from "./Icon.vue";
 
 const props = defineProps<{
   /** Current active page (1-based) */
@@ -27,18 +28,18 @@ const next = () => {
     aria-label="Paginación"
     class="mt-10 flex items-center justify-center gap-4"
   >
-    <button
+    <Button
       type="button"
+      variant="outline"
+      size="md"
+      class="p-2"
       :disabled="currentPage === 1"
       :aria-disabled="currentPage === 1"
       aria-label="Página anterior"
-      class="border-border-strong hover:bg-surface-subtle cursor-pointer
-        rounded-lg border p-2 transition-colors disabled:cursor-not-allowed
-        disabled:opacity-50"
       @click="prev"
     >
-      <ChevronLeft :size="20" aria-hidden="true" />
-    </button>
+      <Icon name="ChevronLeft" :size="20" />
+    </Button>
 
     <span
       aria-current="page"
@@ -48,17 +49,17 @@ const next = () => {
       Página {{ currentPage }} de {{ totalPages }}
     </span>
 
-    <button
+    <Button
       type="button"
+      variant="outline"
+      size="md"
+      class="p-2"
       :disabled="currentPage === totalPages"
       :aria-disabled="currentPage === totalPages"
       aria-label="Página siguiente"
-      class="border-border-strong hover:bg-surface-subtle cursor-pointer
-        rounded-lg border p-2 transition-colors disabled:cursor-not-allowed
-        disabled:opacity-50"
       @click="next"
     >
-      <ChevronRight :size="20" aria-hidden="true" />
-    </button>
+      <Icon name="ChevronRight" :size="20" />
+    </Button>
   </nav>
 </template>

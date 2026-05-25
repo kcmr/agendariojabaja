@@ -22,7 +22,6 @@ const TITLES = [
 ];
 
 const meta = {
-  title: "layout/Grid",
   component: Grid,
   tags: ["autodocs"],
   argTypes: {

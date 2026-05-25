@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import Button from "../ui/Button.vue";
 import type { ButtonVariant } from "../../composables/useButtonClasses";
-import type { IconName } from "../utils/Icon.vue";
-import Icon from "../utils/Icon.vue";
+import Icon, { type IconName } from "../ui/Icon.vue";
 
 interface NavItem {
   label: string;
@@ -30,11 +29,11 @@ defineProps<{
       class="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6
         lg:px-8"
     >
-      <div class="group flex items-center gap-2">
+      <div class="group flex h-10 shrink-0 items-center gap-2">
         <a :href="brand.href" aria-hidden="true" tabindex="-1">
-          <img :src="brand.logoSrc" alt="" class="h-15 w-auto" />
+          <img :src="brand.logoSrc" alt="" class="h-14 w-auto" />
         </a>
-        <a :href="brand.href" class="flex flex-col gap-2">
+        <a :href="brand.href" class="flex flex-col gap-1">
           <h1
             class="text-content-heading group-hover:text-content-brand text-xl
               leading-none font-bold tracking-tight transition-colors"
@@ -60,7 +59,7 @@ defineProps<{
             :variant="link.variant"
             :href="link.href"
           >
-            <Button :variant="link.variant" :href="link.href">
+            <Button :variant="link.variant" :href="link.href" size="sm">
               <template v-if="link.icon" #icon-left>
                 <Icon :name="link.icon" :size="16" />
               </template>

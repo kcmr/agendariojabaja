@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MapPin } from "lucide-vue-next";
+import Icon from "../ui/Icon.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Card from "../ui/Card.vue";
 import Badge from "../ui/Badge.vue";
@@ -23,6 +23,8 @@ const props = defineProps<{
   hour?: string;
   /** Event location (city, venue, etc.) */
   location: string;
+  /** Event status */
+  status?: "upcoming" | "past";
 }>();
 
 const { isoDate, humanDate } = useDateFormatting(
@@ -32,19 +34,33 @@ const { isoDate, humanDate } = useDateFormatting(
 
 <template>
   <Card :heading="heading" :text="text" :image="image" :link="link">
+    <template v-if="status === 'past'" #image-overlay>
+      <div
+        class="bg-content-heading/50 pointer-events-none absolute inset-0 flex
+          items-center justify-center"
+      >
+        <span
+          class="bg-surface-card text-content-heading rounded-lg px-4 py-2
+            font-bold shadow-lg"
+        >
+          Evento finalizado
+        </span>
+      </div>
+    </template>
+
     <template #tag>
       <Badge variant="brand" shape="square">
         <time :datetime="isoDate">{{ humanDate }}</time>
       </Badge>
       <template v-if="hour">
-        <span class="text-content-muted mx-1">•</span>
+        <span class="text-content-muted mx-1" aria-hidden="true">•</span>
         <span>{{ hour }}</span>
       </template>
     </template>
 
     <template #footer>
-      <div class="flex items-center gap-2 text-sm text-gray-600">
-        <MapPin :size="14" aria-hidden="true" class="text-brand" />
+      <div class="text-content-muted flex items-center gap-2 text-sm">
+        <Icon name="MapPin" :size="14" class="text-content-brand" />
         <span class="font-medium">{{ location }}</span>
       </div>
     </template>

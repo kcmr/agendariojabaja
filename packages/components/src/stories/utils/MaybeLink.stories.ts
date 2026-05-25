@@ -3,7 +3,6 @@ import MaybeLink from "../../components/utils/MaybeLink.vue";
 import Heading from "../../components/ui/Heading.vue";
 
 const meta = {
-  title: "utils/MaybeLink",
   component: MaybeLink,
   tags: ["autodocs"],
   args: { default: "Text content" },

@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
 const props = withDefaults(
   defineProps<{
-    level?: 1 | 2 | 3 | 4 | 5 | 6;
+    level?: HeadingLevel;
     variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   }>(),
   { level: 1, variant: undefined }

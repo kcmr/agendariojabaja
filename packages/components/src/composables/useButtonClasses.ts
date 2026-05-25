@@ -1,5 +1,5 @@
 export type ButtonVariant = "brand" | "outline" | "text";
-export type ButtonSize = "md" | "lg";
+export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonClassOptions {
   variant?: ButtonVariant;
@@ -24,6 +24,7 @@ export function useButtonClasses(options: ButtonClassOptions) {
   };
 
   const sizes: Record<ButtonSize, string> = {
+    sm: "text-sm px-4 py-2",
     md: "text-sm px-4 py-3",
     lg: "text-base px-6 py-3",
   };

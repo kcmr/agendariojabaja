@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import Button from "../../components/ui/Button.vue";
 import { ExternalLinkIcon, MailIcon } from "lucide-vue-next";
-import { expect, fn, userEvent, within } from "storybook/test";
+import { expect, fn, within } from "storybook/test";
 
 const meta = {
-  title: "ui/Button",
   component: Button,
   tags: ["autodocs"],
   argTypes: {
@@ -94,7 +93,7 @@ export const ExternalLink: Story = {
 
 export const ClickEmitsEvent: Story = {
   args: { variant: "brand", onClick: fn() },
-  play: async ({ canvasElement, args }) => {
+  play: async ({ canvasElement, args, userEvent }) => {
     const canvas = within(canvasElement);
     const btn = canvas.getByRole("button");
     expect(btn).not.toBeDisabled();

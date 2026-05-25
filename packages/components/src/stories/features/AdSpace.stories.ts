@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import AdSpace from "../../components/features/AdSpace.vue";
+import { expect, fn, waitFor, within } from "storybook/test";
 
 const meta = {
-  title: "features/AdSpace",
   component: AdSpace,
   tags: ["autodocs"],
   argTypes: {
@@ -35,4 +35,29 @@ export const AdSense: Story = {
 
 export const AdSenseVertical: Story = {
   args: { variant: "vertical", mode: "adsense" },
+};
+
+export const WithClickEvent: Story = {
+  args: {
+    variant: "horizontal",
+    mode: "sponsor",
+    onClickSponsor: fn(),
+  },
+  play: async ({ canvasElement, args, userEvent }) => {
+    const canvas = within(canvasElement);
+    const btn = canvas.getByRole("button");
+    await userEvent.click(btn);
+    expect(args.onClickSponsor).toHaveBeenCalled();
+  },
+};
+
+export const ButtonVisibilityOnFocus: Story = {
+  args: { variant: "horizontal", mode: "sponsor" },
+  play: async ({ canvasElement, userEvent }) => {
+    const canvas = within(canvasElement);
+    const btn = canvas.getByRole("button");
+    expect(btn).not.toBeVisible();
+    await userEvent.tab();
+    await waitFor(() => expect(btn).toBeVisible());
+  },
 };

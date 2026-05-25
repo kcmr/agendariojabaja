@@ -3,8 +3,10 @@ import AppHeader from "../../components/features/AppHeader.vue";
 import Logo from "../assets/arb-instagram-profile.webp";
 
 const meta: Meta<typeof AppHeader> = {
-  title: "features/AppHeader",
   component: AppHeader,
+  parameters: {
+    layout: "fullscreen",
+  },
   args: {
     brand: {
       label: "Agenda Rioja Baja",

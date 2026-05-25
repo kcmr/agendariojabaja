@@ -2,9 +2,11 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import EventCard from "../../components/features/EventCard.vue";
 
 const meta = {
-  title: "features/EventCard",
   component: EventCard,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   args: {
     heading: "Fiestas de la Juventud y de la Cruz de Mayo en Quel",
     text: "Disfruta de un fin de semana lleno de actividades, música y tradición en las fiestas de la juventud de Quel.",
@@ -26,6 +28,14 @@ export const Default: Story = {};
 export const WithHour: Story = {
   args: {
     hour: "14:00, 22:00",
+  },
+};
+
+export const PastEvent: Story = {
+  args: {
+    status: "past",
+    dateTime: "2026-02-15",
+    hour: "18:00",
   },
 };
 

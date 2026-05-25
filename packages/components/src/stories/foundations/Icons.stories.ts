@@ -1,104 +1,39 @@
 /**
  * # Icons
  *
- * This project uses **[lucide-vue-next](https://lucide.dev/guide/packages/lucide-vue-next)**
- * for iconography.
- *
- * ### Why lucide-vue-next?
- * - Each icon is a self-contained Vue component → full tree-shaking (only the
- *   icons you import end up in the bundle).
- * - Consistent 24×24 grid, stroke-based design that pairs well with the
- *   existing Tailwind utility classes.
- * - No global registration needed; import per component.
+ * This project uses an internal wrapper component called **`Icon`** for iconography.
+ * The internal component wraps [lucide-vue-next](https://lucide.dev/guide/packages/lucide-vue-next)
+ * to provide a single entrypoint and control the bundle size.
  *
  * ### Usage
  * ```vue
  * <script setup>
- * import { Calendar, MapPin } from 'lucide-vue-next'
+ * import { Icon } from '@/components/ui'
+ * // Note: Adjust the import path according to your alias or file structure
  * </script>
  *
  * <template>
- *   <Calendar :size="20" aria-hidden="true" />
- *   <MapPin :size="16" class="text-content-brand" aria-hidden="true" />
+ *   <Icon name="Calendar" :size="20" />
+ *   <Icon name="MapPin" :size="16" class="text-content-brand" />
  * </template>
  * ```
  *
  * ### Icon catalogue used in AgendaRiojaBaja
- * The story below renders all icons currently in use in the app so you can
- * copy-paste the import name quickly.
+ * The story below renders all icons currently available in the `Icon` component.
  */
 
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
-import {
-  ArrowLeft,
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
-  ExternalLink,
-  List,
-  Mail,
-  MapPin,
-  Megaphone,
-  Search,
-  Ticket,
-} from "lucide-vue-next";
-import { defineComponent, h } from "vue";
-
-/** Dummy component so Storybook has a "component" to attach meta to */
-const IconsShowcase = defineComponent({
-  name: "IconsShowcase",
-  setup() {
-    const icons = [
-      { name: "Calendar", component: Calendar },
-      { name: "List", component: List },
-      { name: "MapPin", component: MapPin },
-      { name: "Search", component: Search },
-      { name: "ChevronLeft", component: ChevronLeft },
-      { name: "ChevronRight", component: ChevronRight },
-      { name: "Mail", component: Mail },
-      { name: "ExternalLink", component: ExternalLink },
-      { name: "Ticket", component: Ticket },
-      { name: "ArrowLeft", component: ArrowLeft },
-      { name: "Clock", component: Clock },
-      { name: "Megaphone", component: Megaphone },
-    ];
-
-    return () =>
-      h(
-        "ul",
-        {
-          class:
-            "grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6 list-none m-0 p-0",
-        },
-        icons.map(({ name, component }) =>
-          h(
-            "li",
-            {
-              key: name,
-              class:
-                "flex flex-col items-center gap-2 rounded-xl border border-gray-200 bg-white p-4 text-center shadow-sm",
-            },
-            [
-              h(component, { size: 24, "aria-hidden": "true" }),
-              h("code", { class: "text-xs text-gray-600 break-all" }, name),
-            ]
-          )
-        )
-      );
-  },
-});
+import Icon from "../../components/ui/Icon.vue";
+import IconsShowcase from "../utils/IconsShowcase.vue";
 
 const meta = {
-  title: "foundations/Icons",
   component: IconsShowcase,
   tags: ["autodocs"],
   parameters: {
-    layout: "padded",
     docs: {
       description: {
         component:
-          "Icons sourced from [lucide-vue-next](https://lucide.dev). Import individual icons to keep bundle size minimal.",
+          "Internal `Icon` component that provides a limited set of lucide-vue-next icons.",
       },
     },
   },
@@ -118,27 +53,27 @@ export const AllIcons: Story = {
 export const Sizes: Story = {
   name: "Size variants",
   render: () => ({
-    components: { Calendar },
+    components: { Icon },
     template: `
       <div class="flex items-end gap-6">
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="12" aria-hidden="true" />
+          <Icon name="Calendar" :size="12" />
           <code class="text-xs text-gray-500">:size="12"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="16" aria-hidden="true" />
+          <Icon name="Calendar" :size="16" />
           <code class="text-xs text-gray-500">:size="16"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="20" aria-hidden="true" />
+          <Icon name="Calendar" :size="20" />
           <code class="text-xs text-gray-500">:size="20"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="24" aria-hidden="true" />
+          <Icon name="Calendar" :size="24" />
           <code class="text-xs text-gray-500">:size="24"</code>
         </div>
         <div class="flex flex-col items-center gap-2">
-          <Calendar :size="32" aria-hidden="true" />
+          <Icon name="Calendar" :size="32" />
           <code class="text-xs text-gray-500">:size="32"</code>
         </div>
       </div>
