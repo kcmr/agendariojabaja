@@ -80,11 +80,11 @@ const { isoDate, humanDate } = useDateFormatting(
         </Heading>
 
         <!-- Date / location info grid -->
-        <div
-          class="border-border-subtle bg-surface-subtle mb-8 grid grid-cols-1
-            gap-6 rounded-2xl border p-6 md:grid-cols-2"
+        <ul
+          class="border-border-subtle bg-surface-subtle m-0 mb-8 grid list-none
+            grid-cols-1 gap-6 rounded-2xl border p-6 md:grid-cols-2"
         >
-          <div class="flex items-center gap-4">
+          <li class="flex items-center gap-4">
             <div
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
@@ -92,14 +92,16 @@ const { isoDate, humanDate } = useDateFormatting(
               <Icon name="Calendar" :size="24" />
             </div>
             <div>
-              <p class="text-content-muted text-sm font-medium">Cuándo</p>
-              <p class="text-content-heading font-semibold">
+              <strong class="text-content-muted block text-sm font-medium">
+                Cuándo
+              </strong>
+              <span class="text-content-heading block font-semibold">
                 <time :datetime="isoDate">{{ humanDate }}</time>
                 <span v-if="event.time"> · {{ event.time }}</span>
-              </p>
+              </span>
             </div>
-          </div>
-          <div class="flex items-center gap-4">
+          </li>
+          <li class="flex items-center gap-4">
             <div
               class="bg-surface-card text-content-brand rounded-full p-3
                 shadow-sm"
@@ -107,13 +109,15 @@ const { isoDate, humanDate } = useDateFormatting(
               <Icon name="MapPin" :size="24" />
             </div>
             <div>
-              <p class="text-content-muted text-sm font-medium">Dónde</p>
-              <p class="text-content-heading font-semibold">
+              <strong class="text-content-muted block text-sm font-medium">
+                Dónde
+              </strong>
+              <span class="text-content-heading block font-semibold">
                 {{ event.locality }}
-              </p>
+              </span>
             </div>
-          </div>
-        </div>
+          </li>
+        </ul>
 
         <!-- Description -->
         <div class="mb-10">
