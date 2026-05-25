@@ -1,0 +1,40 @@
+---
+import EventDetail from '@repo/components/features/EventDetail.vue';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublicEvents, type WebEvent } from '../../lib/events';
+
+export async function getStaticPaths() {
+  const events = await getPublicEvents();
+
+  return events.map((event) => ({
+    params: { slug: event.slug },
+    props: { event },
+  }));
+}
+
+interface Props {
+  event: WebEvent;
+}
+
+const { event } = Astro.props;
+---
+
+<BaseLayout title={event.title}>
+  <EventDetail
+    event={{
+      id: event.id,
+      title: event.title,
+      description: event.description,
+      date: event.date,
+      time: event.time ?? '',
+      locality: event.location ?? 'La Rioja Baja',
+      img: event.image?.src ?? '/images/arb-instagram-profile.webp',
+      imgAlt: event.image?.alt ?? event.title,
+      category: event.category,
+      price: event.price,
+      sourceLink: event.sourceUrl ?? '/',
+      sourceName: event.sourceName,
+      status: event.status,
+    }}
+  />
+</BaseLayout>

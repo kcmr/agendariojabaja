@@ -1,8 +1,11 @@
 ---
 import EventList from '../components/EventList.vue';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublicEvents } from '../lib/events';
+
+const events = await getPublicEvents();
 ---
 
-<BaseLayout title='Home'>
-  <EventList client:load />
+<BaseLayout title='Agenda de eventos en La Rioja Baja'>
+  <EventList events={events} client:load />
 </BaseLayout>
