@@ -31,6 +31,14 @@ export const WithHour: Story = {
   },
 };
 
+export const PastEvent: Story = {
+  args: {
+    status: "past",
+    dateTime: "2026-02-15",
+    hour: "18:00",
+  },
+};
+
 export const LongTitle: Story = {
   args: {
     heading:

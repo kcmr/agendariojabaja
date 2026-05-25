@@ -36,6 +36,7 @@ defineProps<{
             group-has-[a]:group-hover:scale-105"
         />
       </MaybeLink>
+      <slot name="image-overlay" />
     </div>
 
     <div class="flex grow flex-col p-5">
