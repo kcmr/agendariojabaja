@@ -111,6 +111,15 @@ Notes:
 - Add static event detail route generation through `getStaticPaths`.
 - Add `.env.example` with placeholder variable names only.
 
+## Future UX Improvements
+
+- Improve back navigation from event detail pages so returning to the agenda
+  restores the previous scroll position instead of landing at the top of the
+  page.
+- Preserve agenda state across detail navigation. If the user opens an event
+  from "Histórico reciente", the "Volver a la agenda" action should return to
+  the recent history view rather than the default upcoming events view.
+
 ## Test Plan
 
 - `pnpm --filter web check-types`
