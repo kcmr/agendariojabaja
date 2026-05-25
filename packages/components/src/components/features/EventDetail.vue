@@ -33,6 +33,13 @@ const { isoDate, humanDate } = useDateFormatting(
 
 <template>
   <div class="mx-auto max-w-4xl py-8">
+    <Button href="/" variant="text" size="md" class="mb-6">
+      <template #icon-left>
+        <Icon name="ArrowLeft" :size="20" />
+      </template>
+      Volver a la agenda
+    </Button>
+
     <div
       class="border-border-subtle bg-surface-card overflow-hidden rounded-3xl
         border shadow-sm"
