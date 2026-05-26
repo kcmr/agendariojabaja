@@ -1,40 +1,33 @@
 <script lang="ts" setup>
 defineProps<{
-  /** Unique value identifying this tab */
-  value: string | number;
   /** Display label */
   label: string;
+  /** URL for this navigation chip */
+  href: string;
   /** Background image URL */
   imageSrc: string;
   /** Whether this tab is currently active */
   active?: boolean;
   /** Optional id for this tab element */
   id?: string;
-  /** Optional id of the tabpanel controlled by this tab */
-  controls?: string;
-}>();
-
-const emit = defineEmits<{
-  select: [value: string | number];
 }>();
 </script>
 
 <template>
-  <button
+  <a
     :id="id"
-    type="button"
-    role="tab"
-    :aria-selected="active ?? false"
-    :aria-controls="controls"
-    :tabindex="active ? 0 : -1"
+    :href="href"
+    :aria-current="active ? 'page' : undefined"
     :class="[
-      `bg-content-heading relative h-30 w-30 shrink-0 cursor-pointer snap-start
-      overflow-hidden rounded-2xl transition-all duration-300 outline-none`,
+      `bg-content-heading focus-visible:ring-ring-brand relative block h-30 w-30
+      shrink-0 cursor-pointer snap-start overflow-hidden rounded-2xl
+      transition-all duration-300 outline-none focus-visible:scale-95
+      focus-visible:opacity-100 focus-visible:shadow-md focus-visible:ring-4
+      focus-visible:ring-offset-2`,
       active
         ? 'ring-ring-brand scale-95 shadow-md ring-4 ring-offset-2'
         : 'opacity-80 hover:scale-105 hover:opacity-100',
     ]"
-    @click="emit('select', value)"
   >
     <!-- alt="" because the label is visible in the text overlay -->
     <img
@@ -53,5 +46,5 @@ const emit = defineEmits<{
     >
       {{ label }}
     </span>
-  </button>
+  </a>
 </template>
