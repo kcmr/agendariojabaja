@@ -1,10 +1,19 @@
 <script lang="ts" setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import LocalitySelector, { type LocalitySelectorOption } from "@repo/components/features/LocalitySelector.vue";
 import EventCard from "@repo/components/features/EventCard.vue";
 import EmptyState from "@repo/components/features/EmptyState.vue";
 import Pagination from "@repo/components/ui/Pagination.vue";
 import Tabs from "@repo/components/ui/Tabs.vue";
+import {
+  DEFAULT_AGENDA_LOCALITY,
+  type AgendaState,
+  filterAgendaEvents,
+  getAgendaLocalities,
+  getAgendaPageEvents,
+  getAgendaTotalPages,
+  getAgendaUrl
+} from "../lib/agenda";
 
 interface EventListItem {
   id: string;
@@ -24,91 +33,91 @@ interface EventListItem {
 
 const props = defineProps<{
   events: EventListItem[];
+  state: AgendaState;
 }>();
 
 const ID_BASE = "locality";
-const ITEMS_PER_PAGE = 9;
 const FALLBACK_IMAGE = "/images/arb-instagram-profile.webp";
-const ALL_LOCALITIES_IMAGE =
+const LOCALITY_PLACEHOLDER_IMAGE =
   "https://images.unsplash.com/photo-1660903293997-efd8ee1abf9a?auto=format&fit=crop&q=80&w=300&h=300";
 
-const selectedLocality = ref("all");
-const selectedStatus = ref<"upcoming" | "past">("upcoming");
-const currentPage = ref(1);
-const statusTabs = [
-  { value: "upcoming", label: "Próximos planes" },
-  { value: "past", label: "Histórico reciente" },
-];
-
-const normalizeLocalityId = (value: string) =>
-  value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-const localityIdForEvent = (event: EventListItem) =>
-  normalizeLocalityId(event.location ?? "la-rioja-baja") || "la-rioja-baja";
+const selectedLocality = computed(() => props.state.locality);
+const selectedStatus = computed(() => props.state.status);
+const currentPage = computed(() => props.state.page);
+const statusTabs = computed(() => [
+  {
+    value: "upcoming",
+    label: "Próximos planes",
+    href:
+      props.state.status === "upcoming"
+        ? getAgendaUrl(props.state)
+        : getAgendaUrl({
+            status: "upcoming",
+            locality: props.state.locality,
+            page: 1,
+          }),
+  },
+  {
+    value: "past",
+    label: "Histórico reciente",
+    href:
+      props.state.status === "past"
+        ? getAgendaUrl(props.state)
+        : getAgendaUrl({
+            status: "past",
+            locality: props.state.locality,
+            page: 1,
+          }),
+  },
+]);
 
 const localities = computed<LocalitySelectorOption[]>(() => {
-  const localityMap = new Map<string, LocalitySelectorOption>();
-
-  for (const event of props.events) {
-    const label = event.location ?? "La Rioja Baja";
-    const id = localityIdForEvent(event);
-
-    if (!localityMap.has(id)) {
-      localityMap.set(id, {
-        id,
-        label,
-        img: event.image?.src ?? ALL_LOCALITIES_IMAGE,
-      });
-    }
-  }
-
   return [
     {
-      id: "all",
+      id: DEFAULT_AGENDA_LOCALITY,
       label: "Toda La Rioja Baja",
-      img: ALL_LOCALITIES_IMAGE,
+      img: LOCALITY_PLACEHOLDER_IMAGE,
+      href:
+        props.state.locality === DEFAULT_AGENDA_LOCALITY
+          ? getAgendaUrl(props.state)
+          : getAgendaUrl({
+              status: props.state.status,
+              locality: DEFAULT_AGENDA_LOCALITY,
+              page: 1,
+            }),
     },
-    ...Array.from(localityMap.values()).sort((a, b) =>
-      a.label.localeCompare(b.label, "es")
-    ),
+    ...getAgendaLocalities(props.events).map((locality) => ({
+      ...locality,
+      img: LOCALITY_PLACEHOLDER_IMAGE,
+      href:
+        props.state.locality === locality.id
+          ? getAgendaUrl(props.state)
+          : getAgendaUrl({
+              status: props.state.status,
+              locality: locality.id,
+              page: 1,
+            }),
+    })),
   ];
 });
 
-const filteredEvents = computed(() =>
-  props.events.filter(
-    (event) =>
-      event.status === selectedStatus.value &&
-      (selectedLocality.value === "all" ||
-        localityIdForEvent(event) === selectedLocality.value)
-  )
+const filteredEvents = computed(() => filterAgendaEvents(props.events, props.state));
+
+const totalPages = computed(() => getAgendaTotalPages(props.events, props.state));
+
+const paginatedEvents = computed(() => getAgendaPageEvents(props.events, props.state));
+
+const previousHref = computed(() =>
+  props.state.page > 1
+    ? getAgendaUrl({ ...props.state, page: props.state.page - 1 })
+    : undefined
 );
 
-const totalPages = computed(() =>
-  Math.max(1, Math.ceil(filteredEvents.value.length / ITEMS_PER_PAGE))
+const nextHref = computed(() =>
+  props.state.page < totalPages.value
+    ? getAgendaUrl({ ...props.state, page: props.state.page + 1 })
+    : undefined
 );
-
-const paginatedEvents = computed(() => {
-  const start = (currentPage.value - 1) * ITEMS_PER_PAGE;
-  return filteredEvents.value.slice(start, start + ITEMS_PER_PAGE);
-});
-
-const onFilterChange = () => {
-  currentPage.value = 1;
-};
-
-const onStatusChange = (status: string | number) => {
-  selectedStatus.value = String(status) === "past" ? "past" : "upcoming";
-  onFilterChange();
-};
-
-const onPageChange = (page: number) => {
-  currentPage.value = page;
-};
 </script>
 
 <template>
@@ -117,8 +126,7 @@ const onPageChange = (page: number) => {
       :id-base="ID_BASE"
       heading="¿Dónde buscas planes?"
       :localities="localities"
-      v-model="selectedLocality"
-      @select="onFilterChange"
+      :active-id="selectedLocality"
     />
 
     <div class="mb-6 flex flex-col gap-4 border-b border-border-default pb-4">
@@ -127,18 +135,10 @@ const onPageChange = (page: number) => {
         :model-value="selectedStatus"
         :tabs="statusTabs"
         aria-label="Tipo de eventos"
-        @update:model-value="onStatusChange"
       />
     </div>
 
-    <!--
-      Un único tabpanel cuyo id y aria-labelledby cambian con la selección activa,
-      siguiendo el patrón de la APG: https://www.w3.org/WAI/ARIA/apg/patterns/tabs/
-    -->
     <section
-      :id="`${ID_BASE}-panel-${selectedLocality}`"
-      role="tabpanel"
-      :aria-labelledby="`${ID_BASE}-tab-${selectedLocality}`"
     >
       <div v-if="filteredEvents.length" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <EventCard
@@ -166,7 +166,8 @@ const onPageChange = (page: number) => {
         v-if="totalPages > 1"
         :current-page="currentPage"
         :total-pages="totalPages"
-        @page-change="onPageChange"
+        :previous-href="previousHref"
+        :next-href="nextHref"
       />
     </section>
   </div>
