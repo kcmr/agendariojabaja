@@ -1,5 +1,6 @@
 ---
 import AppHeader from '@repo/components/features/AppHeader';
+import NewsletterSignup from '@repo/components/features/NewsletterSignup';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 
@@ -28,7 +29,12 @@ const title = Astro.props.title ?? 'Agenda Rioja Baja';
           icon: 'Megaphone',
           variant: 'text',
         },
-        { label: 'Suscríbete', href: '#', icon: 'Mail', variant: 'text' },
+        {
+          label: 'Suscríbete',
+          href: '/#newsletter',
+          icon: 'Mail',
+          variant: 'text',
+        },
         { label: 'Publicar Evento', href: '#', variant: 'brand' },
       ]}
     />
@@ -38,6 +44,7 @@ const title = Astro.props.title ?? 'Agenda Rioja Baja';
         <slot />
       </div>
     </main>
+    <NewsletterSignup />
     <script>
       import '../scripts/back-navigation';
     </script>
