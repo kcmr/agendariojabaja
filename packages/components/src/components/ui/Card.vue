@@ -49,7 +49,8 @@ defineProps<{
     <div class="flex grow flex-col p-5">
       <div
         v-if="$slots.tag"
-        class="text-content-muted mb-4 flex items-center gap-2 text-sm"
+        class="text-content-muted mb-4 flex flex-wrap items-center gap-2
+          text-sm"
       >
         <slot name="tag" />
       </div>

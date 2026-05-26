@@ -31,6 +31,20 @@ export const WithHour: Story = {
   },
 };
 
+export const WithLongHour: Story = {
+  args: {
+    heading: "Día del Comercio en la Calle",
+    text: "El evento se celebrará durante toda la jornada con actividades en diferentes comercios locales.",
+    dateTime: "2026-05-30",
+    hour: "10:00-14:00 y 17:00-20:00",
+    location: "Calahorra",
+    image: {
+      src: "https://krmwxunfqtcxqgjcngwz.supabase.co/storage/v1/object/public/event-images/core/1281709743949657.jpg",
+      alt: "Cartel del Día del Comercio en la Calle",
+    },
+  },
+};
+
 export const PastEvent: Story = {
   args: {
     status: "past",

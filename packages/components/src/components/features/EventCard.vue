@@ -57,7 +57,7 @@ const { isoDate, humanDate } = useDateFormatting(
     </template>
 
     <template #tag>
-      <Badge variant="brand" shape="square">
+      <Badge variant="brand" shape="square" class="shrink-0 whitespace-nowrap">
         <time :datetime="isoDate">{{ humanDate }}</time>
       </Badge>
       <template v-if="hour">
