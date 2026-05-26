@@ -42,7 +42,7 @@ const headingId = () => `${resolvedIdBase()}-heading`;
     </Heading>
     <ul
       class="m-0 -my-2 flex snap-x scroll-px-2 list-none gap-4 overflow-x-auto
-        px-2 py-2 pb-4 md:-mx-1 md:scroll-px-1 md:px-1"
+        px-2 py-2 pb-4 md:-mx-2 md:scroll-px-2 md:px-2"
       style="scrollbar-width: none"
     >
       <li v-for="locality in localities" :key="locality.id" class="shrink-0">

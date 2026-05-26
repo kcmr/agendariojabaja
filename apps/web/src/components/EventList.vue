@@ -129,7 +129,7 @@ const nextHref = computed(() =>
       :active-id="selectedLocality"
     />
 
-    <div class="mb-6 flex flex-col gap-4 border-b border-border-default pb-4">
+    <div class="mb-6 flex flex-col items-start gap-4 border-b border-border-default pb-4">
       <Tabs
         id-base="event-status"
         :model-value="selectedStatus"
