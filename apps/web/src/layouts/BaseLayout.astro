@@ -2,12 +2,14 @@
 import AppHeader from '@repo/components/features/AppHeader';
 import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
+
+const title = Astro.props.title ?? 'Agenda Rioja Baja';
 ---
 
 <html lang='es'>
   <head>
     <meta charset='UTF-8' />
-    <title>Tutorial – {Astro.props.title}</title>
+    <title>{title}</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <ClientRouter />
   </head>

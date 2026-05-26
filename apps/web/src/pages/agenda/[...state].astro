@@ -1,0 +1,42 @@
+---
+import EventList from '../../components/EventList.vue';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import {
+  getAgendaLocalities,
+  getAgendaPageTitle,
+  getAgendaPathParam,
+  getAgendaStaticStates,
+  type AgendaState,
+} from '../../lib/agenda';
+import { getPublicEvents, type WebEvent } from '../../lib/events';
+
+export async function getStaticPaths() {
+  const events = await getPublicEvents();
+
+  return getAgendaStaticStates(events)
+    .filter(
+      (state) =>
+        !(
+          state.status === 'upcoming' &&
+          state.locality === 'all' &&
+          state.page === 1
+        )
+    )
+    .map((state) => ({
+      params: { state: getAgendaPathParam(state) },
+      props: { events, state },
+    }));
+}
+
+interface Props {
+  events: WebEvent[];
+  state: AgendaState;
+}
+
+const { events, state } = Astro.props;
+const title = getAgendaPageTitle(state, getAgendaLocalities(events));
+---
+
+<BaseLayout title={title}>
+  <EventList events={events} state={state} />
+</BaseLayout>
