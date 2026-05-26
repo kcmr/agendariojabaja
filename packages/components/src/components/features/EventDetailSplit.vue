@@ -19,7 +19,7 @@ const { isoDate, humanDate } = useDateFormatting(
 
 <template>
   <article class="mx-auto max-w-6xl py-8">
-    <Button href="/" variant="text" size="md" class="mb-6">
+    <Button href="/" variant="text" size="md" class="mb-6" data-back-link>
       <template #icon-left>
         <Icon name="ArrowLeft" :size="20" />
       </template>
