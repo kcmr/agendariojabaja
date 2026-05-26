@@ -5,8 +5,10 @@ type AgendaBackState = {
 };
 
 const agendaBackStateKey = "agenda:back-state";
+const agendaFocusTargetKey = "agenda:focus-target";
 const agendaBackStateMaxAge = 30 * 60 * 1000;
 const eventDetailPathPattern = /^\/eventos\/[^/]+\/?$/;
+const agendaPathPattern = /^\/(?:$|agenda(?:\/|$))/;
 
 const getSameOriginUrl = (href: string) => {
   try {
@@ -36,6 +38,42 @@ const getStoredAgendaBackState = () => {
   } catch {
     return null;
   }
+};
+
+const shouldRestoreAgendaFocus = (url: URL) =>
+  url.origin === window.location.origin && agendaPathPattern.test(url.pathname);
+
+const storeAgendaFocusTarget = (link: HTMLAnchorElement, nextUrl: URL) => {
+  if (!shouldRestoreAgendaFocus(nextUrl)) {
+    return;
+  }
+
+  const explicitTarget = link.dataset.agendaFocusId;
+  const targetId = explicitTarget || link.id;
+
+  if (!targetId) {
+    return;
+  }
+
+  window.sessionStorage.setItem(agendaFocusTargetKey, targetId);
+};
+
+const restoreAgendaFocus = () => {
+  const targetId = window.sessionStorage.getItem(agendaFocusTargetKey);
+
+  if (!targetId) {
+    return;
+  }
+
+  window.sessionStorage.removeItem(agendaFocusTargetKey);
+
+  const target = document.getElementById(targetId);
+
+  if (!(target instanceof HTMLElement)) {
+    return;
+  }
+
+  target.focus({ preventScroll: true });
 };
 
 document.addEventListener("click", (event) => {
@@ -70,6 +108,10 @@ document.addEventListener("click", (event) => {
 
   const nextUrl = getSameOriginUrl(link.href);
 
+  if (nextUrl) {
+    storeAgendaFocusTarget(link, nextUrl);
+  }
+
   if (!nextUrl || !eventDetailPathPattern.test(nextUrl.pathname)) {
     return;
   }
@@ -83,3 +125,7 @@ document.addEventListener("click", (event) => {
     } satisfies AgendaBackState)
   );
 });
+
+document.addEventListener("astro:page-load", restoreAgendaFocus);
+
+restoreAgendaFocus();
