@@ -70,7 +70,7 @@ defineProps<{
         </Heading>
       </MaybeLink>
 
-      <p class="text-content-body mb-4 line-clamp-2 text-sm">
+      <p class="text-content-body mb-4 line-clamp-3 text-sm">
         {{ text }}
       </p>
     </div>
