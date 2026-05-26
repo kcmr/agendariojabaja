@@ -60,10 +60,10 @@ const { isoDate, humanDate } = useDateFormatting(
           </Heading>
         </header>
 
-        <div>
+        <div class="contents lg:block">
           <ul
-            class="border-border-subtle bg-surface-subtle m-0 mb-10 grid
-              list-none grid-cols-1 gap-6 rounded-2xl border p-6 md:grid-cols-2"
+            class="border-border-subtle bg-surface-subtle m-0 grid list-none
+              grid-cols-1 gap-6 rounded-2xl border p-6 md:grid-cols-2 lg:mb-10"
           >
             <li class="flex items-center gap-4">
               <div
@@ -108,10 +108,10 @@ const { isoDate, humanDate } = useDateFormatting(
           </section>
         </div>
 
-        <aside class="self-start">
+        <aside class="self-start lg:col-start-2 lg:row-start-2">
           <div
-            class="border-border-subtle bg-surface-subtle relative flex min-h-96
-              items-start justify-center overflow-hidden rounded-2xl border"
+            class="bg-surface-subtle relative flex min-h-96 items-start
+              justify-center overflow-hidden rounded-2xl"
           >
             <img
               :src="event.img"
