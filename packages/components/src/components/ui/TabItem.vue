@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
   /** Unique value identifying this tab */
   value: string | number;
   /** Display label */
   label: string;
+  /** Optional URL. When present the tab is rendered as a real link. */
+  href?: string;
   /** Whether this tab is currently active */
   active?: boolean;
   /** Visual variant inherited from parent Tabs */
@@ -20,16 +22,20 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <button
+  <component
+    :is="props.href ? 'a' : 'button'"
     :id="id"
-    type="button"
-    role="tab"
-    :aria-controls="controls"
-    :aria-selected="active"
-    :tabindex="active ? 0 : -1"
+    :href="props.href"
+    :type="props.href ? undefined : 'button'"
+    :role="props.href ? undefined : 'tab'"
+    :aria-controls="props.href ? undefined : controls"
+    :aria-selected="props.href ? undefined : active"
+    :aria-current="props.href && active ? 'page' : undefined"
+    :tabindex="props.href ? undefined : active ? 0 : -1"
     :class="[
-      `flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 text-sm
-      font-bold transition-all`,
+      `focus-visible:ring-ring-brand flex cursor-pointer items-center gap-2
+      rounded-md px-4 py-2 text-sm font-bold transition-all focus-visible:ring-2
+      focus-visible:ring-offset-2 focus-visible:outline-none`,
       variant === 'toggle'
         ? active
           ? 'bg-surface-brand text-content-on-brand'
@@ -42,5 +48,5 @@ const emit = defineEmits<{
   >
     <slot name="icon" />
     {{ label }}
-  </button>
+  </component>
 </template>
