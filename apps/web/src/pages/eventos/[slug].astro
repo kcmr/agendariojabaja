@@ -1,5 +1,5 @@
 ---
-import EventDetail from '@repo/components/features/EventDetail.vue';
+import EventDetailSplit from '@repo/components/features/EventDetailSplit.vue';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublicEvents, type WebEvent } from '../../lib/events';
 
@@ -20,7 +20,7 @@ const { event } = Astro.props;
 ---
 
 <BaseLayout title={event.title}>
-  <EventDetail
+  <EventDetailSplit
     transitionName={`event-${event.slug}`}
     event={{
       id: event.id,
