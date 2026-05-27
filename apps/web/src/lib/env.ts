@@ -42,4 +42,11 @@ export const getServerEnv = () => ({
 export const getPublicEnv = () => ({
   siteUrl: readOptionalEnv("PUBLIC_SITE_URL"),
   kitFormActionUrl: readOptionalEnv("PUBLIC_KIT_FORM_ACTION_URL"),
+  turnstileSiteKey: readOptionalEnv("PUBLIC_TURNSTILE_SITE_KEY"),
+});
+
+export const getEventSubmissionEnv = () => ({
+  n8nWebhookUrl: readRequiredEnv("N8N_WEBHOOK_URL"),
+  n8nFormSecret: readRequiredEnv("N8N_FORM_SECRET"),
+  turnstileSecretKey: readRequiredEnv("TURNSTILE_SECRET_KEY"),
 });

@@ -1,0 +1,405 @@
+---
+import Button from '@repo/components/ui/Button';
+import FormInput from '@repo/components/ui/FormInput';
+import FormTextarea from '@repo/components/ui/FormTextarea';
+import Heading from '@repo/components/ui/Heading';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublicEnv } from '../lib/env';
+
+const { turnstileSiteKey } = getPublicEnv();
+
+if (!turnstileSiteKey) {
+  throw new Error(
+    'Missing required environment variable: PUBLIC_TURNSTILE_SITE_KEY',
+  );
+}
+---
+
+<BaseLayout title='Enviar evento — Agenda Rioja Baja'>
+  <section
+    class='mx-auto flex w-full max-w-3xl flex-col items-center py-8 sm:py-12'
+    aria-labelledby='submit-event-heading'
+  >
+    <div class='mb-8'>
+      <Heading
+        id='submit-event-heading'
+        level={1}
+        variant='h1'
+        class='text-content-heading mb-4 text-3xl leading-tight font-bold sm:text-4xl'
+      >
+        Enviar evento
+      </Heading>
+      <p class='text-content-body mx-auto max-w-2xl leading-7'>
+        ¿Conoces un plan o evento en La Rioja Baja? Cuéntanoslo y lo revisaremos
+        para incluirlo en la agenda.
+      </p>
+    </div>
+
+    <div
+      class='bg-surface-card border-border-default w-full rounded-lg border p-5 shadow-sm sm:p-6'
+    >
+      <div class='mx-auto w-full max-w-2xl'>
+        <p class='text-content-muted mb-5 text-sm'>
+          Los campos marcados con
+          <span class='text-content-error' aria-hidden='true'>*</span>
+          <span class='sr-only'>asterisco</span>
+          son obligatorios.
+        </p>
+
+        <form
+          id='event-form'
+          class='space-y-5'
+          action='/api/submit-event'
+          method='post'
+          novalidate
+          data-turnstile-site-key={turnstileSiteKey}
+        >
+          <div>
+            <FormInput
+              label='Nombre del evento'
+              id='event_name'
+              name='event_name'
+              autocomplete='off'
+              required
+              aria-describedby='event_name-error'
+              data-error-required='El nombre del evento es obligatorio.'
+            />
+            <p
+              id='event_name-error'
+              class='field-error text-content-error mt-1.5 text-sm leading-5'
+              role='alert'
+              hidden
+            >
+            </p>
+          </div>
+
+          <div>
+            <FormTextarea
+              label='Descripción'
+              id='description'
+              name='description'
+              required
+              aria-describedby='description-error'
+              data-error-required='La descripción es obligatoria.'
+            />
+            <p
+              id='description-error'
+              class='field-error text-content-error mt-1.5 text-sm leading-5'
+              role='alert'
+              hidden
+            >
+            </p>
+          </div>
+
+          <div class='grid gap-5 sm:grid-cols-2'>
+            <div>
+              <FormInput
+                label='Fecha'
+                id='date'
+                name='date'
+                type='date'
+                required
+                aria-describedby='date-error'
+                data-error-required='La fecha es obligatoria.'
+                data-error-range='La fecha no puede ser anterior a hoy.'
+              />
+              <p
+                id='date-error'
+                class='field-error text-content-error mt-1.5 text-sm leading-5'
+                role='alert'
+                hidden
+              >
+              </p>
+            </div>
+
+            <div>
+              <FormInput
+                label='Localidad'
+                id='locality'
+                name='locality'
+                autocomplete='address-level2'
+                required
+                aria-describedby='locality-error'
+                data-error-required='La localidad es obligatoria.'
+              />
+              <p
+                id='locality-error'
+                class='field-error text-content-error mt-1.5 text-sm leading-5'
+                role='alert'
+                hidden
+              >
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <FormInput
+              label='URL de la imagen'
+              id='image'
+              name='image'
+              type='url'
+              placeholder='https://...'
+              hint='Enlace directo a la imagen o cartel del evento.'
+              aria-describedby='image-error'
+              data-error-url='Introduce una URL válida.'
+            />
+            <p
+              id='image-error'
+              class='field-error text-content-error mt-1.5 text-sm leading-5'
+              role='alert'
+              hidden
+            >
+            </p>
+          </div>
+
+          <FormInput
+            label='Fuente'
+            id='source'
+            name='source'
+            placeholder='Web, artículo de prensa, etc.'
+          />
+
+          <FormInput
+            label='Cuenta de Instagram'
+            id='instagram_account'
+            name='instagram_account'
+            placeholder='agendariojabaja'
+            autocomplete='off'
+            autocapitalize='none'
+            autocorrect='off'
+            spellcheck='false'
+          >
+            <span slot='prefix'>@</span>
+          </FormInput>
+
+          <div
+            id='turnstile-container'
+            class='min-h-16.25'
+            aria-label='Verificación de seguridad'
+          >
+          </div>
+
+          <Button type='submit' class='w-full'>
+            <span id='submit-label'>Enviar evento</span>
+            <span id='submit-loading' hidden>Enviando...</span>
+          </Button>
+
+          <div
+            id='form-error'
+            class='border-border-error-tint bg-surface-error-tint text-content-error rounded-lg border px-4 py-3 text-sm leading-6'
+            role='alert'
+            tabindex='-1'
+            hidden
+          >
+            <strong>Error:</strong>
+            <span id='form-error-text'>
+              Ha ocurrido un error. Por favor, inténtalo de nuevo.
+            </span>
+          </div>
+        </form>
+
+        <div
+          id='form-success'
+          class='border-border-success-tint bg-surface-success-tint text-content-success rounded-lg border px-4 py-3 text-sm leading-6'
+          role='alert'
+          tabindex='-1'
+          hidden
+        >
+          <strong>Evento enviado.</strong> Revisaremos tu propuesta y la incluiremos
+          en la agenda si todavía no la tenemos. Gracias por tu colaboración.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const form = document.getElementById('event-form');
+    const submitButton = form?.querySelector('button[type="submit"]');
+    const submitLabel = document.getElementById('submit-label');
+    const submitLoading = document.getElementById('submit-loading');
+    const successMessage = document.getElementById('form-success');
+    const errorMessage = document.getElementById('form-error');
+    const errorText = document.getElementById('form-error-text');
+    const dateInput = document.getElementById('date');
+    const turnstileContainer = document.getElementById('turnstile-container');
+    let turnstileWidgetId;
+
+    const getTodayString = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
+
+    const today = getTodayString();
+    if (dateInput) {
+      dateInput.min = today;
+    }
+
+    const showFieldError = (input, datasetKey = 'errorRequired') => {
+      const error = document.getElementById(`${input.id}-error`);
+      if (!error) return;
+      error.textContent = input.dataset[datasetKey] ?? '';
+      error.hidden = false;
+      input.setAttribute('aria-invalid', 'true');
+    };
+
+    const clearFieldError = (input) => {
+      const error = document.getElementById(`${input.id}-error`);
+      if (!error) return;
+      error.textContent = '';
+      error.hidden = true;
+      input.removeAttribute('aria-invalid');
+    };
+
+    const showGlobalError = (message) => {
+      if (!errorText || !errorMessage) return;
+      errorText.textContent = message;
+      errorMessage.hidden = false;
+      errorMessage.focus();
+    };
+
+    const setLoading = (isLoading) => {
+      if (!submitButton || !submitLabel || !submitLoading) return;
+      submitButton.disabled = isLoading;
+      submitLabel.hidden = isLoading;
+      submitLoading.hidden = !isLoading;
+    };
+
+    const resetTurnstile = () => {
+      window.turnstile?.reset(turnstileWidgetId);
+    };
+
+    const renderTurnstile = () => {
+      if (!turnstileContainer || !window.turnstile || turnstileWidgetId) return;
+
+      turnstileWidgetId = window.turnstile.render(turnstileContainer, {
+        sitekey: form.dataset.turnstileSiteKey,
+        theme: 'light',
+        language: 'es',
+      });
+    };
+
+    window.onTurnstileLoad = renderTurnstile;
+    renderTurnstile();
+
+    const validateUrl = (input) => {
+      if (!input.value.trim()) return true;
+
+      try {
+        const url = new URL(input.value.trim());
+        if (url.protocol === 'http:' || url.protocol === 'https:') {
+          clearFieldError(input);
+          return true;
+        }
+      } catch {
+        // Fall through to shared error handling.
+      }
+
+      showFieldError(input, 'errorUrl');
+      return false;
+    };
+
+    const validateForm = () => {
+      let isValid = true;
+      const requiredFields = form.querySelectorAll('[data-error-required]');
+
+      for (const input of requiredFields) {
+        clearFieldError(input);
+
+        if (!input.value.trim()) {
+          showFieldError(input);
+          isValid = false;
+        }
+      }
+
+      if (dateInput?.value && dateInput.value < today) {
+        showFieldError(dateInput, 'errorRange');
+        isValid = false;
+      }
+
+      const imageInput = document.getElementById('image');
+      if (imageInput) {
+        isValid = validateUrl(imageInput) && isValid;
+      }
+
+      return isValid;
+    };
+
+    form?.addEventListener('input', (event) => {
+      if (event.target instanceof HTMLInputElement) {
+        clearFieldError(event.target);
+      }
+
+      if (event.target instanceof HTMLTextAreaElement) {
+        clearFieldError(event.target);
+      }
+    });
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      successMessage.hidden = true;
+      errorMessage.hidden = true;
+
+      if (!validateForm()) {
+        form.querySelector('[aria-invalid="true"]')?.focus();
+        return;
+      }
+
+      const formData = new FormData(form);
+      if (!formData.get('cf-turnstile-response')) {
+        showGlobalError(
+          'Por favor, completa la verificación de seguridad antes de enviar.',
+        );
+        return;
+      }
+
+      const payload = Object.fromEntries(
+        [...formData.entries()]
+          .filter(
+            ([, value]) => typeof value === 'string' && value.trim() !== '',
+          )
+          .map(([key, value]) => [key, String(value).trim()]),
+      );
+
+      setLoading(true);
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (response.ok) {
+          form.reset();
+          resetTurnstile();
+          form.hidden = true;
+          successMessage.hidden = false;
+          successMessage.focus();
+          return;
+        }
+
+        const data = await response.json().catch(() => ({}));
+        showGlobalError(
+          data.error || 'Ha ocurrido un error. Por favor, inténtalo de nuevo.',
+        );
+        resetTurnstile();
+      } catch {
+        showGlobalError(
+          'No se pudo conectar con el servidor. Por favor, inténtalo de nuevo.',
+        );
+        resetTurnstile();
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+  <script
+    is:inline
+    src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad'
+    async
+    defer></script>
+</BaseLayout>

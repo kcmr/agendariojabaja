@@ -17,7 +17,7 @@ const meta: Meta<typeof AppHeader> = {
     links: [
       { label: "Patrocínanos", href: "#", icon: "Megaphone", variant: "text" },
       { label: "Suscríbete", href: "#", icon: "Mail", variant: "text" },
-      { label: "Publicar Evento", href: "#", variant: "brand" },
+      { label: "Enviar evento", href: "#", variant: "brand" },
     ],
   },
 };
