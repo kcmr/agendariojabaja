@@ -17,6 +17,8 @@ const props = withDefaults(
     variant?: ButtonVariant;
     /** Size of the button */
     size?: ButtonSize;
+    /** Native button type when rendered as a button */
+    type?: "button" | "submit" | "reset";
     /** Opens link in new tab with rel="noopener noreferrer" */
     external?: boolean;
     /** Disables the button */
@@ -26,6 +28,7 @@ const props = withDefaults(
     href: undefined,
     variant: "brand",
     size: "md",
+    type: "button",
     external: false,
     disabled: false,
   }
@@ -65,7 +68,7 @@ const onClick = (event: MouseEvent) => {
     :is="tag"
     v-bind="{ ...attrs, class: undefined }"
     :href="href"
-    :type="!href ? (attrs.type ?? 'button') : undefined"
+    :type="!href ? type : undefined"
     :class="classes"
     :disabled="disabled"
     :target="external ? '_blank' : undefined"

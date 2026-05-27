@@ -4,9 +4,18 @@
 
   /* Red – primary brand color */
   --color-brand: #da121a;
-  --color-brand-hover: var(--color-red-700);
-  --color-brand-tint: var(--color-red-50);
-  --color-brand-tint-border: var(--color-red-100);
+  --color-brand-25: color-mix(in oklab, var(--color-brand) 4%, white);
+  --color-brand-50: color-mix(in oklab, var(--color-brand) 8%, white);
+  --color-brand-100: color-mix(in oklab, var(--color-brand) 14%, white);
+  --color-brand-200: color-mix(in oklab, var(--color-brand) 24%, white);
+  --color-brand-500: var(--color-brand);
+  --color-brand-600: color-mix(in oklab, var(--color-brand) 90%, black);
+  --color-brand-700: color-mix(in oklab, var(--color-brand) 80%, black);
+  --color-brand-800: color-mix(in oklab, var(--color-brand) 68%, black);
+  --color-brand-900: color-mix(in oklab, var(--color-brand) 58%, black);
+  --color-brand-hover: var(--color-brand-700);
+  --color-brand-tint: var(--color-brand-50);
+  --color-brand-tint-border: var(--color-brand-100);
 
   /* Green – category badges */
   --color-category: #0b8043;
@@ -30,6 +39,8 @@
   --color-content-brand: var(--color-brand);
   --color-content-category: var(--color-category);
   --color-content-highlight: var(--color-highlight-text);
+  --color-content-error: var(--color-brand-800);
+  --color-content-success: var(--color-green-900);
   --color-content-on-brand: var(--color-white);
   --color-content-on-highlight: var(--color-gray-900);
 
@@ -46,6 +57,8 @@
   --color-surface-category-tint: var(--color-category-tint);
   --color-surface-highlight: var(--color-highlight);
   --color-surface-highlight-tint: var(--color-highlight-tint);
+  --color-surface-error-tint: var(--color-brand-25);
+  --color-surface-success-tint: var(--color-green-50);
   /* Borders */
   --color-border-subtle: var(--color-gray-100);
   --color-border-default: var(--color-gray-200);
@@ -53,9 +66,13 @@
   --color-border-brand-tint: var(--color-brand-tint-border);
   --color-border-category-tint: var(--color-category-tint-border);
   --color-border-highlight-tint: var(--color-highlight-tint-border);
+  --color-border-error: var(--color-brand-700);
+  --color-border-error-tint: var(--color-brand-200);
+  --color-border-success-tint: var(--color-green-200);
 
   /* Focus rings */
   --color-ring-brand: var(--color-brand);
+  --color-ring-error: var(--color-brand-200);
 
   /* Ad spaces */
   --color-surface-ad: var(--color-gray-50);

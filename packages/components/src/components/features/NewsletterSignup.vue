@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useId } from "vue";
 import Button from "../ui/Button.vue";
+import FormInput from "../ui/FormInput.vue";
 import Heading, { type HeadingLevel } from "../ui/Heading.vue";
 import Icon from "../ui/Icon.vue";
 
@@ -94,38 +95,16 @@ const emailId = () => `${resolvedIdBase()}-email`;
         :target="target"
       >
         <div class="min-w-0 flex-1">
-          <div
-            class="group has-focus-within:[&_label]:text-content-muted relative
-              has-focus-within:[&_label]:top-2
-              has-focus-within:[&_label]:translate-y-0
-              has-focus-within:[&_label]:text-xs
-              has-focus-within:[&_label]:font-medium
-              has-[input:not(:placeholder-shown)]:[&_label]:top-2
-              has-[input:not(:placeholder-shown)]:[&_label]:translate-y-0
-              has-[input:not(:placeholder-shown)]:[&_label]:text-xs
-              has-[input:not(:placeholder-shown)]:[&_label]:font-medium"
-          >
-            <label
-              :for="emailId()"
-              class="text-content-muted pointer-events-none absolute top-1/2
-                left-4 z-1 origin-left -translate-y-1/2 text-base transition-all
-                duration-150 ease-out"
-            >
-              {{ emailLabel }}
-            </label>
-            <input
-              :id="emailId()"
-              class="border-border-strong text-content-heading
-                focus:ring-ring-brand h-12 w-full rounded-lg border px-4 pt-5
-                pb-2 placeholder-transparent focus:border-transparent
-                focus:ring-2 focus:outline-none"
-              type="email"
-              name="email_address"
-              placeholder=" "
-              autocomplete="email"
-              required
-            />
-          </div>
+          <FormInput
+            :id="emailId()"
+            :label="emailLabel"
+            label-variant="floating"
+            input-size="lg"
+            type="email"
+            name="email_address"
+            autocomplete="email"
+            required
+          />
         </div>
 
         <Button type="submit" class="sm:shrink-0">
