@@ -17,28 +17,29 @@ if (!turnstileSiteKey) {
 
 <BaseLayout title='Enviar evento — Agenda Rioja Baja'>
   <section
-    class='mx-auto flex w-full max-w-3xl flex-col items-center py-8 sm:py-12'
+    class='mx-auto w-full py-8 sm:py-12'
     aria-labelledby='submit-event-heading'
   >
-    <div class='mb-8'>
-      <Heading
-        id='submit-event-heading'
-        level={1}
-        variant='h1'
-        class='text-content-heading mb-4 text-3xl leading-tight font-bold sm:text-4xl'
-      >
-        Enviar evento
-      </Heading>
-      <p class='text-content-body mx-auto max-w-2xl leading-7'>
-        ¿Conoces un plan o evento en La Rioja Baja? Cuéntanoslo y lo revisaremos
-        para incluirlo en la agenda.
-      </p>
-    </div>
-
     <div
-      class='bg-surface-card border-border-default w-full rounded-lg border p-5 shadow-sm sm:p-6'
+      class='bg-surface-card border-border-subtle w-full rounded-3xl border p-6
+        shadow-sm sm:p-8 lg:p-12'
     >
-      <div class='mx-auto w-full max-w-2xl'>
+      <div class='mx-auto mb-10 max-w-3xl'>
+        <Heading
+          id='submit-event-heading'
+          level={1}
+          variant='h1'
+          class='text-content-heading mb-4 text-3xl leading-tight font-bold sm:text-4xl'
+        >
+          Enviar evento
+        </Heading>
+        <p class='text-content-body max-w-2xl leading-7'>
+          ¿Conoces un plan o evento en La Rioja Baja? Cuéntanoslo y lo
+          revisaremos para incluirlo en la agenda.
+        </p>
+      </div>
+
+      <div class='mx-auto w-full max-w-3xl'>
         <p class='text-content-muted mb-5 text-sm'>
           Los campos marcados con
           <span class='text-content-error' aria-hidden='true'>*</span>
@@ -48,7 +49,7 @@ if (!turnstileSiteKey) {
 
         <form
           id='event-form'
-          class='space-y-5'
+          class='space-y-7'
           action='/api/submit-event'
           method='post'
           novalidate
@@ -91,7 +92,7 @@ if (!turnstileSiteKey) {
             </p>
           </div>
 
-          <div class='grid gap-5 sm:grid-cols-2'>
+          <div class='grid gap-7 sm:grid-cols-2'>
             <div>
               <FormInput
                 label='Fecha'
@@ -212,18 +213,10 @@ if (!turnstileSiteKey) {
     </div>
   </section>
 
-  <script is:inline>
-    const form = document.getElementById('event-form');
-    const submitButton = form?.querySelector('button[type="submit"]');
-    const submitLabel = document.getElementById('submit-label');
-    const submitLoading = document.getElementById('submit-loading');
-    const successMessage = document.getElementById('form-success');
-    const errorMessage = document.getElementById('form-error');
-    const errorText = document.getElementById('form-error-text');
-    const dateInput = document.getElementById('date');
-    const turnstileContainer = document.getElementById('turnstile-container');
-    let turnstileWidgetId;
-
+  <script
+    is:inline
+    define:vars={{ turnstileScriptUrl: 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit' }}
+  >
     const getTodayString = () => {
       const now = new Date();
       const year = now.getFullYear();
@@ -231,11 +224,6 @@ if (!turnstileSiteKey) {
       const day = String(now.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
     };
-
-    const today = getTodayString();
-    if (dateInput) {
-      dateInput.min = today;
-    }
 
     const showFieldError = (input, datasetKey = 'errorRequired') => {
       const error = document.getElementById(`${input.id}-error`);
@@ -253,153 +241,207 @@ if (!turnstileSiteKey) {
       input.removeAttribute('aria-invalid');
     };
 
-    const showGlobalError = (message) => {
-      if (!errorText || !errorMessage) return;
-      errorText.textContent = message;
-      errorMessage.hidden = false;
-      errorMessage.focus();
-    };
-
-    const setLoading = (isLoading) => {
-      if (!submitButton || !submitLabel || !submitLoading) return;
-      submitButton.disabled = isLoading;
-      submitLabel.hidden = isLoading;
-      submitLoading.hidden = !isLoading;
-    };
-
-    const resetTurnstile = () => {
-      window.turnstile?.reset(turnstileWidgetId);
-    };
-
-    const renderTurnstile = () => {
-      if (!turnstileContainer || !window.turnstile || turnstileWidgetId) return;
-
-      turnstileWidgetId = window.turnstile.render(turnstileContainer, {
-        sitekey: form.dataset.turnstileSiteKey,
-        theme: 'light',
-        language: 'es',
-      });
-    };
-
-    window.onTurnstileLoad = renderTurnstile;
-    renderTurnstile();
-
-    const validateUrl = (input) => {
-      if (!input.value.trim()) return true;
-
-      try {
-        const url = new URL(input.value.trim());
-        if (url.protocol === 'http:' || url.protocol === 'https:') {
-          clearFieldError(input);
-          return true;
-        }
-      } catch {
-        // Fall through to shared error handling.
-      }
-
-      showFieldError(input, 'errorUrl');
-      return false;
-    };
-
-    const validateForm = () => {
-      let isValid = true;
-      const requiredFields = form.querySelectorAll('[data-error-required]');
-
-      for (const input of requiredFields) {
-        clearFieldError(input);
-
-        if (!input.value.trim()) {
-          showFieldError(input);
-          isValid = false;
-        }
-      }
-
-      if (dateInput?.value && dateInput.value < today) {
-        showFieldError(dateInput, 'errorRange');
-        isValid = false;
-      }
-
-      const imageInput = document.getElementById('image');
-      if (imageInput) {
-        isValid = validateUrl(imageInput) && isValid;
-      }
-
-      return isValid;
-    };
-
-    form?.addEventListener('input', (event) => {
-      if (event.target instanceof HTMLInputElement) {
-        clearFieldError(event.target);
-      }
-
-      if (event.target instanceof HTMLTextAreaElement) {
-        clearFieldError(event.target);
-      }
-    });
-
-    form?.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      successMessage.hidden = true;
-      errorMessage.hidden = true;
-
-      if (!validateForm()) {
-        form.querySelector('[aria-invalid="true"]')?.focus();
-        return;
-      }
-
-      const formData = new FormData(form);
-      if (!formData.get('cf-turnstile-response')) {
-        showGlobalError(
-          'Por favor, completa la verificación de seguridad antes de enviar.',
-        );
-        return;
-      }
-
-      const payload = Object.fromEntries(
-        [...formData.entries()]
-          .filter(
-            ([, value]) => typeof value === 'string' && value.trim() !== '',
-          )
-          .map(([key, value]) => [key, String(value).trim()]),
-      );
-
-      setLoading(true);
-
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-
-        if (response.ok) {
-          form.reset();
-          resetTurnstile();
-          form.hidden = true;
-          successMessage.hidden = false;
-          successMessage.focus();
+    const loadTurnstile = () =>
+      new Promise((resolve) => {
+        if (window.turnstile) {
+          resolve(window.turnstile);
           return;
         }
 
-        const data = await response.json().catch(() => ({}));
-        showGlobalError(
-          data.error || 'Ha ocurrido un error. Por favor, inténtalo de nuevo.',
+        const existingScript = document.querySelector(
+          'script[data-turnstile-script]',
         );
-        resetTurnstile();
-      } catch {
-        showGlobalError(
-          'No se pudo conectar con el servidor. Por favor, inténtalo de nuevo.',
-        );
-        resetTurnstile();
-      } finally {
-        setLoading(false);
+
+        if (existingScript) {
+          existingScript.addEventListener(
+            'load',
+            () => resolve(window.turnstile),
+            { once: true },
+          );
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = turnstileScriptUrl;
+        script.async = true;
+        script.defer = true;
+        script.dataset.turnstileScript = 'true';
+        script.addEventListener('load', () => resolve(window.turnstile), {
+          once: true,
+        });
+        document.head.append(script);
+      });
+
+    const initEventForm = async () => {
+      const form = document.getElementById('event-form');
+      if (!form || form.dataset.enhanced === 'true') return;
+
+      form.dataset.enhanced = 'true';
+
+      const submitButton = form.querySelector('button[type="submit"]');
+      const submitLabel = document.getElementById('submit-label');
+      const submitLoading = document.getElementById('submit-loading');
+      const successMessage = document.getElementById('form-success');
+      const errorMessage = document.getElementById('form-error');
+      const errorText = document.getElementById('form-error-text');
+      const dateInput = document.getElementById('date');
+      const turnstileContainer = document.getElementById('turnstile-container');
+      const today = getTodayString();
+      let turnstileWidgetId;
+
+      if (dateInput) {
+        dateInput.min = today;
       }
-    });
+
+      const showGlobalError = (message) => {
+        if (!errorText || !errorMessage) return;
+        errorText.textContent = message;
+        errorMessage.hidden = false;
+        errorMessage.focus();
+      };
+
+      const setLoading = (isLoading) => {
+        if (!submitButton || !submitLabel || !submitLoading) return;
+        submitButton.disabled = isLoading;
+        submitLabel.hidden = isLoading;
+        submitLoading.hidden = !isLoading;
+      };
+
+      const resetTurnstile = () => {
+        window.turnstile?.reset(turnstileWidgetId);
+      };
+
+      const renderTurnstile = async () => {
+        if (!turnstileContainer || turnstileWidgetId) return;
+
+        const turnstile = await loadTurnstile();
+        if (!turnstile) return;
+
+        turnstileWidgetId = turnstile.render(turnstileContainer, {
+          sitekey: form.dataset.turnstileSiteKey,
+          theme: 'light',
+          language: 'es',
+        });
+      };
+
+      const validateUrl = (input) => {
+        if (!input.value.trim()) return true;
+
+        try {
+          const url = new URL(input.value.trim());
+          if (url.protocol === 'http:' || url.protocol === 'https:') {
+            clearFieldError(input);
+            return true;
+          }
+        } catch {
+          // Fall through to shared error handling.
+        }
+
+        showFieldError(input, 'errorUrl');
+        return false;
+      };
+
+      const validateForm = () => {
+        let isValid = true;
+        const requiredFields = form.querySelectorAll('[data-error-required]');
+
+        for (const input of requiredFields) {
+          clearFieldError(input);
+
+          if (!input.value.trim()) {
+            showFieldError(input);
+            isValid = false;
+          }
+        }
+
+        if (dateInput?.value && dateInput.value < today) {
+          showFieldError(dateInput, 'errorRange');
+          isValid = false;
+        }
+
+        const imageInput = document.getElementById('image');
+        if (imageInput) {
+          isValid = validateUrl(imageInput) && isValid;
+        }
+
+        return isValid;
+      };
+
+      await renderTurnstile();
+
+      form.addEventListener('input', (event) => {
+        if (event.target instanceof HTMLInputElement) {
+          clearFieldError(event.target);
+        }
+
+        if (event.target instanceof HTMLTextAreaElement) {
+          clearFieldError(event.target);
+        }
+      });
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        successMessage.hidden = true;
+        errorMessage.hidden = true;
+
+        if (!validateForm()) {
+          form.querySelector('[aria-invalid="true"]')?.focus();
+          return;
+        }
+
+        const formData = new FormData(form);
+        if (!formData.get('cf-turnstile-response')) {
+          showGlobalError(
+            'Por favor, completa la verificación de seguridad antes de enviar.',
+          );
+          return;
+        }
+
+        const payload = Object.fromEntries(
+          [...formData.entries()]
+            .filter(
+              ([, value]) => typeof value === 'string' && value.trim() !== '',
+            )
+            .map(([key, value]) => [key, String(value).trim()]),
+        );
+
+        setLoading(true);
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+          if (response.ok) {
+            form.reset();
+            resetTurnstile();
+            form.hidden = true;
+            successMessage.hidden = false;
+            successMessage.focus();
+            return;
+          }
+
+          const data = await response.json().catch(() => ({}));
+          showGlobalError(
+            data.error ||
+              'Ha ocurrido un error. Por favor, inténtalo de nuevo.',
+          );
+          resetTurnstile();
+        } catch {
+          showGlobalError(
+            'No se pudo conectar con el servidor. Por favor, inténtalo de nuevo.',
+          );
+          resetTurnstile();
+        } finally {
+          setLoading(false);
+        }
+      });
+    };
+
+    document.addEventListener('astro:page-load', initEventForm);
+    initEventForm();
   </script>
-  <script
-    is:inline
-    src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad'
-    async
-    defer></script>
 </BaseLayout>
