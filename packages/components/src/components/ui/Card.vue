@@ -5,7 +5,7 @@ import Heading, { type HeadingLevel } from "./Heading.vue";
 defineProps<{
   /** Card heading */
   heading: string;
-  /** Heading level for accessibility (default: h2) */
+  /** Heading level for accessibility (default: h3) */
   headingLevel?: HeadingLevel;
   /** Card content that will be rendered with ellipsis in a single paragraph */
   text: string;
@@ -58,7 +58,7 @@ defineProps<{
       <MaybeLink :href="link">
         <Heading
           variant="h3"
-          :level="headingLevel ?? 2"
+          :level="headingLevel ?? 3"
           :style="
             transitionName
               ? { viewTransitionName: `${transitionName}-title` }

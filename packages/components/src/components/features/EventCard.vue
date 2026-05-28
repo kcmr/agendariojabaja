@@ -2,6 +2,7 @@
 import Icon from "../ui/Icon.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Card from "../ui/Card.vue";
+import type { HeadingLevel } from "../ui/Heading.vue";
 import Badge from "../ui/Badge.vue";
 import { computed } from "vue";
 
@@ -25,6 +26,8 @@ const props = defineProps<{
   location: string;
   /** Event status */
   status?: "upcoming" | "past";
+  /** Heading level for accessibility */
+  headingLevel?: HeadingLevel;
   /** Optional stable view-transition name prefix */
   transitionName?: string;
 }>();
@@ -40,6 +43,7 @@ const { isoDate, humanDate } = useDateFormatting(
     :text="text"
     :image="image"
     :link="link"
+    :heading-level="headingLevel"
     :transition-name="transitionName"
   >
     <template v-if="status === 'past'" #image-overlay>

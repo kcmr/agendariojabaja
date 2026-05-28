@@ -163,6 +163,18 @@ const localities = computed<FormSelectOption[]>(() => {
   ];
 });
 
+const selectedLocalityHeading = computed(() => {
+  if (currentState.value.locality === DEFAULT_AGENDA_LOCALITY) {
+    return "La Rioja Baja";
+  }
+
+  return (
+    localities.value.find(
+      (locality) => locality.value === currentState.value.locality,
+    )?.label ?? "La Rioja Baja"
+  );
+});
+
 const filteredEvents = computed(() =>
   filterAgendaEvents(props.events, currentState.value),
 );
@@ -248,7 +260,11 @@ onUnmounted(() => {
       />
     </div>
 
-    <section>
+    <section aria-labelledby="events-list-heading">
+      <h2 id="events-list-heading" class="sr-only">
+        Eventos en {{ selectedLocalityHeading }}
+      </h2>
+
       <div
         v-if="filteredEvents.length"
         class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -265,6 +281,7 @@ onUnmounted(() => {
           :location="event.location ?? 'La Rioja Baja'"
           :status="event.status"
           :transition-name="`event-${event.slug}`"
+          :heading-level="3"
         />
       </div>
 

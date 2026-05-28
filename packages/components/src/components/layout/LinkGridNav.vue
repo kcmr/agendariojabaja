@@ -27,6 +27,7 @@ const headingId = useId();
       :id="headingId"
       :level="headingLevel"
       variant="h6"
+      :aria-label="heading"
       class="text-content-heading mb-4 text-sm leading-none font-bold
         tracking-wide uppercase"
     >

@@ -18,7 +18,7 @@ const { isoDate, humanDate } = useDateFormatting(
 </script>
 
 <template>
-  <article class="mx-auto max-w-6xl py-8">
+  <article class="w-full py-8">
     <Button href="/" variant="text" size="md" class="mb-6" data-back-link>
       <template #icon-left>
         <Icon name="ArrowLeft" :size="20" />
@@ -47,7 +47,7 @@ const { isoDate, humanDate } = useDateFormatting(
             </Badge>
           </div>
 
-          <Heading :level="1" variant="h1" class="max-w-5xl">
+          <Heading :level="2" variant="h1" class="max-w-5xl">
             <span
               :style="
                 transitionName
@@ -101,7 +101,7 @@ const { isoDate, humanDate } = useDateFormatting(
           </ul>
 
           <section>
-            <Heading :level="2" class="mb-4">Sobre el evento</Heading>
+            <Heading :level="3" class="mb-4">Sobre el evento</Heading>
             <p class="text-content-body text-lg whitespace-pre-line">
               {{ event.description }}
             </p>
