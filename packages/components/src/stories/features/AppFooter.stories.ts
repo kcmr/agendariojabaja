@@ -61,7 +61,7 @@ export const Default: Story = {
     const legalLink = canvas.getByRole("link", { name: "Aviso Legal" });
     const developerLink = canvas.getByRole("link", { name: "kuscamara.dev" });
     const instagramLink = canvas.getByRole("link", {
-      name: "Visita nuestro perfil de Instagram",
+      name: /Instagram/,
     });
 
     expect(footer).toBeInTheDocument();

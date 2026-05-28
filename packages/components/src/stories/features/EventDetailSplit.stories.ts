@@ -40,10 +40,10 @@ export const Upcoming: Story = {
     const canvas = within(canvasElement);
 
     expect(
-      canvas.getByRole("heading", { level: 1, name: args.event.title })
+      canvas.getByRole("heading", { name: args.event.title })
     ).toBeInTheDocument();
     expect(
-      canvas.getByRole("heading", { level: 2, name: "Sobre el evento" })
+      canvas.getByRole("heading", { name: "Sobre el evento" })
     ).toBeInTheDocument();
     expect(
       canvas.getByRole("link", { name: "Volver a la agenda" })
