@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, within } from "storybook/test";
-import FooterLinkGrid, {
-  type FooterLinkGridLink,
-} from "../../components/layout/FooterLinkGrid.vue";
+import LinkGridNav, {
+  type LinkGridNavLink,
+} from "../../components/layout/LinkGridNav.vue";
 
 const LINKS = [
   {
@@ -21,10 +21,10 @@ const LINKS = [
     label: "Eventos en Rincón de Soto",
     href: "/agenda/proximos/localidad/rincon-de-soto/",
   },
-] satisfies FooterLinkGridLink[];
+] satisfies LinkGridNavLink[];
 
 const meta = {
-  component: FooterLinkGrid,
+  component: LinkGridNav,
   tags: ["autodocs"],
   argTypes: {
     headingLevel: {
@@ -37,7 +37,7 @@ const meta = {
     headingLevel: 2,
     links: LINKS,
   },
-} satisfies Meta<typeof FooterLinkGrid>;
+} satisfies Meta<typeof LinkGridNav>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,0 +1,81 @@
+---
+import Heading from '@repo/components/ui/Heading';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title='Aviso Legal — Agenda Rioja Baja'>
+  <section class='mx-auto w-full py-8 sm:py-12' aria-labelledby='legal-heading'>
+    <div
+      class='bg-surface-card border-border-subtle w-full rounded-3xl border p-6
+        shadow-sm sm:p-8 lg:p-12'
+    >
+      <div class='mx-auto max-w-3xl'>
+        <Heading
+          id='legal-heading'
+          level={1}
+          variant='h1'
+          class='text-content-heading mb-4 text-3xl leading-tight font-bold sm:text-4xl'
+        >
+          Aviso Legal
+        </Heading>
+
+        <div class='text-content-body space-y-6 leading-7'>
+          <p>
+            Esta página recoge la información legal básica de Agenda Rioja
+            Baja. El contenido definitivo se completará con los datos del
+            titular del sitio y las condiciones aplicables.
+          </p>
+
+          <section aria-labelledby='legal-owner-heading'>
+            <Heading
+              id='legal-owner-heading'
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              Titularidad
+            </Heading>
+            <p>
+              Agenda Rioja Baja es un proyecto digital de información local
+              sobre eventos, ocio y planes en La Rioja Baja.
+            </p>
+          </section>
+
+          <section aria-labelledby='legal-content-heading'>
+            <Heading
+              id='legal-content-heading'
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              Contenidos
+            </Heading>
+            <p>
+              La agenda recopila información pública y propuestas enviadas por
+              organizadores, entidades y usuarios. Revisamos los datos antes de
+              publicarlos, pero recomendamos consultar siempre la fuente oficial
+              de cada evento para confirmar horarios, precios y cambios de
+              última hora.
+            </p>
+          </section>
+
+          <section aria-labelledby='legal-contact-heading'>
+            <Heading
+              id='legal-contact-heading'
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              Contacto
+            </Heading>
+            <p>
+              Para solicitar cambios, comunicar errores o enviar información
+              relacionada con un evento, utiliza el formulario de envío de
+              evento disponible en la web.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

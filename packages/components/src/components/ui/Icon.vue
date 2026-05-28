@@ -19,6 +19,7 @@ import {
   ChevronRight,
   ChevronDown,
   List,
+  Instagram,
 } from "lucide-vue-next";
 import { computed } from "vue";
 
@@ -38,6 +39,7 @@ const icons = {
   ChevronRight,
   ChevronDown,
   List,
+  Instagram,
 } as const;
 
 export type IconName = keyof typeof icons;

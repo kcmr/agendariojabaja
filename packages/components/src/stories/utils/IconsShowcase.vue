@@ -21,6 +21,7 @@ const iconNames: IconName[] = [
   "Home",
   "MapPinOff",
   "List",
+  "Instagram",
 ];
 
 const copyToClipboard = (name: IconName, event: MouseEvent) => {

@@ -1,7 +1,7 @@
 ---
 import AppHeader from '@repo/components/features/AppHeader';
+import AppFooter from '@repo/components/features/AppFooter';
 import NewsletterSignup from '@repo/components/features/NewsletterSignup';
-import FooterLinkGrid from '@repo/components/layout/FooterLinkGrid';
 import { ClientRouter } from 'astro:transitions';
 import {
   DEFAULT_AGENDA_PAGE,
@@ -71,8 +71,8 @@ const localityLinks =
       </div>
     </main>
     <NewsletterSignup />
-    <FooterLinkGrid
-      heading='Explora planes por localidad'
+    <AppFooter
+      linksHeading='Explora planes por localidad'
       links={localityLinks}
     />
     <script>
