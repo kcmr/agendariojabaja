@@ -16,6 +16,9 @@ const iconNames: IconName[] = [
   "Ticket",
   "Clock",
   "Megaphone",
+  "ArrowLeft",
+  "Home",
+  "MapPinOff",
   "List",
 ];
 
