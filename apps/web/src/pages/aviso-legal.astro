@@ -16,14 +16,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           variant='h1'
           class='text-content-heading mb-4 text-3xl leading-tight font-bold sm:text-4xl'
         >
-          Aviso Legal
+          Aviso Legal y Condiciones de Uso
         </Heading>
 
         <div class='text-content-body space-y-6 leading-7'>
           <p>
-            Esta página recoge la información legal básica de Agenda Rioja
-            Baja. El contenido definitivo se completará con los datos del
-            titular del sitio y las condiciones aplicables.
+            En cumplimiento con el deber de información recogido en artículo 10
+            de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la
+            Información y del Comercio Electrónico (LSSI-CE), se reflejan a
+            continuación los siguientes datos legales del sitio web
+            <strong class='text-content-heading'>agendariojabaja.com</strong>.
           </p>
 
           <section aria-labelledby='legal-owner-heading'>
@@ -33,45 +35,206 @@ import BaseLayout from '../layouts/BaseLayout.astro';
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
             >
-              Titularidad
+              1. Datos identificativos del titular
             </Heading>
-            <p>
-              Agenda Rioja Baja es un proyecto digital de información local
-              sobre eventos, ocio y planes en La Rioja Baja.
-            </p>
+            <ul class='list-disc space-y-2 pl-5'>
+              <li>
+                <strong class='text-content-heading'>Titular:</strong>
+                María Cruz Cámara Muro, operando bajo la marca profesional o
+                nombre comercial Kus Cámara / kuscamara.dev.
+              </li>
+              <li>
+                <strong class='text-content-heading'
+                  >Correo electrónico de contacto:</strong
+                >
+                <a
+                  href='mailto:hola@kuscamara.dev'
+                  class='text-content-brand font-medium hover:underline'
+                  >hola@kuscamara.dev</a
+                >
+              </li>
+              <li>
+                <strong class='text-content-heading'>Sitio web:</strong>
+                <a
+                  href='https://agendariojabaja.com'
+                  class='text-content-brand font-medium hover:underline'
+                  >https://agendariojabaja.com</a
+                >
+              </li>
+            </ul>
           </section>
 
-          <section aria-labelledby='legal-content-heading'>
+          <section aria-labelledby='legal-service-heading'>
             <Heading
-              id='legal-content-heading'
+              id='legal-service-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
             >
-              Contenidos
+              2. Objeto y naturaleza del servicio
             </Heading>
             <p>
-              La agenda recopila información pública y propuestas enviadas por
-              organizadores, entidades y usuarios. Revisamos los datos antes de
-              publicarlos, pero recomendamos consultar siempre la fuente oficial
-              de cada evento para confirmar horarios, precios y cambios de
-              última hora.
+              Agenda Rioja Baja es un agregador informativo automatizado de
+              carácter independiente. Su objetivo es recopilar, organizar y dar
+              difusión a la oferta de ocio, cultura y eventos de diversas
+              localidades de La Rioja Baja.
+            </p>
+            <p class='mt-3'>
+              La información publicada puede proceder de fuentes públicas,
+              sitios web oficiales, redes sociales y propuestas enviadas
+              voluntariamente por organizadores, entidades o usuarios a través
+              del formulario de envío de eventos.
+            </p>
+            <p class='mt-3'>
+              Este sitio web
+              <strong class='text-content-heading'>no tiene vinculación oficial</strong>
+              con los Ayuntamientos, instituciones, locales comerciales u
+              organizadores de los eventos publicados, actuando únicamente como
+              un canal de difusión y un intermediario de la información pública
+              disponible en la red.
             </p>
           </section>
 
-          <section aria-labelledby='legal-contact-heading'>
+          <section aria-labelledby='legal-ip-heading'>
             <Heading
-              id='legal-contact-heading'
+              id='legal-ip-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
             >
-              Contacto
+              3. Propiedad Intelectual e Industrial y Derechos de Autor
             </Heading>
             <p>
-              Para solicitar cambios, comunicar errores o enviar información
-              relacionada con un evento, utiliza el formulario de envío de
-              evento disponible en la web.
+              El diseño del portal y sus códigos fuente, así como los logos,
+              marcas y demás signos distintivos que pertenecen a Agenda Rioja
+              Baja o kuscamara.dev, están protegidos por los correspondientes
+              derechos de propiedad intelectual e industrial.
+            </p>
+            <p class='mt-3'>
+              Respecto al contenido de los eventos publicados, se establece lo
+              siguiente:
+            </p>
+            <ul class='mt-3 list-disc space-y-2 pl-5'>
+              <li>
+                <strong class='text-content-heading'
+                  >Textos y descripciones:</strong
+                >
+                los textos descriptivos de los eventos son generados y adaptados
+                mediante herramientas tecnológicas, incluida IA, a partir de
+                información pública, datos fácticos como fechas, horas y
+                lugares, y datos remitidos voluntariamente mediante el
+                formulario de envío de eventos.
+              </li>
+              <li>
+                <strong class='text-content-heading'>Imágenes y carteles:</strong>
+                las fotografías y carteles promocionales mostrados en cada
+                evento son propiedad exclusiva de sus respectivos autores,
+                diseñadores u organizadores. Su reproducción en este sitio web
+                se realiza de buena fe y con un propósito estrictamente
+                promocional e informativo para dar a conocer el evento,
+                amparándose en el derecho de reseña.
+              </li>
+            </ul>
+
+            <div
+              class='border-border-subtle bg-surface-subtle mt-5 rounded-xl border p-5'
+            >
+              <p class='text-content-heading font-bold'>
+                Política de retirada de contenidos (Notice and Takedown)
+              </p>
+              <p class='mt-2'>
+                Si usted es el titular de los derechos de cualquier imagen,
+                cartel o información mostrada en esta web y desea que sea
+                modificada o retirada, por favor, envíe un correo a
+                <a
+                  href='mailto:hola@kuscamara.dev'
+                  class='text-content-brand font-medium hover:underline'
+                  >hola@kuscamara.dev</a
+                >
+                indicando el enlace al evento. El contenido será eliminado de
+                nuestras bases de datos a la mayor brevedad posible.
+              </p>
+            </div>
+          </section>
+
+          <section aria-labelledby='legal-liability-heading'>
+            <Heading
+              id='legal-liability-heading'
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              4. Exención de responsabilidad
+            </Heading>
+            <p>
+              El titular de la web realiza los máximos esfuerzos para mantener
+              la información actualizada y correcta. Sin embargo, al tratarse de
+              un proceso automatizado que bebe de fuentes externas,
+              <strong class='text-content-heading'>
+                no se garantiza la exactitud, integridad o vigencia de los datos
+                publicados</strong
+              >.
+            </p>
+            <p class='mt-3'>
+              Agenda Rioja Baja
+              <strong class='text-content-heading'>no se hace responsable</strong>
+              en ningún caso de:
+            </p>
+            <ol class='mt-3 list-decimal space-y-2 pl-5'>
+              <li>
+                Las cancelaciones, retrasos, cambios de ubicación o
+                modificaciones en los precios de los eventos.
+              </li>
+              <li>
+                Los errores tipográficos o inexactitudes en la información
+                extraída de las fuentes originales.
+              </li>
+              <li>
+                Las experiencias, daños o perjuicios que el usuario pueda sufrir
+                al asistir a los eventos promocionados.
+              </li>
+            </ol>
+            <p class='mt-3'>
+              Se recomienda encarecidamente a los usuarios verificar siempre los
+              detalles finales del evento haciendo clic en el enlace de “Ver
+              fuente original” proporcionado en cada ficha.
+            </p>
+          </section>
+
+          <section aria-labelledby='legal-external-links-heading'>
+            <Heading
+              id='legal-external-links-heading'
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              5. Enlaces externos
+            </Heading>
+            <p>
+              En el caso de que en la página web se dispusiesen enlaces o
+              hipervínculos hacia otros sitios de Internet, como Facebook,
+              páginas de ayuntamientos o venta de entradas, el titular no
+              ejercerá ningún tipo de control sobre dichos sitios y contenidos.
+              En ningún caso asumirá responsabilidad alguna por los contenidos
+              de algún enlace perteneciente a un sitio web ajeno.
+            </p>
+          </section>
+
+          <section aria-labelledby='legal-jurisdiction-heading'>
+            <Heading
+              id='legal-jurisdiction-heading'
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              6. Legislación aplicable y jurisdicción
+            </Heading>
+            <p>
+              La relación entre el titular de la web y el usuario se regirá por
+              la normativa española vigente. Para la resolución de cualquier
+              controversia que pudiera derivarse del acceso o uso de este sitio
+              web, las partes se someterán a los Juzgados y Tribunales que
+              resulten competentes conforme a la legislación aplicable.
             </p>
           </section>
         </div>
