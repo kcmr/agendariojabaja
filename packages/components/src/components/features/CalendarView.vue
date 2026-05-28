@@ -221,8 +221,8 @@ const hidePopover = (popoverId: string) => {
               <div v-if="day.events.length" class="mt-2 space-y-1">
                 <a
                   v-for="event in day.events"
-                  :key="event.id"
                   :id="eventAnchorId('desktop', day.isoDate, event)"
+                  :key="event.id"
                   :href="event.href"
                   :class="[
                     `calendar-event-link border-border-brand-tint
@@ -291,8 +291,8 @@ const hidePopover = (popoverId: string) => {
           <div class="mt-3 space-y-2">
             <a
               v-for="event in day.events"
-              :key="event.id"
               :id="eventAnchorId('mobile', day.isoDate, event)"
+              :key="event.id"
               :href="event.href"
               :class="[
                 `calendar-event-link border-border-brand-tint
