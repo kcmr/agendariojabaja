@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { navigate } from "astro:transitions/client";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import CalendarView from "@repo/components/features/CalendarView.vue";
 import EventCard from "@repo/components/features/EventCard.vue";
 import EmptyState from "@repo/components/features/EmptyState.vue";
 import FormSelect, {
   type FormSelectOption,
 } from "@repo/components/ui/FormSelect.vue";
+import Icon from "@repo/components/ui/Icon.vue";
 import Pagination from "@repo/components/ui/Pagination.vue";
 import Tabs from "@repo/components/ui/Tabs.vue";
 import {
@@ -46,6 +48,7 @@ const ID_BASE = "locality";
 const FALLBACK_IMAGE = "/images/arb-instagram-profile.webp";
 
 const currentState = ref<AgendaState>({ ...props.state });
+const activeView = ref<"list" | "calendar">("list");
 let isSyncingExternalState = false;
 
 const defaultState = (): AgendaState => ({
@@ -149,6 +152,16 @@ const statusTabs = computed(() => [
     label: "Histórico reciente",
   },
 ]);
+const viewTabs = computed(() => [
+  {
+    value: "list",
+    label: "Lista",
+  },
+  {
+    value: "calendar",
+    label: "Calendario",
+  },
+]);
 
 const localities = computed<FormSelectOption[]>(() => {
   return [
@@ -185,6 +198,23 @@ const totalPages = computed(() =>
 
 const paginatedEvents = computed(() =>
   getAgendaPageEvents(props.events, currentState.value),
+);
+
+const calendarEvents = computed(() =>
+  filteredEvents.value.map((event) => ({
+    id: event.id,
+    title: event.title,
+    date: event.date,
+    time: event.time,
+    href: `/eventos/${event.slug}/`,
+    status: event.status,
+    location: event.location ?? "La Rioja Baja",
+    category: event.category,
+  })),
+);
+
+const calendarInitialMonth = computed(() =>
+  calendarEvents.value[0]?.date.slice(0, 7),
 );
 
 const previousHref = computed(() =>
@@ -250,17 +280,37 @@ onUnmounted(() => {
     </section>
 
     <div
-      class="mb-6 flex flex-col items-start gap-4 border-b border-border-default pb-4"
+      class="mb-6 flex flex-col items-start justify-between gap-4 border-b border-border-default pb-4 lg:flex-row lg:items-center"
     >
       <Tabs
-        id-base="event-status"
         v-model="selectedStatus"
         :tabs="statusTabs"
         aria-label="Tipo de eventos"
       />
+
+      <Tabs
+        id-base="event-view"
+        v-model="activeView"
+        :tabs="viewTabs"
+        variant="toggle"
+        aria-label="Vista de eventos"
+      >
+        <template #icon-list>
+          <Icon name="List" :size="18" aria-hidden="true" />
+        </template>
+        <template #icon-calendar>
+          <Icon name="Calendar" :size="18" aria-hidden="true" />
+        </template>
+      </Tabs>
     </div>
 
-    <section aria-labelledby="events-list-heading">
+    <section
+      v-show="activeView === 'list'"
+      id="event-view-panel-list"
+      role="tabpanel"
+      :hidden="activeView !== 'list'"
+      aria-labelledby="event-view-tab-list"
+    >
       <h2 id="events-list-heading" class="sr-only">
         Eventos en {{ selectedLocalityHeading }}
       </h2>
@@ -300,5 +350,19 @@ onUnmounted(() => {
         client-navigation
       />
     </section>
+
+    <div
+      v-show="activeView === 'calendar'"
+      id="event-view-panel-calendar"
+      role="tabpanel"
+      :hidden="activeView !== 'calendar'"
+      aria-labelledby="event-view-tab-calendar"
+    >
+      <CalendarView
+        :key="`${currentState.status}-${currentState.locality}`"
+        :events="calendarEvents"
+        :initial-month="calendarInitialMonth"
+      />
+    </div>
   </div>
 </template>
