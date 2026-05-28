@@ -11,7 +11,20 @@ const props = defineProps<{
   previousHref?: string;
   /** URL for the next page. Required when the next control is enabled. */
   nextHref?: string;
+  /** Intercepts link clicks and emits page changes for client-side pagination. */
+  clientNavigation?: boolean;
 }>();
+
+const emit = defineEmits<{
+  (event: "update:currentPage", page: number): void;
+}>();
+
+const goToPage = (event: MouseEvent, page: number) => {
+  if (!props.clientNavigation) return;
+
+  event.preventDefault();
+  emit("update:currentPage", page);
+};
 </script>
 
 <template>
@@ -28,6 +41,7 @@ const props = defineProps<{
       :aria-disabled="currentPage === 1"
       aria-label="Página anterior"
       data-agenda-focus-id="agenda-pagination-status"
+      @click="goToPage($event, currentPage - 1)"
     >
       <Icon name="ChevronLeft" :size="20" />
     </Button>
@@ -55,6 +69,7 @@ const props = defineProps<{
       :aria-disabled="currentPage === totalPages"
       aria-label="Página siguiente"
       data-agenda-focus-id="agenda-pagination-status"
+      @click="goToPage($event, currentPage + 1)"
     >
       <Icon name="ChevronRight" :size="20" />
     </Button>
