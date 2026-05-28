@@ -1,10 +1,39 @@
 ---
 import AppHeader from '@repo/components/features/AppHeader';
 import NewsletterSignup from '@repo/components/features/NewsletterSignup';
+import FooterLinkGrid from '@repo/components/layout/FooterLinkGrid';
 import { ClientRouter } from 'astro:transitions';
+import {
+  DEFAULT_AGENDA_PAGE,
+  DEFAULT_AGENDA_STATUS,
+  getAgendaLocalities,
+  getAgendaUrl,
+} from '../lib/agenda';
+import { getPublicEvents } from '../lib/events';
 import '../styles/global.css';
 
+interface Props {
+  title?: string;
+  localityLinks?: Array<{
+    label: string;
+    href: string;
+  }>;
+}
+
 const title = Astro.props.title ?? 'Agenda Rioja Baja';
+const localities = Astro.props.localityLinks
+  ? []
+  : getAgendaLocalities(await getPublicEvents());
+const localityLinks =
+  Astro.props.localityLinks ??
+  localities.map((locality) => ({
+    label: `Eventos en ${locality.label}`,
+    href: getAgendaUrl({
+      status: DEFAULT_AGENDA_STATUS,
+      locality: locality.id,
+      page: DEFAULT_AGENDA_PAGE,
+    }),
+  }));
 ---
 
 <html lang='es'>
@@ -45,6 +74,10 @@ const title = Astro.props.title ?? 'Agenda Rioja Baja';
       </div>
     </main>
     <NewsletterSignup />
+    <FooterLinkGrid
+      heading='Explora planes por localidad'
+      links={localityLinks}
+    />
     <script>
       import '../scripts/back-navigation';
     </script>

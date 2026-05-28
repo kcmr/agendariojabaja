@@ -34,9 +34,14 @@ interface Props {
 }
 
 const { events, state } = Astro.props;
-const title = getAgendaPageTitle(state, getAgendaLocalities(events));
+const localities = getAgendaLocalities(events);
+const title = getAgendaPageTitle(state, localities);
 ---
 
 <BaseLayout title={title}>
-  <EventList events={events} state={state} />
+  <EventList
+    client:load
+    events={events}
+    state={state}
+  />
 </BaseLayout>

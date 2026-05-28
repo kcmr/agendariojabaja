@@ -16,11 +16,13 @@ const state = {
   locality: DEFAULT_AGENDA_LOCALITY,
   page: DEFAULT_AGENDA_PAGE,
 } as const;
-const title = getAgendaPageTitle(state, getAgendaLocalities(events));
+const localities = getAgendaLocalities(events);
+const title = getAgendaPageTitle(state, localities);
 ---
 
 <BaseLayout title={title}>
   <EventList
+    client:load
     events={events}
     state={state}
   />

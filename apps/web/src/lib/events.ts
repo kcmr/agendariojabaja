@@ -154,7 +154,9 @@ export const mapEventRowToWebEvent = (
   };
 };
 
-export const getPublicEvents = async (): Promise<WebEvent[]> => {
+let publicEventsPromise: Promise<WebEvent[]> | undefined;
+
+const fetchPublicEvents = async (): Promise<WebEvent[]> => {
   const client = createServerSupabaseClient();
   const { eventArchiveRetentionDays } = getServerEnv();
 
@@ -173,6 +175,11 @@ export const getPublicEvents = async (): Promise<WebEvent[]> => {
   return (data ?? [])
     .map((row) => mapEventRowToWebEvent(row, eventArchiveRetentionDays))
     .filter((event): event is WebEvent => Boolean(event));
+};
+
+export const getPublicEvents = async (): Promise<WebEvent[]> => {
+  publicEventsPromise ??= fetchPublicEvents();
+  return publicEventsPromise;
 };
 
 export const getPublicEventBySlug = async (
