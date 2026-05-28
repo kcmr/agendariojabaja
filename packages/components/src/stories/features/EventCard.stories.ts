@@ -18,6 +18,11 @@ const meta = {
     dateTime: "2026-05-02",
     location: "Quel",
   },
+  decorators: [
+    () => ({
+      template: '<div class="w-94"><story /></div>',
+    }),
+  ],
 } satisfies Meta<typeof EventCard>;
 
 export default meta;

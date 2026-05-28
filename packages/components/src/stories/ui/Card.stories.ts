@@ -18,6 +18,11 @@ const meta = {
       alt: "Cartel de las fiestas de la juventud de Quel 2026",
     },
   },
+  decorators: [
+    () => ({
+      template: '<div class="w-94"><story /></div>',
+    }),
+  ],
 } satisfies Meta<typeof Card>;
 
 export default meta;
