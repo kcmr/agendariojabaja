@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "build": "astro build",
+    "build:preview": "ASTRO_ADAPTER=node astro build",
     "check-types": "astro check",
     "dev": "astro dev",
-    "preview": "astro preview"
+    "preview": "ASTRO_ADAPTER=node astro preview",
+    "preview:local": "pnpm build:preview && pnpm preview"
   },
   "dependencies": {
     "@astrojs/vercel": "^10.0.7",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/node": "10.0.6",
     "@tailwindcss/vite": "^4.2.4",
     "tailwindcss": "^4.2.4"
   }

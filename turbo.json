@@ -34,6 +34,10 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "preview:local": {
+      "cache": false,
+      "persistent": true
     }
   }
 }
