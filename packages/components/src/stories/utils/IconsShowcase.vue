@@ -11,6 +11,7 @@ const iconNames: IconName[] = [
   "Search",
   "ChevronLeft",
   "ChevronRight",
+  "ChevronDown",
   "Mail",
   "ExternalLink",
   "Ticket",

@@ -17,6 +17,7 @@ import {
   MapPinOff,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   List,
 } from "lucide-vue-next";
 import { computed } from "vue";
@@ -35,6 +36,7 @@ const icons = {
   MapPinOff,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   List,
 } as const;
 
