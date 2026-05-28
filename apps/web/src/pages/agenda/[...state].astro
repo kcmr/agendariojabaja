@@ -34,7 +34,7 @@ interface Props {
 }
 
 const { events, state } = Astro.props;
-const localities = getAgendaLocalities(events);
+const localities = getAgendaLocalities();
 const title = getAgendaPageTitle(state, localities);
 ---
 

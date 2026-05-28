@@ -9,7 +9,6 @@ import {
   getAgendaLocalities,
   getAgendaUrl,
 } from '../lib/agenda';
-import { getPublicEvents } from '../lib/events';
 import '../styles/global.css';
 
 interface Props {
@@ -21,9 +20,7 @@ interface Props {
 }
 
 const title = Astro.props.title ?? 'Agenda Rioja Baja';
-const localities = Astro.props.localityLinks
-  ? []
-  : getAgendaLocalities(await getPublicEvents());
+const localities = Astro.props.localityLinks ? [] : getAgendaLocalities();
 const localityLinks =
   Astro.props.localityLinks ??
   localities.map((locality) => ({

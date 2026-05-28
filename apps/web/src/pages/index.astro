@@ -16,7 +16,7 @@ const state = {
   locality: DEFAULT_AGENDA_LOCALITY,
   page: DEFAULT_AGENDA_PAGE,
 } as const;
-const localities = getAgendaLocalities(events);
+const localities = getAgendaLocalities();
 const title = getAgendaPageTitle(state, localities);
 ---
 

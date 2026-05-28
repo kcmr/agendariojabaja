@@ -156,7 +156,7 @@ const localities = computed<FormSelectOption[]>(() => {
       value: DEFAULT_AGENDA_LOCALITY,
       label: "Toda La Rioja Baja",
     },
-    ...getAgendaLocalities(props.events).map((locality) => ({
+    ...getAgendaLocalities().map((locality) => ({
       value: locality.id,
       label: locality.label,
     })),

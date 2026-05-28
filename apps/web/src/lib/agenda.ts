@@ -18,6 +18,21 @@ export type AgendaLocality = {
 
 type AgendaEvent = Pick<WebEvent, "location" | "status">;
 
+export const AGENDA_LOCALITIES = [
+  { id: "aldeanueva-de-ebro", label: "Aldeanueva de Ebro" },
+  { id: "alfaro", label: "Alfaro" },
+  { id: "arnedillo", label: "Arnedillo" },
+  { id: "arnedo", label: "Arnedo" },
+  { id: "autol", label: "Autol" },
+  { id: "calahorra", label: "Calahorra" },
+  { id: "cornago", label: "Cornago" },
+  { id: "enciso", label: "Enciso" },
+  { id: "pradejon", label: "Pradejón" },
+  { id: "prejano", label: "Préjano" },
+  { id: "quel", label: "Quel" },
+  { id: "rincon-de-soto", label: "Rincón de Soto" },
+] satisfies AgendaLocality[];
+
 export const normalizeLocalityId = (value: string) =>
   value
     .normalize("NFD")
@@ -29,25 +44,7 @@ export const normalizeLocalityId = (value: string) =>
 export const localityIdForEvent = (event: Pick<AgendaEvent, "location">) =>
   normalizeLocalityId(event.location ?? "la-rioja-baja") || "la-rioja-baja";
 
-export const getAgendaLocalities = (events: AgendaEvent[]) => {
-  const localityMap = new Map<string, AgendaLocality>();
-
-  for (const event of events) {
-    const label = event.location ?? "La Rioja Baja";
-    const id = localityIdForEvent(event);
-
-    if (!localityMap.has(id)) {
-      localityMap.set(id, {
-        id,
-        label,
-      });
-    }
-  }
-
-  return Array.from(localityMap.values()).sort((a, b) =>
-    a.label.localeCompare(b.label, "es")
-  );
-};
+export const getAgendaLocalities = () => AGENDA_LOCALITIES;
 
 export const filterAgendaEvents = <TEvent extends AgendaEvent>(
   events: TEvent[],
@@ -153,7 +150,7 @@ export const parseAgendaPath = (path = ""): AgendaState | null => {
 export const getAgendaStaticStates = (events: WebEvent[]) => {
   const localities = [
     DEFAULT_AGENDA_LOCALITY,
-    ...getAgendaLocalities(events).map((locality) => locality.id),
+    ...getAgendaLocalities().map((locality) => locality.id),
   ];
   const states: AgendaState[] = [];
 
