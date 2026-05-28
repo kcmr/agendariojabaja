@@ -13,7 +13,7 @@ defineProps<{
 <template>
   <div
     class="border-border-strong bg-surface-card col-span-full rounded-2xl border
-      border-dashed py-16 text-center"
+      border-dashed px-8 py-16 text-center sm:px-10"
   >
     <div
       class="text-content-subtle mx-auto mb-4 flex h-12 w-12 items-center
@@ -26,7 +26,10 @@ defineProps<{
     <Heading :level="2" variant="h4" class="mb-2 font-semibold">
       {{ title }}
     </Heading>
-    <p v-if="description" class="text-content-muted mt-1 text-sm">
+    <p
+      v-if="description"
+      class="text-content-muted mx-auto mt-1 max-w-sm text-sm leading-6"
+    >
       {{ description }}
     </p>
   </div>
