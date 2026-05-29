@@ -53,7 +53,6 @@ export default defineConfig({
       PUBLIC_KIT_FORM_ACTION_URL: envField.string({
         context: 'client',
         access: 'public',
-        optional: true,
       }),
       PUBLIC_TURNSTILE_SITE_KEY: envField.string({
         context: 'client',

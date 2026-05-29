@@ -8,6 +8,7 @@ import {
   getAgendaLocalities,
   getAgendaUrl,
 } from '../lib/agenda';
+import { getPublicEnv } from '../lib/env';
 import '../styles/global.css';
 
 interface Props {
@@ -29,6 +30,7 @@ const localityLinks =
       page: DEFAULT_AGENDA_PAGE,
     }),
   }));
+const { kitFormActionUrl } = getPublicEnv();
 ---
 
 <html lang='es'>
@@ -68,7 +70,7 @@ const localityLinks =
         <slot />
       </div>
     </main>
-    <NewsletterSignup />
+    <NewsletterSignup action={kitFormActionUrl} />
     <AppFooter
       linksHeading='Explora planes por localidad'
       links={localityLinks}

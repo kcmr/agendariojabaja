@@ -4,6 +4,9 @@ import NewsletterSignup from "../../components/features/NewsletterSignup.vue";
 const meta = {
   component: NewsletterSignup,
   tags: ["autodocs"],
+  args: {
+    action: "https://app.kit.com/forms/9152132/subscriptions",
+  },
   parameters: {
     layout: "fullscreen",
   },

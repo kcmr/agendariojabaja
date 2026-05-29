@@ -31,7 +31,10 @@ export const getServerEnv = () => ({
 
 export const getPublicEnv = () => ({
   siteUrl: PUBLIC_SITE_URL,
-  kitFormActionUrl: PUBLIC_KIT_FORM_ACTION_URL,
+  kitFormActionUrl: readRequiredValue(
+    "PUBLIC_KIT_FORM_ACTION_URL",
+    PUBLIC_KIT_FORM_ACTION_URL
+  ),
   turnstileSiteKey: PUBLIC_TURNSTILE_SITE_KEY,
 });
 

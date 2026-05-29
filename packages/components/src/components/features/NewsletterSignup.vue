@@ -12,7 +12,7 @@ const props = withDefaults(
     /** Section id used as an anchor target. */
     id?: string;
     /** Kit subscription endpoint. */
-    action?: string;
+    action: string;
     /** Kit form id. */
     formId?: string;
     /** Kit form uid. */
@@ -34,7 +34,6 @@ const props = withDefaults(
   }>(),
   {
     id: "newsletter",
-    action: "https://app.kit.com/forms/9152132/subscriptions",
     formId: "9152132",
     uid: "f0a168168a",
     heading: "No te pierdas ningún plan",
