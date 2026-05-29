@@ -5,7 +5,18 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".astro/**"]
+      "outputs": ["dist/**", ".astro/**"],
+      "env": [
+        "ASTRO_ADAPTER",
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "SUPABASE_PUBLISHABLE_KEY",
+        "SUPABASE_ANON_KEY",
+        "N8N_WEBHOOK_URL",
+        "N8N_FORM_SECRET",
+        "TURNSTILE_SECRET_KEY",
+        "PUBLIC_*"
+      ]
     },
     "build-storybook": {
       "dependsOn": ["^build"],
