@@ -68,6 +68,40 @@ const { isoDate, humanDate } = useDateFormatting(
           </Heading>
         </header>
 
+        <aside
+          class="-mx-6 self-start md:-mx-8 lg:col-start-2 lg:row-start-2
+            lg:mx-0"
+        >
+          <div
+            class="bg-surface-subtle relative flex max-h-[72vh] min-h-80
+              items-start justify-center overflow-hidden sm:min-h-96
+              lg:max-h-none lg:rounded-2xl"
+          >
+            <img
+              :src="event.img"
+              :alt="event.imgAlt ?? event.title"
+              :style="
+                transitionName
+                  ? { viewTransitionName: `${transitionName}-image` }
+                  : undefined
+              "
+              class="h-auto max-h-[72vh] w-full object-contain lg:max-h-190"
+            />
+            <div
+              v-if="event.status === 'past'"
+              class="bg-content-heading/50 absolute inset-0 flex items-center
+                justify-center"
+            >
+              <span
+                class="bg-surface-card text-content-heading rounded-xl px-6 py-3
+                  text-lg font-bold shadow-lg"
+              >
+                Este evento ya se ha celebrado
+              </span>
+            </div>
+          </div>
+        </aside>
+
         <div class="contents lg:block">
           <ul
             class="border-border-subtle bg-surface-subtle m-0 grid list-none
@@ -115,44 +149,14 @@ const { isoDate, humanDate } = useDateFormatting(
             </p>
           </section>
         </div>
-
-        <aside class="self-start lg:col-start-2 lg:row-start-2">
-          <div
-            class="bg-surface-subtle relative flex min-h-96 items-start
-              justify-center overflow-hidden rounded-2xl"
-          >
-            <img
-              :src="event.img"
-              :alt="event.imgAlt ?? event.title"
-              :style="
-                transitionName
-                  ? { viewTransitionName: `${transitionName}-image` }
-                  : undefined
-              "
-              class="h-auto max-h-[min(72vh,760px)] w-full object-contain"
-            />
-            <div
-              v-if="event.status === 'past'"
-              class="bg-content-heading/50 absolute inset-0 flex items-center
-                justify-center"
-            >
-              <span
-                class="bg-surface-card text-content-heading rounded-xl px-6 py-3
-                  text-lg font-bold shadow-lg"
-              >
-                Este evento ya se ha celebrado
-              </span>
-            </div>
-          </div>
-        </aside>
       </div>
 
       <footer
         class="border-border-subtle flex flex-col items-start justify-between
           gap-4 border-t px-6 py-5 sm:flex-row sm:items-center md:px-8"
       >
-        <p class="text-content-muted flex items-center gap-2 text-sm">
-          <Icon name="Clock" :size="16" />
+        <p class="text-content-muted flex items-start gap-2 text-sm">
+          <Icon name="Clock" :size="16" class="mt-0.5 shrink-0" />
           Publicado originalmente en
           {{ event.sourceName ?? "Facebook" }}
         </p>

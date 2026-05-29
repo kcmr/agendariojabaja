@@ -28,7 +28,7 @@ defineProps<{
 <template>
   <header class="bg-surface-card sticky top-0 z-1 shadow-sm">
     <div
-      class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-3 py-3
+      class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3
         sm:px-6 sm:py-4 lg:px-8"
     >
       <div class="group flex min-w-0 shrink items-center gap-2 sm:gap-3">
