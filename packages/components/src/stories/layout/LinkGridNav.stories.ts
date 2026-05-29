@@ -7,19 +7,19 @@ import LinkGridNav, {
 const LINKS = [
   {
     label: "Eventos en Calahorra",
-    href: "/agenda/proximos/localidad/calahorra/",
+    href: "/agenda/localidad/calahorra/",
   },
   {
     label: "Eventos en Arnedo",
-    href: "/agenda/proximos/localidad/arnedo/",
+    href: "/agenda/localidad/arnedo/",
   },
   {
     label: "Eventos en Alfaro",
-    href: "/agenda/proximos/localidad/alfaro/",
+    href: "/agenda/localidad/alfaro/",
   },
   {
     label: "Eventos en Rincón de Soto",
-    href: "/agenda/proximos/localidad/rincon-de-soto/",
+    href: "/agenda/localidad/rincon-de-soto/",
   },
 ] satisfies LinkGridNavLink[];
 
@@ -57,10 +57,7 @@ export const Default: Story = {
     });
 
     expect(heading).toBeInTheDocument();
-    expect(calahorra).toHaveAttribute(
-      "href",
-      "/agenda/proximos/localidad/calahorra/"
-    );
+    expect(calahorra).toHaveAttribute("href", "/agenda/localidad/calahorra/");
   },
 };
 

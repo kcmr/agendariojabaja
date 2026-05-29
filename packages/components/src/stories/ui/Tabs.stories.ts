@@ -7,8 +7,8 @@ import TabPanels from "../../components/ui/TabPanels.vue";
 import Icon from "../../components/ui/Icon.vue";
 
 const SEGMENT_TABS = [
-  { value: "upcoming", label: "Próximos planes" },
-  { value: "past", label: "Histórico" },
+  { value: "events", label: "Eventos" },
+  { value: "workshops", label: "Talleres" },
 ];
 
 const TOGGLE_TABS = [
@@ -17,13 +17,13 @@ const TOGGLE_TABS = [
 ];
 
 const TAB_CONTENT = {
-  upcoming: {
-    title: "Próximos planes",
-    text: "Eventos abiertos para reservar plaza durante las próximas semanas.",
+  events: {
+    title: "Eventos",
+    text: "Actividades abiertas durante las próximas semanas.",
   },
-  past: {
-    title: "Histórico",
-    text: "Actividades ya celebradas con sus fechas y localizaciones.",
+  workshops: {
+    title: "Talleres",
+    text: "Sesiones prácticas y actividades con plazas limitadas.",
   },
   list: {
     title: "Lista",
@@ -60,11 +60,11 @@ import Tabs from "@repo/components/ui/Tabs";
 import TabPanels from "@repo/components/ui/TabPanels";
 
 const tabs = [
-  { value: "upcoming", label: "Upcoming events" },
-  { value: "past", label: "Past events" },
+  { value: "events", label: "Events" },
+  { value: "workshops", label: "Workshops" },
 ];
 
-const activeTab = ref("upcoming");
+const activeTab = ref("events");
 </script>
 
 <template>
@@ -81,11 +81,11 @@ const activeTab = ref("upcoming");
     :model-value="activeTab"
   >
     <template #default="{ tab }">
-      <section v-if="tab.value === 'upcoming'">
-        Upcoming events.
+      <section v-if="tab.value === 'events'">
+        Events.
       </section>
       <section v-else>
-        Past events.
+        Workshops.
       </section>
     </template>
   </TabPanels>
@@ -129,7 +129,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Segment: Story = {
-  args: { modelValue: "upcoming", variant: "segment", tabs: SEGMENT_TABS },
+  args: { modelValue: "events", variant: "segment", tabs: SEGMENT_TABS },
   render: (args) => ({
     components: { Tabs, TabPanels },
     setup() {
@@ -161,27 +161,27 @@ export const Segment: Story = {
   }),
   play: async ({ canvasElement, userEvent }) => {
     const canvas = within(canvasElement);
-    const upcoming = canvas.getByRole("tab", { name: "Próximos planes" });
-    const historico = canvas.getByRole("tab", { name: "Histórico" });
-    const upcomingPanel = canvas.getByRole("tabpanel", {
-      name: "Próximos planes",
+    const events = canvas.getByRole("tab", { name: "Eventos" });
+    const workshops = canvas.getByRole("tab", { name: "Talleres" });
+    const eventsPanel = canvas.getByRole("tabpanel", {
+      name: "Eventos",
     });
 
-    expect(upcoming).toHaveAttribute(
+    expect(events).toHaveAttribute(
       "aria-controls",
-      "event-status-panel-upcoming"
+      "event-status-panel-events"
     );
-    expect(upcomingPanel).toHaveAttribute(
+    expect(eventsPanel).toHaveAttribute(
       "aria-labelledby",
-      "event-status-tab-upcoming"
+      "event-status-tab-events"
     );
-    expect(historico).toHaveAttribute("aria-selected", "false");
-    upcoming.focus();
+    expect(workshops).toHaveAttribute("aria-selected", "false");
+    events.focus();
     await userEvent.keyboard("{ArrowRight}");
-    expect(historico).toHaveAttribute("aria-selected", "true");
-    expect(historico).toHaveFocus();
+    expect(workshops).toHaveAttribute("aria-selected", "true");
+    expect(workshops).toHaveFocus();
     expect(
-      canvas.getByRole("tabpanel", { name: "Histórico" })
+      canvas.getByRole("tabpanel", { name: "Talleres" })
     ).not.toHaveAttribute("hidden");
   },
 };

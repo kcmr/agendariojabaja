@@ -7,7 +7,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     label: "Calahorra",
-    href: "/agenda/proximos/localidad/calahorra/",
+    href: "/agenda/localidad/calahorra/",
     imageSrc:
       "https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&q=80&w=300&h=300",
     active: false,

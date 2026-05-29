@@ -7,27 +7,27 @@ import AppFooter, {
 const LINKS = [
   {
     label: "Eventos en Calahorra",
-    href: "/agenda/proximos/localidad/calahorra/",
+    href: "/agenda/localidad/calahorra/",
   },
   {
     label: "Eventos en Arnedo",
-    href: "/agenda/proximos/localidad/arnedo/",
+    href: "/agenda/localidad/arnedo/",
   },
   {
     label: "Eventos en Alfaro",
-    href: "/agenda/proximos/localidad/alfaro/",
+    href: "/agenda/localidad/alfaro/",
   },
   {
     label: "Eventos en Autol",
-    href: "/agenda/proximos/localidad/autol/",
+    href: "/agenda/localidad/autol/",
   },
   {
     label: "Eventos en Pradejón",
-    href: "/agenda/proximos/localidad/pradejon/",
+    href: "/agenda/localidad/pradejon/",
   },
   {
     label: "Eventos en Rincón de Soto",
-    href: "/agenda/proximos/localidad/rincon-de-soto/",
+    href: "/agenda/localidad/rincon-de-soto/",
   },
 ] satisfies AppFooterLink[];
 
@@ -67,7 +67,7 @@ export const Default: Story = {
     expect(footer).toBeInTheDocument();
     expect(
       within(nav).getByRole("link", { name: "Eventos en Calahorra" })
-    ).toHaveAttribute("href", "/agenda/proximos/localidad/calahorra/");
+    ).toHaveAttribute("href", "/agenda/localidad/calahorra/");
     expect(legalLink).toHaveAttribute("href", "/aviso-legal");
     expect(developerLink).toHaveAttribute("href", "https://kuscamara.dev");
     expect(instagramLink).toHaveAttribute(
