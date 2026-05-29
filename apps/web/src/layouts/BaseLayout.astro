@@ -9,6 +9,7 @@ import {
   getAgendaUrl,
 } from '../lib/agenda';
 import { getPublicEnv } from '../lib/env';
+import { isProductionMode } from '../lib/runtime';
 import { SITE } from '../lib/site';
 import '../styles/global.css';
 
@@ -44,7 +45,9 @@ const localityLinks =
     }),
   }));
 const { kitFormActionUrl, umamiScriptUrl, umamiWebsiteId } = publicEnv;
-const hasAnalytics = Boolean(umamiScriptUrl && umamiWebsiteId);
+const hasAnalytics = Boolean(
+  umamiScriptUrl && umamiWebsiteId && isProductionMode,
+);
 
 const toAbsoluteUrl = (pathOrUrl: string) => {
   try {

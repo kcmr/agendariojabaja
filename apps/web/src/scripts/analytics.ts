@@ -1,3 +1,5 @@
+import { isNonProductionMode } from "../lib/runtime";
+
 type AnalyticsValue = string | number | boolean;
 type AnalyticsPayload = Record<string, AnalyticsValue>;
 
@@ -12,6 +14,9 @@ declare global {
 
 const DATA_PREFIX = "data-analytics-";
 const EVENT_ATTRIBUTE = `${DATA_PREFIX}event`;
+
+const isAnalyticsDisabled = () =>
+  typeof window === "undefined" || isNonProductionMode;
 
 const normalizeAttributeName = (name: string) =>
   name.replace(DATA_PREFIX, "").replace(/-/g, "_");
@@ -41,7 +46,7 @@ export const trackAnalyticsEvent = (
   eventName: string,
   payload?: AnalyticsPayload,
 ) => {
-  if (typeof window === "undefined") return;
+  if (isAnalyticsDisabled()) return;
 
   window.umami?.track(eventName, payload);
 };
@@ -54,6 +59,7 @@ const trackElement = (element: Element) => {
 };
 
 const initAnalytics = () => {
+  if (isAnalyticsDisabled()) return;
   if (window.__agendaAnalyticsInitialized) return;
 
   document.addEventListener(
@@ -83,6 +89,6 @@ const initAnalytics = () => {
   window.__agendaAnalyticsInitialized = true;
 };
 
-if (typeof window !== "undefined") {
+if (!isAnalyticsDisabled()) {
   initAnalytics();
 }
