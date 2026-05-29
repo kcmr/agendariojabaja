@@ -7,6 +7,7 @@ defineOptions({ inheritAttrs: false });
 
 type SelectSize = "sm" | "lg" | "xl";
 type LabelVariant = "stacked" | "hero";
+type Layout = "stacked" | "inline";
 
 export type FormSelectOption = {
   value: string;
@@ -25,6 +26,7 @@ const props = withDefaults(
     error?: string;
     selectSize?: SelectSize;
     labelVariant?: LabelVariant;
+    layout?: Layout;
     required?: boolean;
     icon?: IconName;
   }>(),
@@ -36,6 +38,7 @@ const props = withDefaults(
     error: undefined,
     selectSize: "sm",
     labelVariant: "stacked",
+    layout: "stacked",
     required: false,
     icon: undefined,
   }
@@ -70,12 +73,12 @@ const sizeClasses: Record<SelectSize, string> = {
 
 const selectClasses = computed(() =>
   twMerge(
-    `border-border-strong text-content-heading bg-surface-card
+    `border-border-default text-content-body bg-surface-card
     hover:border-border-strong focus:ring-ring-brand w-full cursor-pointer
-    appearance-none rounded-lg border pr-10 font-semibold shadow-sm
-    transition-all focus:border-transparent focus:ring-2 focus:outline-none`,
-    props.icon ? "pl-12" : "pl-3",
-    props.selectSize === "xl" && "rounded-2xl border-2 shadow-xs",
+    appearance-none rounded-xl border pr-10 font-medium shadow-xs
+    transition-colors focus:border-transparent focus:ring-2 focus:outline-none`,
+    props.icon ? "pl-11" : "pl-3",
+    props.selectSize === "xl" && "rounded-2xl",
     sizeClasses[props.selectSize],
     hasError.value &&
       "border-border-error focus:border-border-error focus:ring-ring-error",
@@ -83,14 +86,25 @@ const selectClasses = computed(() =>
   )
 );
 
+const rootClasses = computed(() =>
+  props.layout === "inline"
+    ? "flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4"
+    : "flex flex-col gap-1.5"
+);
+
 const labelClasses = computed(() =>
   twMerge(
-    "text-content-heading leading-none font-semibold",
+    "text-content-heading shrink-0 leading-none font-semibold",
+    props.layout === "inline" && "text-base font-bold",
     props.labelVariant === "hero"
-      ? `mb-5 text-left text-xl font-extrabold tracking-normal
-        whitespace-nowrap sm:text-center sm:text-3xl`
+      ? `mb-3 text-left text-xl font-extrabold tracking-normal
+        sm:text-2xl`
       : "text-sm"
   )
+);
+
+const controlClasses = computed(() =>
+  props.layout === "inline" ? "group relative min-w-0 flex-1" : "group relative"
 );
 
 const onChange = (event: Event) => {
@@ -99,7 +113,7 @@ const onChange = (event: Event) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-1.5">
+  <div :class="rootClasses">
     <label :for="selectId" :class="labelClasses">
       {{ label
       }}<span v-if="required" class="text-content-error" aria-hidden="true"
@@ -111,7 +125,7 @@ const onChange = (event: Event) => {
       {{ hint }}
     </p>
 
-    <div class="group relative">
+    <div :class="controlClasses">
       <span
         v-if="icon"
         class="text-content-subtle group-hover:text-content-brand
