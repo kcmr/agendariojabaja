@@ -5,10 +5,25 @@ import Badge from "../ui/Badge.vue";
 import { useDateFormatting } from "../../composables/useDateFormatting";
 import Heading from "../ui/Heading.vue";
 import Button from "../ui/Button.vue";
+import EventCard from "./EventCard.vue";
 import type { EventDetailData } from "./EventDetail.vue";
+
+export interface RelatedEventData {
+  id: number | string;
+  title: string;
+  description: string;
+  date: string;
+  time?: string;
+  locality: string;
+  img: string;
+  imgAlt?: string;
+  href: string;
+  status?: "upcoming" | "past";
+}
 
 const props = defineProps<{
   event: EventDetailData;
+  relatedEvents?: RelatedEventData[];
   transitionName?: string;
 }>();
 
@@ -19,13 +34,6 @@ const { isoDate, humanDate } = useDateFormatting(
 
 <template>
   <article class="w-full py-8">
-    <Button href="/" variant="text" size="md" class="mb-6" data-back-link>
-      <template #icon-left>
-        <Icon name="ArrowLeft" :size="20" />
-      </template>
-      Volver a la agenda
-    </Button>
-
     <div
       class="bg-surface-card border-border-subtle overflow-hidden rounded-2xl
         border shadow-sm"
@@ -166,5 +174,33 @@ const { isoDate, humanDate } = useDateFormatting(
         </Button>
       </footer>
     </div>
+
+    <section v-if="relatedEvents?.length" class="mt-10">
+      <div class="mb-5 flex items-end justify-between gap-4">
+        <Heading :level="2" variant="h2">También te puede interesar</Heading>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <EventCard
+          v-for="relatedEvent in relatedEvents"
+          :key="relatedEvent.id"
+          :heading="relatedEvent.title"
+          :text="relatedEvent.description"
+          :link="relatedEvent.href"
+          :date-time="relatedEvent.date"
+          :hour="relatedEvent.time"
+          :location="relatedEvent.locality"
+          :status="relatedEvent.status"
+          :heading-level="3"
+          size="sm"
+        />
+      </div>
+
+      <div class="mt-8 flex justify-center">
+        <Button href="/" variant="brand" size="lg" class="w-full sm:w-auto">
+          Explorar más eventos
+        </Button>
+      </div>
+    </section>
   </article>
 </template>

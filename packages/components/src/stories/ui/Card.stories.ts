@@ -61,6 +61,32 @@ export const WithLink: Story = {
   },
 };
 
+export const Compact: Story = {
+  args: {
+    size: "sm",
+    heading: "Festival de Danzas Día de La Rioja en Arnedo",
+    text: "Una cita cultural con grupos de danza y programación popular para todos los públicos.",
+  },
+};
+
+export const WithoutImage: Story = {
+  args: {
+    image: undefined,
+    heading: "Calahorra Vibra",
+    text: "Conciertos y ambiente festivo en una noche musical dentro de la programación local.",
+  },
+};
+
+export const CompactWithoutImage: Story = {
+  args: {
+    image: undefined,
+    size: "sm",
+    heading: "Calahorra Vibra",
+    text: "Conciertos y ambiente festivo en una noche musical dentro de la programación local.",
+    link: "#",
+  },
+};
+
 /** Card with all slots populated – tag, footer with location and "Ver más" link */
 export const WithFooterSlot: Story = {
   render: (args) => ({

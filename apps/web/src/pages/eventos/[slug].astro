@@ -3,6 +3,9 @@ import EventDetailSplit from '@repo/components/features/EventDetailSplit.vue';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getPublicEvents, type WebEvent } from '../../lib/events';
 
+const RELATED_EVENTS_LIMIT = 3;
+const FALLBACK_IMAGE = '/images/arb-instagram-profile.webp';
+
 export async function getStaticPaths() {
   const events = await getPublicEvents();
 
@@ -17,6 +20,47 @@ interface Props {
 }
 
 const { event } = Astro.props;
+const events = await getPublicEvents();
+
+const getEventTimestamp = (event: WebEvent) =>
+  new Date(`${event.date}T00:00:00`).getTime();
+
+const currentEventTimestamp = getEventTimestamp(event);
+const relatedEvents = events
+  .filter((candidate) => candidate.id !== event.id)
+  .map((candidate) => {
+    const sameLocality =
+      Boolean(candidate.location && event.location) &&
+      candidate.location === event.location;
+    const sameCategory =
+      Boolean(candidate.category && event.category) &&
+      candidate.category === event.category;
+
+    return {
+      event: candidate,
+      score: Number(sameLocality) * 3 + Number(sameCategory) * 2,
+      dateDistance: Math.abs(getEventTimestamp(candidate) - currentEventTimestamp),
+    };
+  })
+  .sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    if (a.dateDistance !== b.dateDistance) return a.dateDistance - b.dateDistance;
+
+    return getEventTimestamp(a.event) - getEventTimestamp(b.event);
+  })
+  .slice(0, RELATED_EVENTS_LIMIT)
+  .map(({ event }) => ({
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    date: event.date,
+    time: event.time,
+    locality: event.location ?? 'La Rioja Baja',
+    img: event.image?.src ?? FALLBACK_IMAGE,
+    imgAlt: event.image?.alt ?? event.title,
+    href: `/eventos/${event.slug}/`,
+    status: event.status,
+  }));
 ---
 
 <BaseLayout
@@ -43,5 +87,6 @@ const { event } = Astro.props;
       sourceName: event.sourceName,
       status: event.status,
     }}
+    relatedEvents={relatedEvents}
   />
 </BaseLayout>

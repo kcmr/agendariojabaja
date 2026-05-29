@@ -12,7 +12,7 @@ const props = defineProps<{
   /** Event summary or description */
   text: string;
   /** Event cover image */
-  image: {
+  image?: {
     src: string;
     alt?: string;
   };
@@ -30,6 +30,8 @@ const props = defineProps<{
   headingLevel?: HeadingLevel;
   /** Optional stable view-transition name prefix */
   transitionName?: string;
+  /** More compact visual treatment for secondary card groups */
+  size?: "md" | "sm";
 }>();
 
 const { isoDate, humanDate } = useDateFormatting(
@@ -45,6 +47,7 @@ const { isoDate, humanDate } = useDateFormatting(
     :link="link"
     :heading-level="headingLevel"
     :transition-name="transitionName"
+    :size="size"
   >
     <template v-if="status === 'past'" #image-overlay>
       <div

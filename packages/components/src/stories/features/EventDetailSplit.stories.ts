@@ -28,6 +28,32 @@ const meta = {
   },
   args: {
     event: SAMPLE_EVENT,
+    relatedEvents: [
+      {
+        id: "related-1",
+        title: "Festival de Danzas Día de La Rioja en Arnedo",
+        description:
+          "Una cita cultural con grupos de danza y programación popular para todos los públicos.",
+        date: "2026-06-06",
+        time: "19:00",
+        locality: "Arnedo",
+        img: "https://krmwxunfqtcxqgjcngwz.supabase.co/storage/v1/object/public/event-images/core/1281709743949657.jpg",
+        href: "/eventos/festival-de-danzas-dia-de-la-rioja-en-arnedo-bfccb6ee/",
+        status: "upcoming" as const,
+      },
+      {
+        id: "related-2",
+        title: "Calahorra Vibra",
+        description:
+          "Conciertos y ambiente festivo en una noche musical dentro de la programación local.",
+        date: "2026-06-06",
+        time: "22:00",
+        locality: "Calahorra",
+        img: "https://krmwxunfqtcxqgjcngwz.supabase.co/storage/v1/object/public/event-images/core/1431883555648742.jpg",
+        href: "/eventos/calahorra-vibra-2f4d9699/",
+        status: "upcoming" as const,
+      },
+    ],
     transitionName: "event-noches-estrelladas",
   },
 } satisfies Meta<typeof EventDetailSplit>;
@@ -46,8 +72,8 @@ export const Upcoming: Story = {
       canvas.getByRole("heading", { name: "Sobre el evento" })
     ).toBeInTheDocument();
     expect(
-      canvas.getByRole("link", { name: "Volver a la agenda" })
-    ).toHaveAttribute("href", "/");
+      canvas.getByRole("heading", { name: "También te puede interesar" })
+    ).toBeInTheDocument();
     expect(
       canvas.getByRole("link", { name: /Ver fuente original/ })
     ).toHaveAttribute("href", args.event.sourceLink);
