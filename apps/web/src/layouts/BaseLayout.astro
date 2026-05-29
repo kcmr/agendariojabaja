@@ -13,6 +13,7 @@ import '../styles/global.css';
 
 interface Props {
   title?: string;
+  showNewsletterSignup?: boolean;
   localityLinks?: Array<{
     label: string;
     href: string;
@@ -20,6 +21,7 @@ interface Props {
 }
 
 const title = Astro.props.title ?? 'Agenda Rioja Baja';
+const showNewsletterSignup = Astro.props.showNewsletterSignup ?? true;
 const localities = Astro.props.localityLinks ? [] : getAgendaLocalities();
 const localityLinks =
   Astro.props.localityLinks ??
@@ -51,14 +53,8 @@ const { kitFormActionUrl } = getPublicEnv();
       }}
       links={[
         {
-          label: 'Patrocínanos',
-          href: '#',
-          icon: 'Megaphone',
-          variant: 'text',
-        },
-        {
           label: 'Suscríbete',
-          href: '/#newsletter',
+          href: '/suscribete',
           icon: 'Mail',
           variant: 'text',
         },
@@ -71,7 +67,7 @@ const { kitFormActionUrl } = getPublicEnv();
         <slot />
       </div>
     </main>
-    <NewsletterSignup action={kitFormActionUrl} />
+    {showNewsletterSignup && <NewsletterSignup action={kitFormActionUrl} />}
     <AppFooter
       linksHeading='Explora planes por localidad'
       links={localityLinks}

@@ -31,6 +31,8 @@ const props = withDefaults(
     hint?: string;
     /** Opens the Kit submission result in a new tab/window. */
     target?: "_self" | "_blank";
+    /** Visual placement of the section. */
+    variant?: "footer" | "embedded";
   }>(),
   {
     id: "newsletter",
@@ -44,6 +46,7 @@ const props = withDefaults(
     submitLabel: "Suscribirme",
     hint: "Gratis, sin spam y con baja en un clic cuando quieras.",
     target: "_blank",
+    variant: "footer",
   }
 );
 
@@ -57,7 +60,12 @@ const emailId = () => `${resolvedIdBase()}-email`;
 <template>
   <section
     :id="id"
-    class="bg-surface-card border-border-default mt-12 border-t py-12"
+    :class="[
+      'bg-surface-card',
+      variant === 'footer'
+        ? 'border-border-default mt-12 border-t py-12'
+        : 'py-4',
+    ]"
     :aria-labelledby="headingId()"
   >
     <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">

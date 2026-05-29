@@ -1,0 +1,28 @@
+---
+import NewsletterSignup from '@repo/components/features/NewsletterSignup';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublicEnv } from '../lib/env';
+
+const { kitFormActionUrl } = getPublicEnv();
+---
+
+<BaseLayout
+  title='Suscríbete — Agenda Rioja Baja'
+  showNewsletterSignup={false}
+>
+  <div class='mx-auto w-full py-8 sm:py-12'>
+    <div
+      class='bg-surface-card border-border-subtle w-full rounded-3xl border p-6
+        shadow-sm sm:p-8 lg:p-12'
+    >
+      <NewsletterSignup
+        id='suscripcion'
+        action={kitFormActionUrl}
+        heading='Suscríbete a Agenda Rioja Baja'
+        headingLevel={1}
+        description='Recibe cada semana una selección de planes y eventos en La Rioja Baja directamente en tu correo.'
+        variant='embedded'
+      />
+    </div>
+  </div>
+</BaseLayout>
