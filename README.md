@@ -1,159 +1,121 @@
-# Turborepo starter
+# Agenda Rioja Baja
 
-This Turborepo starter is maintained by the Turborepo core team.
+Repository for the packages that power the Agenda Rioja Baja website, organized
+as a Turbo monorepo. The web application is built with Astro, Vue and Tailwind
+CSS, with shared UI components developed in the workspace.
 
-## Using this example
+## Requirements
 
-Run the following command:
+- Node.js 20 or newer.
+- pnpm. The expected package manager version is declared in `package.json`.
+- Turbo CLI available on your shell path.
+
+Install dependencies from the repository root:
 
 ```sh
-npx create-turbo@latest
+pnpm install
 ```
 
-## What's inside?
+## Environment
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+The reference environment file for the web app is `apps/web/.env.example`.
+Create a local environment file from it:
 
 ```sh
-cd my-turborepo
-turbo build
+cp apps/web/.env.example apps/web/.env.local
 ```
 
-Without global `turbo`, use your package manager:
+Fill the values needed for the feature you are working on. At minimum, local
+development needs the public site data source and newsletter form variables.
+Analytics variables are optional; when they are empty, the analytics script is
+not rendered.
+
+If Astro reports missing environment variables after editing `.env.local`,
+restart the dev server. Env schema changes are not always picked up by a
+running process.
+
+## Development
+
+Run all persistent development tasks through Turbo:
 
 ```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
 turbo dev
 ```
 
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Run only the web app:
 
 ```sh
 turbo dev --filter=web
 ```
 
-Without global `turbo`:
+Run only the component workspace:
 
 ```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+turbo dev --filter=@repo/components
 ```
 
-### Remote Caching
+## Checks
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Run type checks across the workspace:
 
 ```sh
-cd my-turborepo
-turbo login
+turbo check-types
 ```
 
-Without global `turbo`, use your package manager:
+Run type checks for one target:
 
 ```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
+turbo check-types --filter=web
+turbo check-types --filter=@repo/components
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Run linting:
 
 ```sh
-turbo link
+turbo lint
 ```
 
-Without global `turbo`:
+Run a production build through Turbo:
 
 ```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
+turbo build
 ```
 
-## Useful Links
+## Production Preview
 
-Learn more about the power of Turborepo:
+For a local production-like preview of the web app, use:
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+```sh
+turbo preview:local --filter=web
+```
+
+This command exists because the default production adapter targets Vercel, and
+that output is not convenient for local previewing with Astro's preview server.
+The `preview:local` task builds with the Node adapter instead, then serves the
+resulting output locally.
+
+Use this when you need to verify behavior that can differ from `turbo dev`, such
+as production environment handling, static output, generated metadata, routes, or
+client-side scripts loaded by the final build.
+
+## Turbo Tips
+
+Turbo caches task outputs when a task is cacheable. If a result looks stale,
+force a fresh run:
+
+```sh
+turbo build --force
+turbo check-types --force
+```
+
+To bypass cache for a filtered target:
+
+```sh
+turbo build --filter=web --force
+```
+
+To inspect what Turbo is going to run:
+
+```sh
+turbo build --dry-run
+```
