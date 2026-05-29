@@ -1,12 +1,10 @@
-import type { WebEvent, WebEventStatus } from "./events";
+import type { WebEvent } from "./events";
 
 export const AGENDA_ITEMS_PER_PAGE = 9;
-export const DEFAULT_AGENDA_STATUS: WebEventStatus = "upcoming";
 export const DEFAULT_AGENDA_LOCALITY = "all";
 export const DEFAULT_AGENDA_PAGE = 1;
 
 export type AgendaState = {
-  status: WebEventStatus;
   locality: string;
   page: number;
 };
@@ -52,7 +50,7 @@ export const filterAgendaEvents = <TEvent extends AgendaEvent>(
 ) =>
   events.filter(
     (event) =>
-      event.status === state.status &&
+      event.status === "upcoming" &&
       (state.locality === DEFAULT_AGENDA_LOCALITY ||
         localityIdForEvent(event) === state.locality)
   );
@@ -74,18 +72,7 @@ export const getAgendaPageEvents = <TEvent extends AgendaEvent>(
   );
 };
 
-const statusPathByStatus: Record<WebEventStatus, string> = {
-  upcoming: "proximos",
-  past: "historico",
-};
-
-const statusByStatusPath: Record<string, WebEventStatus> = {
-  proximos: "upcoming",
-  historico: "past",
-};
-
 export const getAgendaUrl = (state: AgendaState) => {
-  const statusPath = statusPathByStatus[state.status];
   const localityPath =
     state.locality === DEFAULT_AGENDA_LOCALITY
       ? ""
@@ -94,14 +81,13 @@ export const getAgendaUrl = (state: AgendaState) => {
     state.page <= DEFAULT_AGENDA_PAGE ? "" : `/pagina/${state.page}`;
 
   if (
-    state.status === DEFAULT_AGENDA_STATUS &&
     state.locality === DEFAULT_AGENDA_LOCALITY &&
     state.page === DEFAULT_AGENDA_PAGE
   ) {
     return "/";
   }
 
-  return `/agenda/${statusPath}${localityPath}${pagePath}/`;
+  return `/agenda${localityPath}${pagePath}/`;
 };
 
 export const getAgendaPathParam = (state: AgendaState) => {
@@ -111,15 +97,9 @@ export const getAgendaPathParam = (state: AgendaState) => {
 
 export const parseAgendaPath = (path = ""): AgendaState | null => {
   const segments = path.split("/").filter(Boolean);
-  const status = statusByStatusPath[segments[0] ?? "proximos"];
-
-  if (!status) {
-    return null;
-  }
-
   let locality = DEFAULT_AGENDA_LOCALITY;
   let page = DEFAULT_AGENDA_PAGE;
-  let index = 1;
+  let index = 0;
 
   if (segments[index] === "localidad") {
     const localitySegment = segments[index + 1];
@@ -144,7 +124,7 @@ export const parseAgendaPath = (path = ""): AgendaState | null => {
     index += 2;
   }
 
-  return index === segments.length ? { status, locality, page } : null;
+  return index === segments.length ? { locality, page } : null;
 };
 
 export const getAgendaStaticStates = (events: WebEvent[]) => {
@@ -154,14 +134,12 @@ export const getAgendaStaticStates = (events: WebEvent[]) => {
   ];
   const states: AgendaState[] = [];
 
-  for (const status of ["upcoming", "past"] satisfies WebEventStatus[]) {
-    for (const locality of localities) {
-      const baseState = { status, locality, page: DEFAULT_AGENDA_PAGE };
-      const totalPages = getAgendaTotalPages(events, baseState);
+  for (const locality of localities) {
+    const baseState = { locality, page: DEFAULT_AGENDA_PAGE };
+    const totalPages = getAgendaTotalPages(events, baseState);
 
-      for (let page = 1; page <= totalPages; page += 1) {
-        states.push({ status, locality, page });
-      }
+    for (let page = 1; page <= totalPages; page += 1) {
+      states.push({ locality, page });
     }
   }
 
@@ -172,8 +150,6 @@ export const getAgendaPageTitle = (
   state: AgendaState,
   localities: AgendaLocality[]
 ) => {
-  const section =
-    state.status === "past" ? "Eventos pasados" : "Próximos eventos";
   const locality =
     state.locality === DEFAULT_AGENDA_LOCALITY
       ? "La Rioja Baja"
@@ -181,5 +157,5 @@ export const getAgendaPageTitle = (
         "La Rioja Baja");
   const page = state.page > 1 ? ` - Página ${state.page}` : "";
 
-  return `${section} en ${locality}${page} | Agenda Rioja Baja`;
+  return `Eventos en ${locality}${page} | Agenda Rioja Baja`;
 };

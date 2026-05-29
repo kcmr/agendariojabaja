@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { navigate } from "astro:transitions/client";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import CalendarView from "@repo/components/features/CalendarView.vue";
 import EventCard from "@repo/components/features/EventCard.vue";
@@ -13,7 +12,6 @@ import Tabs from "@repo/components/ui/Tabs.vue";
 import {
   DEFAULT_AGENDA_PAGE,
   DEFAULT_AGENDA_LOCALITY,
-  DEFAULT_AGENDA_STATUS,
   type AgendaState,
   filterAgendaEvents,
   getAgendaLocalities,
@@ -52,13 +50,12 @@ const activeView = ref<"list" | "calendar">("list");
 let isSyncingExternalState = false;
 
 const defaultState = (): AgendaState => ({
-  status: DEFAULT_AGENDA_STATUS,
   locality: DEFAULT_AGENDA_LOCALITY,
   page: DEFAULT_AGENDA_PAGE,
 });
 
 const statesMatch = (a: AgendaState, b: AgendaState) =>
-  a.status === b.status && a.locality === b.locality && a.page === b.page;
+  a.locality === b.locality && a.page === b.page;
 
 const parseCurrentUrlState = () => {
   if (typeof window === "undefined") return null;
@@ -88,18 +85,6 @@ const applyUrlState = () => {
   });
 };
 
-const navigateToState = (state: AgendaState) => {
-  currentState.value = state;
-
-  if (typeof window === "undefined" || isSyncingExternalState) return;
-
-  const url = getAgendaUrl(state);
-
-  if (url === window.location.pathname) return;
-
-  void navigate(url);
-};
-
 const pushStateWithoutNavigation = (state: AgendaState) => {
   currentState.value = state;
 
@@ -127,13 +112,7 @@ const pushStateWithoutNavigation = (state: AgendaState) => {
 const selectedLocality = computed({
   get: () => currentState.value.locality,
   set: (locality) => {
-    navigateToState({ ...currentState.value, locality, page: 1 });
-  },
-});
-const selectedStatus = computed({
-  get: () => currentState.value.status,
-  set: (status) => {
-    navigateToState({ ...currentState.value, status, page: 1 });
+    pushStateWithoutNavigation({ ...currentState.value, locality, page: 1 });
   },
 });
 const currentPage = computed({
@@ -142,16 +121,6 @@ const currentPage = computed({
     pushStateWithoutNavigation({ ...currentState.value, page });
   },
 });
-const statusTabs = computed(() => [
-  {
-    value: "upcoming",
-    label: "Próximos planes",
-  },
-  {
-    value: "past",
-    label: "Histórico reciente",
-  },
-]);
 const viewTabs = computed(() => [
   {
     value: "list",
@@ -217,6 +186,13 @@ const calendarInitialMonth = computed(() =>
   calendarEvents.value[0]?.date.slice(0, 7),
 );
 
+const currentIsoMonth = computed(() => {
+  const today = new Date();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+
+  return `${today.getFullYear()}-${month}`;
+});
+
 const previousHref = computed(() =>
   currentState.value.page > 1
     ? getAgendaUrl({ ...currentState.value, page: currentState.value.page - 1 })
@@ -229,9 +205,31 @@ const nextHref = computed(() =>
     : undefined,
 );
 
+const pageTitle = computed(() => {
+  const page = currentState.value.page > 1
+    ? ` - Página ${currentState.value.page}`
+    : "";
+
+  return `Eventos en ${selectedLocalityHeading.value}${page} | Agenda Rioja Baja`;
+});
+
+const resultsAnnouncement = computed(() => {
+  const view = activeView.value === "calendar" ? "calendario" : "lista";
+  const count = filteredEvents.value.length;
+  const noun = count === 1 ? "evento" : "eventos";
+
+  return `${count} ${noun} en ${selectedLocalityHeading.value}. Vista ${view}.`;
+});
+
 watch(totalPages, (nextTotalPages) => {
   if (currentState.value.page > nextTotalPages) {
-    navigateToState({ ...currentState.value, page: nextTotalPages });
+    pushStateWithoutNavigation({ ...currentState.value, page: nextTotalPages });
+  }
+});
+
+watch(pageTitle, (title) => {
+  if (typeof document !== "undefined") {
+    document.title = title;
   }
 });
 
@@ -263,46 +261,43 @@ onUnmounted(() => {
 
 <template>
   <div>
-    <section
-      class="mb-8 py-4 sm:bg-surface-card sm:border-border-default sm:rounded-4xl sm:border sm:px-6 sm:py-14 sm:shadow-sm"
-    >
-      <div class="mx-auto max-w-sm sm:px-0">
-        <FormSelect
-          :id="`${ID_BASE}-filter`"
-          v-model="selectedLocality"
-          label="¿Qué quieres hacer en...?"
-          :options="localities"
-          icon="MapPin"
-          label-variant="hero"
-          select-size="xl"
-        />
+    <section class="mb-6">
+      <div
+        class="flex flex-col items-stretch justify-between gap-4 lg:flex-row
+          lg:items-end"
+      >
+        <div class="w-full sm:max-w-sm">
+          <FormSelect
+            :id="`${ID_BASE}-filter`"
+            v-model="selectedLocality"
+            label="¿Qué quieres hacer en...?"
+            :options="localities"
+            icon="MapPin"
+            label-variant="hero"
+            select-size="lg"
+          />
+        </div>
+
+        <Tabs
+          id-base="event-view"
+          v-model="activeView"
+          :tabs="viewTabs"
+          variant="segment"
+          aria-label="Vista de eventos"
+        >
+          <template #icon-list>
+            <Icon name="List" :size="18" aria-hidden="true" />
+          </template>
+          <template #icon-calendar>
+            <Icon name="Calendar" :size="18" aria-hidden="true" />
+          </template>
+        </Tabs>
       </div>
     </section>
 
-    <div
-      class="mb-6 flex flex-col items-start justify-between gap-4 border-b border-border-default pb-4 lg:flex-row lg:items-center"
-    >
-      <Tabs
-        v-model="selectedStatus"
-        :tabs="statusTabs"
-        aria-label="Tipo de eventos"
-      />
-
-      <Tabs
-        id-base="event-view"
-        v-model="activeView"
-        :tabs="viewTabs"
-        variant="toggle"
-        aria-label="Vista de eventos"
-      >
-        <template #icon-list>
-          <Icon name="List" :size="18" aria-hidden="true" />
-        </template>
-        <template #icon-calendar>
-          <Icon name="Calendar" :size="18" aria-hidden="true" />
-        </template>
-      </Tabs>
-    </div>
+    <p class="sr-only" role="status" aria-live="polite">
+      {{ resultsAnnouncement }}
+    </p>
 
     <section
       v-show="activeView === 'list'"
@@ -338,7 +333,7 @@ onUnmounted(() => {
       <EmptyState
         v-else
         title="No hay eventos para esta selección"
-        description="Prueba a cambiar de localidad o revisa el histórico reciente."
+        description="Prueba a cambiar de localidad o vuelve más adelante."
       />
 
       <Pagination
@@ -359,9 +354,10 @@ onUnmounted(() => {
       aria-labelledby="event-view-tab-calendar"
     >
       <CalendarView
-        :key="`${currentState.status}-${currentState.locality}`"
+        :key="currentState.locality"
         :events="calendarEvents"
         :initial-month="calendarInitialMonth"
+        :min-month="currentIsoMonth"
       />
     </div>
   </div>

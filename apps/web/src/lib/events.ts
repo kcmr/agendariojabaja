@@ -1,6 +1,5 @@
 import type { Tables } from "../../database.types";
 import { createServerSupabaseClient } from "./supabase";
-import { getServerEnv } from "./env";
 
 type EventRow = Tables<"events">;
 type PublicEventRow = Pick<
@@ -42,7 +41,7 @@ export interface WebEvent {
   status: WebEventStatus;
 }
 
-const PUBLIC_EVENT_STATUSES = ["Publicado", "Caducado"] as const;
+const PUBLIC_EVENT_STATUSES = ["Publicado"] as const;
 const EMPTY_VALUE_LABELS = new Set([
   "",
   "no especificado",
@@ -96,20 +95,8 @@ const parseDate = (value: string | null): Date | undefined => {
 const startOfDay = (date: Date): Date =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-const isWithinExpiredRetention = (
-  eventDate: Date,
-  retentionDays: number,
-  now = new Date()
-): boolean => {
-  const retentionMs = retentionDays * 24 * 60 * 60 * 1000;
-  const cutoff = new Date(startOfDay(now).getTime() - retentionMs);
-
-  return eventDate >= cutoff;
-};
-
 export const mapEventRowToWebEvent = (
   row: PublicEventRow,
-  retentionDays = getServerEnv().eventArchiveRetentionDays,
   now = new Date()
 ): WebEvent | undefined => {
   if (!row.name || !row.date || !row.status) return undefined;
@@ -123,12 +110,7 @@ export const mapEventRowToWebEvent = (
   const eventDate = parseDate(row.date);
   if (!eventDate) return undefined;
 
-  const status: WebEventStatus =
-    row.status === "Caducado" || eventDate < startOfDay(now)
-      ? "past"
-      : "upcoming";
-
-  if (status === "past" && !isWithinExpiredRetention(eventDate, retentionDays, now)) {
+  if (eventDate < startOfDay(now)) {
     return undefined;
   }
 
@@ -150,7 +132,7 @@ export const mapEventRowToWebEvent = (
       : undefined,
     sourceUrl: cleanOptionalText(row.link),
     sourceName: cleanOptionalText(row.publisher) ?? cleanOptionalText(row.source_type),
-    status,
+    status: "upcoming",
   };
 };
 
@@ -158,7 +140,6 @@ let publicEventsPromise: Promise<WebEvent[]> | undefined;
 
 const fetchPublicEvents = async (): Promise<WebEvent[]> => {
   const client = createServerSupabaseClient();
-  const { eventArchiveRetentionDays } = getServerEnv();
 
   const { data, error } = await client
     .from("events")
@@ -173,7 +154,7 @@ const fetchPublicEvents = async (): Promise<WebEvent[]> => {
   }
 
   return (data ?? [])
-    .map((row) => mapEventRowToWebEvent(row, eventArchiveRetentionDays))
+    .map((row) => mapEventRowToWebEvent(row))
     .filter((event): event is WebEvent => Boolean(event));
 };
 

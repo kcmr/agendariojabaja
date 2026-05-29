@@ -17,7 +17,6 @@ export async function getStaticPaths() {
     .filter(
       (state) =>
         !(
-          state.status === 'upcoming' &&
           state.locality === 'all' &&
           state.page === 1
         )

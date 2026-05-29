@@ -1,5 +1,4 @@
 import {
-  EVENT_ARCHIVE_RETENTION_DAYS,
   N8N_FORM_SECRET,
   N8N_WEBHOOK_URL,
   SUPABASE_ANON_KEY,
@@ -28,7 +27,6 @@ export const getServerEnv = () => ({
     SUPABASE_SERVICE_ROLE_KEY ??
     SUPABASE_PUBLISHABLE_KEY ??
     readRequiredValue("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY),
-  eventArchiveRetentionDays: EVENT_ARCHIVE_RETENTION_DAYS,
 });
 
 export const getPublicEnv = () => ({

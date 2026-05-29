@@ -30,11 +30,6 @@ export default defineConfig({
         access: 'secret',
         optional: true,
       }),
-      EVENT_ARCHIVE_RETENTION_DAYS: envField.number({
-        context: 'server',
-        access: 'public',
-        default: 60,
-      }),
       N8N_WEBHOOK_URL: envField.string({
         context: 'server',
         access: 'secret',

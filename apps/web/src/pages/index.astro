@@ -4,7 +4,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   DEFAULT_AGENDA_LOCALITY,
   DEFAULT_AGENDA_PAGE,
-  DEFAULT_AGENDA_STATUS,
   getAgendaLocalities,
   getAgendaPageTitle,
 } from '../lib/agenda';
@@ -12,7 +11,6 @@ import { getPublicEvents } from '../lib/events';
 
 const events = await getPublicEvents();
 const state = {
-  status: DEFAULT_AGENDA_STATUS,
   locality: DEFAULT_AGENDA_LOCALITY,
   page: DEFAULT_AGENDA_PAGE,
 } as const;
