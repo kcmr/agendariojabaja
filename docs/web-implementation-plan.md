@@ -37,12 +37,10 @@ Event detail routes use stable slugs derived from the event name plus a short su
 
 ## Expired Event Policy
 
-Expired events are generated only for a limited time to keep the static build useful and bounded.
+Expired events are not generated in the public site.
 
-- Default retention: `60` days.
-- Configurable with `EVENT_ARCHIVE_RETENTION_DAYS`.
-- Expired events older than the retention window are excluded from `getStaticPaths`.
-- Excluded event detail URLs return 404 because Astro never generates those routes.
+- Past event listings are not exposed.
+- Expired event detail URLs return 404 because Astro never generates those routes.
 
 ## Newsletter
 
@@ -85,7 +83,6 @@ Optional:
 ```txt
 SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
-EVENT_ARCHIVE_RETENTION_DAYS=60
 PUBLIC_KIT_FORM_ACTION_URL=
 ```
 
@@ -116,15 +113,14 @@ Notes:
 - Improve back navigation from event detail pages so returning to the agenda
   restores the previous scroll position instead of landing at the top of the
   page.
-- Preserve agenda state across detail navigation. If the user opens an event
-  from "Histórico reciente", the "Volver a la agenda" action should return to
-  the recent history view rather than the default upcoming events view.
+- Preserve agenda state across detail navigation so returning to the agenda
+  restores the selected locality.
 
 ## Test Plan
 
 - `pnpm --filter web check-types`
 - `pnpm --filter web build`
 - Verify non-public statuses are not generated.
-- Verify expired events outside `EVENT_ARCHIVE_RETENTION_DAYS` are not generated.
+- Verify expired events are not generated.
 - Verify `.env.local` remains ignored by git.
 - Search `apps/web/dist` for server-only Supabase keys before production deployment.

@@ -208,7 +208,7 @@ Tabs accesibles con dos estilos visuales:
 - Emite `update:modelValue`
 - Rol ARIA: `tablist`
 
-**Variante `segment`** (estilo "Próximos planes / Histórico"):
+**Variante `segment`** (estilo de navegación entre secciones):
 - Contenedor con `bg-surface-muted rounded-lg p-1`
 - Tab activo: `bg-surface-card text-content-heading shadow-sm rounded-md`
 - Tab inactivo: `text-content-muted hover:text-content-body`
@@ -303,4 +303,3 @@ El setup actual (`storybookTest` + Vitest + Playwright headless) convierte autom
 | `LocalityChip` — Default | Click emite `select` con id correcto |
 | `Pagination` — Default | Siguiente/anterior cambian página; disabled en extremos |
 | `Tabs` — Segment/Toggle | Click en tab cambia el activo |
-
