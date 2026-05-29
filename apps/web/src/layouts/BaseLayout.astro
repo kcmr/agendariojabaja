@@ -44,23 +44,25 @@ const { kitFormActionUrl } = getPublicEnv();
   </head>
   <body class='bg-surface-body flex min-h-dvh flex-col'>
     <a class='skip-link' href='#main'>Saltar al contenido</a>
-    <AppHeader
-      brand={{
-        label: 'Agenda Rioja Baja',
-        headline: 'Eventos y ocio local',
-        href: '/',
-        logoSrc: '/images/arb-instagram-profile.webp',
-      }}
-      links={[
-        {
-          label: 'Suscríbete',
-          href: '/suscribete',
-          icon: 'Mail',
-          variant: 'text',
-        },
-        { label: 'Enviar evento', href: '/enviar-evento', variant: 'brand' },
-      ]}
-    />
+    <div transition:persist='site-header'>
+      <AppHeader
+        brand={{
+          label: 'Agenda Rioja Baja',
+          headline: 'Eventos y ocio local',
+          href: '/',
+          logoSrc: '/images/arb-instagram-profile.webp',
+        }}
+        links={[
+          {
+            label: 'Suscríbete',
+            href: '/suscribete',
+            icon: 'Mail',
+            variant: 'text',
+          },
+          { label: 'Enviar evento', href: '/enviar-evento', variant: 'brand' },
+        ]}
+      />
+    </div>
 
     <main id='main' class='flex-1 p-4' tabindex='-1'>
       <div class='mx-auto max-w-7xl p-4 sm:px-6 lg:px-8'>
