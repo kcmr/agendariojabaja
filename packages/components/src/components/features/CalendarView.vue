@@ -6,6 +6,7 @@ import EmptyState from "./EmptyState.vue";
 import {
   addMonths,
   getMonthCalendarDays,
+  parseIsoMonth,
   resolveInitialMonth,
   toIsoMonth,
   type CalendarEvent,
@@ -16,12 +17,14 @@ const props = withDefaults(
     events: readonly CalendarEvent[];
     initialMonth?: string;
     locale?: string;
+    minMonth?: string;
     previousLabel?: string;
     nextLabel?: string;
   }>(),
   {
     initialMonth: undefined,
     locale: "es-ES",
+    minMonth: undefined,
     previousLabel: "Mes anterior",
     nextLabel: "Mes siguiente",
   }
@@ -38,6 +41,16 @@ const WEEKDAYS = [
 ];
 
 const currentMonth = ref(resolveInitialMonth(props.initialMonth, props.events));
+
+const monthIndex = (date: Date) => date.getFullYear() * 12 + date.getMonth();
+
+const minMonthDate = computed(() => parseIsoMonth(props.minMonth));
+
+const canGoToPreviousMonth = computed(
+  () =>
+    !minMonthDate.value ||
+    monthIndex(currentMonth.value) > monthIndex(minMonthDate.value)
+);
 
 const monthHeading = computed(() =>
   new Intl.DateTimeFormat(props.locale, {
@@ -69,6 +82,8 @@ const mobileEventDays = computed(() =>
 const calendarId = computed(() => `calendar-${toIsoMonth(currentMonth.value)}`);
 
 const goToPreviousMonth = () => {
+  if (!canGoToPreviousMonth.value) return;
+
   currentMonth.value = addMonths(currentMonth.value, -1);
 };
 
@@ -150,6 +165,7 @@ const hidePopover = (popoverId: string) => {
           variant="outline"
           size="md"
           class="p-2"
+          :disabled="!canGoToPreviousMonth"
           :aria-label="previousLabel"
           @click="goToPreviousMonth"
         >
@@ -349,7 +365,7 @@ const hidePopover = (popoverId: string) => {
       <EmptyState
         v-else
         title="No hay eventos este mes"
-        description="Prueba a cambiar de mes, localidad o estado de eventos."
+        description="Prueba a cambiar de mes o localidad."
       />
     </div>
   </section>
