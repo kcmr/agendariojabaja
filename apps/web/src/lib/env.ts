@@ -1,8 +1,20 @@
-const DEFAULT_ARCHIVE_RETENTION_DAYS = 60;
+import {
+  EVENT_ARCHIVE_RETENTION_DAYS,
+  N8N_FORM_SECRET,
+  N8N_WEBHOOK_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_PUBLISHABLE_KEY,
+  SUPABASE_SERVICE_ROLE_KEY,
+  SUPABASE_URL,
+  TURNSTILE_SECRET_KEY,
+} from "astro:env/server";
+import {
+  PUBLIC_KIT_FORM_ACTION_URL,
+  PUBLIC_SITE_URL,
+  PUBLIC_TURNSTILE_SITE_KEY,
+} from "astro:env/client";
 
-const readRequiredEnv = (name: string): string => {
-  const value = import.meta.env[name];
-
+const readRequiredValue = (name: string, value: string | undefined): string => {
   if (typeof value !== "string" || value.length === 0) {
     throw new Error(`Missing required environment variable: ${name}`);
   }
@@ -10,43 +22,26 @@ const readRequiredEnv = (name: string): string => {
   return value;
 };
 
-const readOptionalEnv = (name: string): string | undefined => {
-  const value = import.meta.env[name];
-  return typeof value === "string" && value.length > 0 ? value : undefined;
-};
-
-const readPositiveIntegerEnv = (name: string, fallback: number): number => {
-  const value = readOptionalEnv(name);
-  if (!value) return fallback;
-
-  const parsed = Number.parseInt(value, 10);
-  if (!Number.isFinite(parsed) || parsed < 1) {
-    throw new Error(`${name} must be a positive integer`);
-  }
-
-  return parsed;
-};
-
 export const getServerEnv = () => ({
-  supabaseUrl: readRequiredEnv("SUPABASE_URL"),
+  supabaseUrl: SUPABASE_URL,
   supabaseKey:
-    readOptionalEnv("SUPABASE_SERVICE_ROLE_KEY") ??
-    readOptionalEnv("SUPABASE_PUBLISHABLE_KEY") ??
-    readRequiredEnv("SUPABASE_ANON_KEY"),
-  eventArchiveRetentionDays: readPositiveIntegerEnv(
-    "EVENT_ARCHIVE_RETENTION_DAYS",
-    DEFAULT_ARCHIVE_RETENTION_DAYS
-  ),
+    SUPABASE_SERVICE_ROLE_KEY ??
+    SUPABASE_PUBLISHABLE_KEY ??
+    readRequiredValue("SUPABASE_ANON_KEY", SUPABASE_ANON_KEY),
+  eventArchiveRetentionDays: EVENT_ARCHIVE_RETENTION_DAYS,
 });
 
 export const getPublicEnv = () => ({
-  siteUrl: readOptionalEnv("PUBLIC_SITE_URL"),
-  kitFormActionUrl: readOptionalEnv("PUBLIC_KIT_FORM_ACTION_URL"),
-  turnstileSiteKey: readOptionalEnv("PUBLIC_TURNSTILE_SITE_KEY"),
+  siteUrl: PUBLIC_SITE_URL,
+  kitFormActionUrl: PUBLIC_KIT_FORM_ACTION_URL,
+  turnstileSiteKey: PUBLIC_TURNSTILE_SITE_KEY,
 });
 
 export const getEventSubmissionEnv = () => ({
-  n8nWebhookUrl: readRequiredEnv("N8N_WEBHOOK_URL"),
-  n8nFormSecret: readRequiredEnv("N8N_FORM_SECRET"),
-  turnstileSecretKey: readRequiredEnv("TURNSTILE_SECRET_KEY"),
+  n8nWebhookUrl: readRequiredValue("N8N_WEBHOOK_URL", N8N_WEBHOOK_URL),
+  n8nFormSecret: readRequiredValue("N8N_FORM_SECRET", N8N_FORM_SECRET),
+  turnstileSecretKey: readRequiredValue(
+    "TURNSTILE_SECRET_KEY",
+    TURNSTILE_SECRET_KEY
+  ),
 });
