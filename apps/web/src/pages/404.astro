@@ -3,6 +3,10 @@ import NotFoundPage from '@repo/components/features/NotFoundPage';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title='Página no encontrada | Agenda Rioja Baja'>
+<BaseLayout
+  title='Página no encontrada | Agenda Rioja Baja'
+  description='La página solicitada no existe o ya no está disponible en Agenda Rioja Baja.'
+  noindex
+>
   <NotFoundPage />
 </BaseLayout>

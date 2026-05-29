@@ -5,7 +5,9 @@ import {
   DEFAULT_AGENDA_LOCALITY,
   DEFAULT_AGENDA_PAGE,
   getAgendaLocalities,
+  getAgendaPageDescription,
   getAgendaPageTitle,
+  getAgendaUrl,
 } from '../lib/agenda';
 import { getPublicEvents } from '../lib/events';
 
@@ -16,9 +18,14 @@ const state = {
 } as const;
 const localities = getAgendaLocalities();
 const title = getAgendaPageTitle(state, localities);
+const description = getAgendaPageDescription(state, localities);
 ---
 
-<BaseLayout title={title}>
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={getAgendaUrl(state)}
+>
   <EventList
     client:load
     events={events}

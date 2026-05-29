@@ -9,10 +9,16 @@ import {
   getAgendaUrl,
 } from '../lib/agenda';
 import { getPublicEnv } from '../lib/env';
+import { SITE } from '../lib/site';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
+  description?: string;
+  canonicalPath?: string;
+  image?: string;
+  pageType?: 'website' | 'article';
+  noindex?: boolean;
   showNewsletterSignup?: boolean;
   localityLinks?: Array<{
     label: string;
@@ -20,7 +26,12 @@ interface Props {
   }>;
 }
 
-const title = Astro.props.title ?? 'Agenda Rioja Baja';
+const publicEnv = getPublicEnv();
+const siteUrl = publicEnv.siteUrl ?? SITE.fallbackUrl;
+const title = Astro.props.title ?? SITE.name;
+const description = Astro.props.description ?? SITE.defaultDescription;
+const pageType = Astro.props.pageType ?? 'website';
+const image = Astro.props.image ?? SITE.defaultImage;
 const showNewsletterSignup = Astro.props.showNewsletterSignup ?? true;
 const localities = Astro.props.localityLinks ? [] : getAgendaLocalities();
 const localityLinks =
@@ -32,14 +43,41 @@ const localityLinks =
       page: DEFAULT_AGENDA_PAGE,
     }),
   }));
-const { kitFormActionUrl } = getPublicEnv();
+const { kitFormActionUrl } = publicEnv;
+
+const toAbsoluteUrl = (pathOrUrl: string) => {
+  try {
+    return new URL(pathOrUrl).toString();
+  } catch {
+    return new URL(pathOrUrl, siteUrl).toString();
+  }
+};
+
+const canonicalUrl = toAbsoluteUrl(
+  Astro.props.canonicalPath ?? Astro.url.pathname,
+);
+const imageUrl = toAbsoluteUrl(image);
 ---
 
 <html lang='es'>
   <head>
     <meta charset='UTF-8' />
     <title>{title}</title>
+    <meta name='description' content={description} />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    {Astro.props.noindex && <meta name='robots' content='noindex, follow' />}
+    <link rel='canonical' href={canonicalUrl} />
+    <meta property='og:site_name' content={SITE.name} />
+    <meta property='og:locale' content={SITE.locale} />
+    <meta property='og:type' content={pageType} />
+    <meta property='og:title' content={title} />
+    <meta property='og:description' content={description} />
+    <meta property='og:url' content={canonicalUrl} />
+    <meta property='og:image' content={imageUrl} />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:title' content={title} />
+    <meta name='twitter:description' content={description} />
+    <meta name='twitter:image' content={imageUrl} />
     <ClientRouter />
   </head>
   <body class='bg-surface-body flex min-h-dvh flex-col'>

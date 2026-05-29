@@ -3,9 +3,11 @@ import EventList from '../../components/EventList.vue';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
   getAgendaLocalities,
+  getAgendaPageDescription,
   getAgendaPageTitle,
   getAgendaPathParam,
   getAgendaStaticStates,
+  getAgendaUrl,
   type AgendaState,
 } from '../../lib/agenda';
 import { getPublicEvents, type WebEvent } from '../../lib/events';
@@ -35,9 +37,14 @@ interface Props {
 const { events, state } = Astro.props;
 const localities = getAgendaLocalities();
 const title = getAgendaPageTitle(state, localities);
+const description = getAgendaPageDescription(state, localities);
 ---
 
-<BaseLayout title={title}>
+<BaseLayout
+  title={title}
+  description={description}
+  canonicalPath={getAgendaUrl(state)}
+>
   <EventList
     client:load
     events={events}

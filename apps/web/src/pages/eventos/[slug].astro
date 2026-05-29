@@ -19,7 +19,13 @@ interface Props {
 const { event } = Astro.props;
 ---
 
-<BaseLayout title={event.title}>
+<BaseLayout
+  title={`${event.title} | Agenda Rioja Baja`}
+  description={event.description}
+  canonicalPath={`/eventos/${event.slug}/`}
+  image={event.image?.src}
+  pageType='article'
+>
   <EventDetailSplit
     transitionName={`event-${event.slug}`}
     event={{
