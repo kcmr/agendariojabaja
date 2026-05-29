@@ -8,6 +8,8 @@ interface NavItem {
   href: string;
   variant?: Extract<ButtonVariant, "text" | "brand">;
   icon?: IconName;
+  analyticsEvent?: string;
+  analyticsLocation?: string;
 }
 
 interface Brand {
@@ -73,6 +75,9 @@ defineProps<{
               :href="link.href"
               size="sm"
               class="whitespace-nowrap max-sm:px-3"
+              :data-analytics-event="link.analyticsEvent"
+              :data-analytics-location="link.analyticsLocation"
+              :data-analytics-label="link.label"
             >
               <template v-if="link.icon" #icon-left>
                 <Icon :name="link.icon" :size="16" />

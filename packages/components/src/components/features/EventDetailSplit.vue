@@ -154,6 +154,12 @@ const { isoDate, humanDate } = useDateFormatting(
           variant="brand"
           size="lg"
           class="w-full sm:w-auto"
+          data-analytics-event="event_source_click"
+          :data-analytics-event-id="event.id"
+          :data-analytics-event-title="event.title"
+          :data-analytics-locality="event.locality"
+          :data-analytics-category="event.category"
+          :data-analytics-source-name="event.sourceName"
         >
           <Icon name="ExternalLink" :size="18" />
           Ver fuente original

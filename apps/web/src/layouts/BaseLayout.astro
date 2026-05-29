@@ -43,7 +43,8 @@ const localityLinks =
       page: DEFAULT_AGENDA_PAGE,
     }),
   }));
-const { kitFormActionUrl } = publicEnv;
+const { kitFormActionUrl, umamiScriptUrl, umamiWebsiteId } = publicEnv;
+const hasAnalytics = Boolean(umamiScriptUrl && umamiWebsiteId);
 
 const toAbsoluteUrl = (pathOrUrl: string) => {
   try {
@@ -93,6 +94,16 @@ const imageUrl = toAbsoluteUrl(image);
     <meta name='twitter:title' content={title} />
     <meta name='twitter:description' content={description} />
     <meta name='twitter:image' content={imageUrl} />
+    {
+      hasAnalytics && (
+        <script
+          is:inline
+          defer
+          src={umamiScriptUrl}
+          data-website-id={umamiWebsiteId}
+        />
+      )
+    }
     <ClientRouter />
   </head>
   <body class='bg-surface-body flex min-h-dvh flex-col'>
@@ -111,8 +122,16 @@ const imageUrl = toAbsoluteUrl(image);
             href: '/suscribete',
             icon: 'Mail',
             variant: 'text',
+            analyticsEvent: 'newsletter_header_click',
+            analyticsLocation: 'header',
           },
-          { label: 'Enviar evento', href: '/enviar-evento', variant: 'brand' },
+          {
+            label: 'Enviar evento',
+            href: '/enviar-evento',
+            variant: 'brand',
+            analyticsEvent: 'submit_event_header_click',
+            analyticsLocation: 'header',
+          },
         ]}
       />
     </div>
@@ -122,13 +141,21 @@ const imageUrl = toAbsoluteUrl(image);
         <slot />
       </div>
     </main>
-    {showNewsletterSignup && <NewsletterSignup action={kitFormActionUrl} />}
+    {
+      showNewsletterSignup && (
+        <NewsletterSignup
+          action={kitFormActionUrl}
+          analyticsLocation='footer'
+        />
+      )
+    }
     <AppFooter
       linksHeading='Explora planes por localidad'
       links={localityLinks}
     />
     <script>
       import '../scripts/back-navigation';
+      import '../scripts/analytics';
     </script>
   </body>
 </html>

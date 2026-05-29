@@ -11,6 +11,8 @@ import {
   PUBLIC_KIT_FORM_ACTION_URL,
   PUBLIC_SITE_URL,
   PUBLIC_TURNSTILE_SITE_KEY,
+  PUBLIC_UMAMI_SCRIPT_URL,
+  PUBLIC_UMAMI_WEBSITE_ID,
 } from "astro:env/client";
 
 const readRequiredValue = (name: string, value: string | undefined): string => {
@@ -36,6 +38,8 @@ export const getPublicEnv = () => ({
     PUBLIC_KIT_FORM_ACTION_URL
   ),
   turnstileSiteKey: PUBLIC_TURNSTILE_SITE_KEY,
+  umamiScriptUrl: PUBLIC_UMAMI_SCRIPT_URL,
+  umamiWebsiteId: PUBLIC_UMAMI_WEBSITE_ID,
 });
 
 export const getEventSubmissionEnv = () => ({

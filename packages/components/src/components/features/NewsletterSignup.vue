@@ -33,6 +33,10 @@ const props = withDefaults(
     target?: "_self" | "_blank";
     /** Visual placement of the section. */
     variant?: "footer" | "embedded";
+    /** Analytics event name tracked when the form is submitted. */
+    analyticsEvent?: string;
+    /** Analytics location payload for this form instance. */
+    analyticsLocation?: string;
   }>(),
   {
     id: "newsletter",
@@ -47,6 +51,8 @@ const props = withDefaults(
     hint: "Gratis, sin spam y con baja en un clic cuando quieras.",
     target: "_blank",
     variant: "footer",
+    analyticsEvent: "newsletter_submit",
+    analyticsLocation: "footer",
   }
 );
 
@@ -100,6 +106,8 @@ const emailId = () => `${resolvedIdBase()}-email`;
         :data-uid="uid"
         :aria-describedby="`${descriptionId()} ${hintId()}`"
         :target="target"
+        :data-analytics-event="analyticsEvent"
+        :data-analytics-location="analyticsLocation"
       >
         <div class="min-w-0 flex-1">
           <FormInput

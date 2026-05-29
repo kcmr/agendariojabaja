@@ -9,14 +9,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   canonicalPath='/aviso-legal'
   noindex
 >
-  <section class='mx-auto w-full py-8 sm:py-12' aria-labelledby='legal-heading'>
+  <section class='mx-auto w-full py-8 sm:py-12'>
     <div
       class='bg-surface-card border-border-subtle w-full rounded-3xl border p-6
         shadow-sm sm:p-8 lg:p-12'
     >
       <div class='mx-auto max-w-3xl'>
         <Heading
-          id='legal-heading'
           level={1}
           variant='h1'
           class='text-content-heading mb-4 text-3xl leading-tight font-bold sm:text-4xl'
@@ -33,9 +32,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <strong class='text-content-heading'>agendariojabaja.com</strong>.
           </p>
 
-          <section aria-labelledby='legal-owner-heading'>
+          <section>
             <Heading
-              id='legal-owner-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
@@ -69,9 +67,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </ul>
           </section>
 
-          <section aria-labelledby='legal-service-heading'>
+          <section>
             <Heading
-              id='legal-service-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
@@ -101,9 +98,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </p>
           </section>
 
-          <section aria-labelledby='legal-ip-heading'>
+          <section>
             <Heading
-              id='legal-ip-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
@@ -163,9 +159,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </div>
           </section>
 
-          <section aria-labelledby='legal-liability-heading'>
+          <section>
             <Heading
-              id='legal-liability-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
@@ -209,9 +204,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </p>
           </section>
 
-          <section aria-labelledby='legal-external-links-heading'>
+          <section>
             <Heading
-              id='legal-external-links-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
@@ -228,14 +222,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             </p>
           </section>
 
-          <section aria-labelledby='legal-jurisdiction-heading'>
+          <section>
             <Heading
-              id='legal-jurisdiction-heading'
               level={2}
               variant='h3'
               class='text-content-heading mb-2 text-xl font-bold'
             >
-              6. Legislación aplicable y jurisdicción
+              6. Analítica anónima
+            </Heading>
+            <p>
+              Este sitio puede utilizar analítica anónima para conocer de forma
+              agregada el uso de la web y mejorar sus contenidos. Esta medición
+              no utiliza cookies, no identifica personalmente a los visitantes y
+              no se emplea para crear perfiles individuales.
+            </p>
+          </section>
+
+          <section>
+            <Heading
+              level={2}
+              variant='h3'
+              class='text-content-heading mb-2 text-xl font-bold'
+            >
+              7. Legislación aplicable y jurisdicción
             </Heading>
             <p>
               La relación entre el titular de la web y el usuario se regirá por

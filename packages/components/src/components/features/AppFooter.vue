@@ -84,6 +84,8 @@ withDefaults(
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Síguenos en Instagram"
+          data-analytics-event="instagram_footer_click"
+          data-analytics-location="footer"
         >
           <Icon name="Instagram" :size="22" />
         </a>

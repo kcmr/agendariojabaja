@@ -20,6 +20,7 @@ import {
   getAgendaUrl,
   parseAgendaPath,
 } from "../lib/agenda";
+import { trackAnalyticsEvent } from "../scripts/analytics";
 
 interface EventListItem {
   id: string;
@@ -112,6 +113,10 @@ const pushStateWithoutNavigation = (state: AgendaState) => {
 const selectedLocality = computed({
   get: () => currentState.value.locality,
   set: (locality) => {
+    trackAnalyticsEvent("agenda_filter_change", {
+      locality,
+      previous_locality: currentState.value.locality,
+    });
     pushStateWithoutNavigation({ ...currentState.value, locality, page: 1 });
   },
 });
@@ -131,6 +136,20 @@ const viewTabs = computed(() => [
     label: "Calendario",
   },
 ]);
+
+const trackEventCardClick = (clickEvent: MouseEvent, event: EventListItem) => {
+  if (!(clickEvent.target instanceof Element)) return;
+  if (!clickEvent.target.closest("a")) return;
+
+  trackAnalyticsEvent("event_card_click", {
+    event_id: event.id,
+    event_slug: event.slug,
+    event_title: event.title,
+    locality: event.location ?? "La Rioja Baja",
+    category: event.category ?? "",
+    view: activeView.value,
+  });
+};
 
 const localities = computed<FormSelectOption[]>(() => {
   return [
@@ -233,6 +252,14 @@ watch(pageTitle, (title) => {
   }
 });
 
+watch(activeView, (view, previousView) => {
+  trackAnalyticsEvent("agenda_view_change", {
+    view,
+    previous_view: previousView,
+    locality: currentState.value.locality,
+  });
+});
+
 watch(
   () => props.state,
   (state) => {
@@ -327,6 +354,7 @@ onUnmounted(() => {
           :status="event.status"
           :transition-name="`event-${event.slug}`"
           :heading-level="3"
+          @click.capture="trackEventCardClick($event, event)"
         />
       </div>
 

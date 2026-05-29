@@ -58,6 +58,8 @@ if (!turnstileSiteKey) {
           method='post'
           novalidate
           data-turnstile-site-key={turnstileSiteKey}
+          data-analytics-event='submit_event_form_submit'
+          data-analytics-location='submit_event_page'
         >
           <div>
             <FormInput
@@ -420,6 +422,7 @@ if (!turnstileSiteKey) {
           });
 
           if (response.ok) {
+            window.umami?.track('submit_event_form_success');
             form.reset();
             resetTurnstile();
             form.hidden = true;
