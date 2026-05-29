@@ -42,7 +42,7 @@ const { kitFormActionUrl } = getPublicEnv();
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <ClientRouter />
   </head>
-  <body class='bg-surface-body'>
+  <body class='bg-surface-body flex min-h-dvh flex-col'>
     <a class='skip-link' href='#main'>Saltar al contenido</a>
     <AppHeader
       brand={{
@@ -62,7 +62,7 @@ const { kitFormActionUrl } = getPublicEnv();
       ]}
     />
 
-    <main id='main' class='p-4' tabindex='-1'>
+    <main id='main' class='flex-1 p-4' tabindex='-1'>
       <div class='mx-auto max-w-7xl p-4 sm:px-6 lg:px-8'>
         <slot />
       </div>
