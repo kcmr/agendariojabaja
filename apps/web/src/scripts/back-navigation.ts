@@ -6,6 +6,7 @@ type AgendaBackState = {
 
 const agendaBackStateKey = "agenda:back-state";
 const agendaFocusTargetKey = "agenda:focus-target";
+const agendaScrollToTopKey = "agenda:scroll-to-top";
 const agendaBackStateMaxAge = 30 * 60 * 1000;
 const eventDetailPathPattern = /^\/eventos\/[^/]+\/?$/;
 const agendaPathPattern = /^\/(?:$|agenda(?:\/|$))/;
@@ -38,6 +39,19 @@ const getStoredAgendaBackState = () => {
   } catch {
     return null;
   }
+};
+
+const scrollToDocumentTop = () => {
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+};
+
+const restoreAgendaScroll = () => {
+  if (!window.sessionStorage.getItem(agendaScrollToTopKey)) {
+    return;
+  }
+
+  window.sessionStorage.removeItem(agendaScrollToTopKey);
+  scrollToDocumentTop();
 };
 
 const shouldRestoreAgendaFocus = (url: URL) =>
@@ -94,6 +108,8 @@ document.addEventListener("click", (event) => {
 
     if (isFresh && state.to === currentUrl && history.length > 1) {
       event.preventDefault();
+      window.sessionStorage.setItem(agendaFocusTargetKey, "main");
+      window.sessionStorage.setItem(agendaScrollToTopKey, "true");
       window.history.back();
     }
 
@@ -126,6 +142,13 @@ document.addEventListener("click", (event) => {
   );
 });
 
-document.addEventListener("astro:page-load", restoreAgendaFocus);
+document.addEventListener("astro:page-load", () => {
+  restoreAgendaFocus();
+  restoreAgendaScroll();
+});
+window.addEventListener("popstate", () => {
+  window.setTimeout(restoreAgendaScroll, 0);
+});
 
 restoreAgendaFocus();
+restoreAgendaScroll();

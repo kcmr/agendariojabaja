@@ -58,6 +58,12 @@ const defaultState = (): AgendaState => ({
 const statesMatch = (a: AgendaState, b: AgendaState) =>
   a.locality === b.locality && a.page === b.page;
 
+const scrollToDocumentTop = () => {
+  if (typeof window === "undefined") return;
+
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+};
+
 const parseCurrentUrlState = () => {
   if (typeof window === "undefined") return null;
 
@@ -124,6 +130,7 @@ const currentPage = computed({
   get: () => currentState.value.page,
   set: (page) => {
     pushStateWithoutNavigation({ ...currentState.value, page });
+    scrollToDocumentTop();
   },
 });
 const viewTabs = computed(() => [
