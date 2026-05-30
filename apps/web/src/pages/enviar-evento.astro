@@ -44,7 +44,7 @@ if (!turnstileSiteKey) {
       </div>
 
       <div class='mx-auto w-full max-w-3xl'>
-        <p class='text-content-muted mb-5 text-sm'>
+        <p id='required-fields-note' class='text-content-muted mb-5 text-sm'>
           Los campos marcados con
           <span class='text-content-error' aria-hidden='true'>*</span>
           <span class='sr-only'>asterisco</span>
@@ -290,6 +290,7 @@ if (!turnstileSiteKey) {
       const successMessage = document.getElementById('form-success');
       const errorMessage = document.getElementById('form-error');
       const errorText = document.getElementById('form-error-text');
+      const requiredFieldsNote = document.getElementById('required-fields-note');
       const dateInput = document.getElementById('date');
       const turnstileContainer = document.getElementById('turnstile-container');
       const today = getTodayString();
@@ -426,6 +427,9 @@ if (!turnstileSiteKey) {
             form.reset();
             resetTurnstile();
             form.hidden = true;
+            if (requiredFieldsNote) {
+              requiredFieldsNote.hidden = true;
+            }
             successMessage.hidden = false;
             successMessage.focus();
             return;
