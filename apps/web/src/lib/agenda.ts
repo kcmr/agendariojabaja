@@ -24,6 +24,7 @@ export const AGENDA_LOCALITIES = [
   { id: "autol", label: "Autol" },
   { id: "calahorra", label: "Calahorra" },
   { id: "cornago", label: "Cornago" },
+  { id: "el-villar-de-arnedo", label: "El Villar de Arnedo" },
   { id: "enciso", label: "Enciso" },
   { id: "igea", label: "Igea" },
   { id: "pradejon", label: "Pradejón" },
