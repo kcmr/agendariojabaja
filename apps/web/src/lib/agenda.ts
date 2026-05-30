@@ -25,6 +25,7 @@ export const AGENDA_LOCALITIES = [
   { id: "calahorra", label: "Calahorra" },
   { id: "cornago", label: "Cornago" },
   { id: "enciso", label: "Enciso" },
+  { id: "igea", label: "Igea" },
   { id: "pradejon", label: "Pradejón" },
   { id: "prejano", label: "Préjano" },
   { id: "quel", label: "Quel" },
