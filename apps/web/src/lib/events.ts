@@ -2,6 +2,7 @@ import type { Tables } from "../../database.types";
 import { createServerSupabaseClient } from "./supabase";
 
 type EventRow = Tables<"events">;
+type EventStatus = NonNullable<EventRow["status"]>;
 type PublicEventRow = Pick<
   EventRow,
   | "id"
@@ -41,7 +42,10 @@ export interface WebEvent {
   status: WebEventStatus;
 }
 
-const PUBLIC_EVENT_STATUSES = ["Publicado"] as const;
+const EXCLUDED_PUBLIC_EVENT_STATUSES = new Set<EventStatus>([
+  "Descartado",
+  "Revisión",
+]);
 const EMPTY_VALUE_LABELS = new Set([
   "",
   "no especificado",
@@ -95,6 +99,29 @@ const parseDate = (value: string | null): Date | undefined => {
 const startOfDay = (date: Date): Date =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
+const addMonths = (date: Date, months: number): Date => {
+  const result = new Date(date);
+  result.setMonth(result.getMonth() + months);
+  return result;
+};
+
+const formatDateValue = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const getPublicEventDateRange = (now: Date) => {
+  const start = startOfDay(now);
+
+  return {
+    start,
+    end: addMonths(start, 2),
+  };
+};
+
 export const mapEventRowToWebEvent = (
   row: PublicEventRow,
   now = new Date()
@@ -103,14 +130,16 @@ export const mapEventRowToWebEvent = (
   const description = getWebDescription(row.neutral_description);
   if (!description) return undefined;
 
-  if (!PUBLIC_EVENT_STATUSES.includes(row.status as (typeof PUBLIC_EVENT_STATUSES)[number])) {
+  if (EXCLUDED_PUBLIC_EVENT_STATUSES.has(row.status)) {
     return undefined;
   }
 
   const eventDate = parseDate(row.date);
   if (!eventDate) return undefined;
 
-  if (eventDate < startOfDay(now)) {
+  const dateRange = getPublicEventDateRange(now);
+
+  if (eventDate < dateRange.start || eventDate > dateRange.end) {
     return undefined;
   }
 
@@ -140,13 +169,16 @@ let publicEventsPromise: Promise<WebEvent[]> | undefined;
 
 const fetchPublicEvents = async (): Promise<WebEvent[]> => {
   const client = createServerSupabaseClient();
+  const now = new Date();
+  const dateRange = getPublicEventDateRange(now);
 
   const { data, error } = await client
     .from("events")
     .select(
       "id,name,neutral_description,description,date,time,location,category,price,image_url,link,publisher,source_type,status"
     )
-    .in("status", [...PUBLIC_EVENT_STATUSES])
+    .gte("date", formatDateValue(dateRange.start))
+    .lte("date", formatDateValue(dateRange.end))
     .order("date", { ascending: true });
 
   if (error) {
@@ -154,7 +186,7 @@ const fetchPublicEvents = async (): Promise<WebEvent[]> => {
   }
 
   return (data ?? [])
-    .map((row) => mapEventRowToWebEvent(row))
+    .map((row) => mapEventRowToWebEvent(row, now))
     .filter((event): event is WebEvent => Boolean(event));
 };
 
