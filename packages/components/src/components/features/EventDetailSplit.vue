@@ -30,6 +30,16 @@ const props = defineProps<{
 const { isoDate, humanDate } = useDateFormatting(
   computed(() => props.event.date)
 );
+
+const sourceAttributionText = computed(() => {
+  const sourceName = props.event.sourceName?.trim();
+
+  if (sourceName?.toLowerCase() === "manual") {
+    return "Evento enviado a través del formulario de envío";
+  }
+
+  return `Publicado originalmente en ${sourceName ?? "Facebook"}`;
+});
 </script>
 
 <template>
@@ -157,8 +167,7 @@ const { isoDate, humanDate } = useDateFormatting(
       >
         <p class="text-content-muted flex items-start gap-2 text-sm">
           <Icon name="Clock" :size="16" class="mt-0.5 shrink-0" />
-          Publicado originalmente en
-          {{ event.sourceName ?? "Facebook" }}
+          {{ sourceAttributionText }}
         </p>
         <Button
           :href="event.sourceLink"
