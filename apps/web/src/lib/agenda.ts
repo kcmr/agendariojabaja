@@ -169,12 +169,12 @@ export const getAgendaPageDescription = (
   const page = state.page > 1 ? ` Página ${state.page}.` : "";
 
   if (state.locality === DEFAULT_AGENDA_LOCALITY) {
-    return `Agenda de eventos, planes de ocio, cultura, fiestas y actividades en La Rioja Baja.${page} Encuentra propuestas actualizadas cerca de ti.`;
+    return `Agenda de eventos, planes de ocio, cultura, fiestas y actividades en La Rioja Oriental.${page} Encuentra propuestas actualizadas cerca de ti.`;
   }
 
   const locality =
     localities.find((item) => item.id === state.locality)?.label ??
     "La Rioja Baja";
 
-  return `Eventos en ${locality}: planes de ocio, cultura, fiestas y actividades próximas en La Rioja Baja.${page} Consulta la agenda actualizada.`;
+  return `Eventos en ${locality}: planes de ocio, cultura, fiestas y actividades próximas en La Rioja Oriental.${page} Consulta la agenda actualizada.`;
 };
