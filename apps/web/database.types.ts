@@ -30,6 +30,7 @@ export type Database = {
           post_id: string
           price: string | null
           publish_by_date: string | null
+          publish_on_web: boolean
           publisher: string | null
           source_type: string | null
           status: Database["public"]["Enums"]["event_status"] | null
@@ -50,6 +51,7 @@ export type Database = {
           post_id: string
           price?: string | null
           publish_by_date?: string | null
+          publish_on_web?: boolean
           publisher?: string | null
           source_type?: string | null
           status?: Database["public"]["Enums"]["event_status"] | null
@@ -70,6 +72,7 @@ export type Database = {
           post_id?: string
           price?: string | null
           publish_by_date?: string | null
+          publish_on_web?: boolean
           publisher?: string | null
           source_type?: string | null
           status?: Database["public"]["Enums"]["event_status"] | null
