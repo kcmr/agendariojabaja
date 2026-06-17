@@ -19,6 +19,7 @@ type PublicEventRow = Pick<
   | "publisher"
   | "source_type"
   | "status"
+  | "publish_on_web"
 >;
 
 export type WebEventStatus = "upcoming" | "past";
@@ -127,6 +128,8 @@ export const mapEventRowToWebEvent = (
   now = new Date()
 ): WebEvent | undefined => {
   if (!row.name || !row.date || !row.status) return undefined;
+  if (row.publish_on_web === false) return undefined;
+
   const description = getWebDescription(row.neutral_description);
   if (!description) return undefined;
 
@@ -175,8 +178,9 @@ const fetchPublicEvents = async (): Promise<WebEvent[]> => {
   const { data, error } = await client
     .from("events")
     .select(
-      "id,name,neutral_description,description,date,time,location,category,price,image_url,link,publisher,source_type,status"
+      "id,name,neutral_description,description,date,time,location,category,price,image_url,link,publisher,source_type,status,publish_on_web"
     )
+    .eq("publish_on_web", true)
     .gte("date", formatDateValue(dateRange.start))
     .lte("date", formatDateValue(dateRange.end))
     .order("date", { ascending: true });
