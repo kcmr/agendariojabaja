@@ -10,10 +10,10 @@ import {
   getAgendaUrl,
   type AgendaState,
 } from '../../lib/agenda';
-import { getPublicEvents, type WebEvent } from '../../lib/events';
+import { getUpcomingEvents, type WebEvent } from '../../lib/events';
 
 export async function getStaticPaths() {
-  const events = await getPublicEvents();
+  const events = await getUpcomingEvents();
 
   return getAgendaStaticStates(events)
     .filter(

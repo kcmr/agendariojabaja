@@ -54,6 +54,14 @@ const EMPTY_VALUE_LABELS = new Set([
   "sin especificar",
   "n/a",
 ]);
+const EVENT_DETAIL_PAST_DAYS = 60;
+const EVENT_SELECT_FIELDS =
+  "id,name,neutral_description,description,date,time,location,category,price,image_url,link,publisher,source_type,status,publish_on_web";
+
+type EventDateRange = {
+  start: Date;
+  end: Date;
+};
 
 const cleanOptionalText = (value: string | null): string | undefined => {
   if (!value) return undefined;
@@ -106,6 +114,12 @@ const addMonths = (date: Date, months: number): Date => {
   return result;
 };
 
+const addDays = (date: Date, days: number): Date => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+};
+
 const formatDateValue = (date: Date): string => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -114,7 +128,7 @@ const formatDateValue = (date: Date): string => {
   return `${year}-${month}-${day}`;
 };
 
-const getPublicEventDateRange = (now: Date) => {
+const getUpcomingEventDateRange = (now: Date): EventDateRange => {
   const start = startOfDay(now);
 
   return {
@@ -123,10 +137,23 @@ const getPublicEventDateRange = (now: Date) => {
   };
 };
 
+const getStaticEventDetailDateRange = (now: Date): EventDateRange => {
+  const today = startOfDay(now);
+
+  return {
+    start: addDays(today, -EVENT_DETAIL_PAST_DAYS),
+    end: addMonths(today, 2),
+  };
+};
+
 export const mapEventRowToWebEvent = (
   row: PublicEventRow,
-  now = new Date()
+  options: {
+    now?: Date;
+    dateRange?: EventDateRange;
+  } = {}
 ): WebEvent | undefined => {
+  const now = options.now ?? new Date();
   if (!row.name || !row.date || !row.status) return undefined;
   if (row.publish_on_web === false) return undefined;
 
@@ -140,7 +167,7 @@ export const mapEventRowToWebEvent = (
   const eventDate = parseDate(row.date);
   if (!eventDate) return undefined;
 
-  const dateRange = getPublicEventDateRange(now);
+  const dateRange = options.dateRange ?? getUpcomingEventDateRange(now);
 
   if (eventDate < dateRange.start || eventDate > dateRange.end) {
     return undefined;
@@ -164,44 +191,70 @@ export const mapEventRowToWebEvent = (
       : undefined,
     sourceUrl: cleanOptionalText(row.link),
     sourceName: cleanOptionalText(row.publisher) ?? cleanOptionalText(row.source_type),
-    status: "upcoming",
+    status: eventDate < startOfDay(now) ? "past" : "upcoming",
   };
 };
 
-let publicEventsPromise: Promise<WebEvent[]> | undefined;
+let upcomingEventsPromise: Promise<WebEvent[]> | undefined;
+let staticEventDetailEventsPromise: Promise<WebEvent[]> | undefined;
 
-const fetchPublicEvents = async (): Promise<WebEvent[]> => {
+const fetchEventsInDateRange = async (
+  dateRange: EventDateRange,
+  now: Date,
+  errorContext: string
+): Promise<WebEvent[]> => {
   const client = createServerSupabaseClient();
-  const now = new Date();
-  const dateRange = getPublicEventDateRange(now);
 
   const { data, error } = await client
     .from("events")
-    .select(
-      "id,name,neutral_description,description,date,time,location,category,price,image_url,link,publisher,source_type,status,publish_on_web"
-    )
+    .select(EVENT_SELECT_FIELDS)
     .eq("publish_on_web", true)
     .gte("date", formatDateValue(dateRange.start))
     .lte("date", formatDateValue(dateRange.end))
     .order("date", { ascending: true });
 
   if (error) {
-    throw new Error(`Could not fetch public events: ${error.message}`);
+    throw new Error(`Could not fetch ${errorContext}: ${error.message}`);
   }
 
   return (data ?? [])
-    .map((row) => mapEventRowToWebEvent(row, now))
+    .map((row) => mapEventRowToWebEvent(row, { now, dateRange }))
     .filter((event): event is WebEvent => Boolean(event));
 };
 
-export const getPublicEvents = async (): Promise<WebEvent[]> => {
-  publicEventsPromise ??= fetchPublicEvents();
-  return publicEventsPromise;
+const fetchUpcomingEvents = async (): Promise<WebEvent[]> => {
+  const now = new Date();
+
+  return fetchEventsInDateRange(
+    getUpcomingEventDateRange(now),
+    now,
+    "upcoming events"
+  );
 };
 
-export const getPublicEventBySlug = async (
+const fetchStaticEventDetailEvents = async (): Promise<WebEvent[]> => {
+  const now = new Date();
+
+  return fetchEventsInDateRange(
+    getStaticEventDetailDateRange(now),
+    now,
+    "static event detail events"
+  );
+};
+
+export const getUpcomingEvents = async (): Promise<WebEvent[]> => {
+  upcomingEventsPromise ??= fetchUpcomingEvents();
+  return upcomingEventsPromise;
+};
+
+export const getStaticEventDetailEvents = async (): Promise<WebEvent[]> => {
+  staticEventDetailEventsPromise ??= fetchStaticEventDetailEvents();
+  return staticEventDetailEventsPromise;
+};
+
+export const getStaticEventDetailBySlug = async (
   slug: string
 ): Promise<WebEvent | undefined> => {
-  const events = await getPublicEvents();
+  const events = await getStaticEventDetailEvents();
   return events.find((event) => event.slug === slug);
 };

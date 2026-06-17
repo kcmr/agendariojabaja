@@ -1,13 +1,17 @@
 ---
 import EventDetailSplit from '@repo/components/features/EventDetailSplit.vue';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPublicEvents, type WebEvent } from '../../lib/events';
+import {
+  getStaticEventDetailEvents,
+  getUpcomingEvents,
+  type WebEvent,
+} from '../../lib/events';
 
 const RELATED_EVENTS_LIMIT = 3;
 const FALLBACK_IMAGE = '/images/arb-instagram-profile.webp';
 
 export async function getStaticPaths() {
-  const events = await getPublicEvents();
+  const events = await getStaticEventDetailEvents();
 
   return events.map((event) => ({
     params: { slug: event.slug },
@@ -20,7 +24,7 @@ interface Props {
 }
 
 const { event } = Astro.props;
-const events = await getPublicEvents();
+const events = await getUpcomingEvents();
 
 const getEventTimestamp = (event: WebEvent) =>
   new Date(`${event.date}T00:00:00`).getTime();

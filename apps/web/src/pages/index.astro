@@ -9,9 +9,9 @@ import {
   getAgendaPageTitle,
   getAgendaUrl,
 } from '../lib/agenda';
-import { getPublicEvents } from '../lib/events';
+import { getUpcomingEvents } from '../lib/events';
 
-const events = await getPublicEvents();
+const events = await getUpcomingEvents();
 const state = {
   locality: DEFAULT_AGENDA_LOCALITY,
   page: DEFAULT_AGENDA_PAGE,
