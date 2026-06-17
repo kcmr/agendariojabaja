@@ -2,11 +2,37 @@ import type { Meta, StoryObj } from "@storybook/vue3-vite";
 import { expect, within } from "storybook/test";
 import CalendarView from "../../components/features/CalendarView.vue";
 
+const today = new Date();
+const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+
+const toIsoDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+const toIsoMonth = (date: Date) => toIsoDate(date).slice(0, 7);
+
+const dateInCurrentMonth = (day: number) =>
+  toIsoDate(new Date(today.getFullYear(), today.getMonth(), day));
+
+const monthHeadingPattern = (date: Date) =>
+  new RegExp(
+    new Intl.DateTimeFormat("es-ES", {
+      month: "long",
+      year: "numeric",
+    }).format(date),
+    "i"
+  );
+
 const EVENTS = [
   {
     id: "1",
     title: "Cata de Vinos y Maridaje",
-    date: "2026-04-24",
+    date: dateInCurrentMonth(12),
     time: "19:30",
     href: "/eventos/cata-de-vinos/",
     status: "upcoming",
@@ -16,7 +42,7 @@ const EVENTS = [
   {
     id: "2",
     title: "Concierto Acústico en la Plaza",
-    date: "2026-04-25",
+    date: dateInCurrentMonth(18),
     time: "22:00",
     href: "/eventos/concierto-acustico/",
     status: "upcoming",
@@ -26,7 +52,7 @@ const EVENTS = [
   {
     id: "3",
     title: "Mercado de Artesanía Local",
-    date: "2026-04-26",
+    date: dateInCurrentMonth(24),
     time: "10:00 - 14:00",
     href: "/eventos/mercado-artesania/",
     status: "upcoming",
@@ -36,7 +62,7 @@ const EVENTS = [
   {
     id: "4",
     title: "Ruta de Senderismo: Miradores",
-    date: "2026-04-26",
+    date: dateInCurrentMonth(24),
     time: "09:00",
     href: "/eventos/ruta-senderismo/",
     status: "upcoming",
@@ -50,7 +76,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     events: EVENTS,
-    initialMonth: "2026-04",
+    initialMonth: toIsoMonth(currentMonth),
   },
   parameters: {
     layout: "padded",
@@ -65,7 +91,7 @@ export const Default: Story = {
     const canvas = within(canvasElement);
 
     expect(
-      canvas.getByRole("heading", { name: /abril de 2026/i })
+      canvas.getByRole("heading", { name: monthHeadingPattern(currentMonth) })
     ).toBeInTheDocument();
     expect(
       canvas.getAllByRole("link", { name: /cata de vinos/i })[0]
@@ -75,22 +101,22 @@ export const Default: Story = {
       canvas.getByRole("button", { name: "Mes siguiente" })
     );
     expect(
-      canvas.getByRole("heading", { name: /mayo de 2026/i })
+      canvas.getByRole("heading", { name: monthHeadingPattern(nextMonth) })
     ).toBeInTheDocument();
   },
 };
 
 export const MultipleEventsSameDay: Story = {
   args: {
-    events: EVENTS.filter((event) => event.date === "2026-04-26"),
-    initialMonth: "2026-04",
+    events: EVENTS.filter((event) => event.date === dateInCurrentMonth(24)),
+    initialMonth: toIsoMonth(currentMonth),
   },
 };
 
 export const EmptyMonth: Story = {
   args: {
     events: [],
-    initialMonth: "2026-04",
+    initialMonth: toIsoMonth(currentMonth),
   },
 };
 
@@ -100,14 +126,14 @@ export const PastEvents: Story = {
       {
         id: "past-1",
         title: "Carnavales 2026",
-        date: "2026-02-15",
+        date: dateInCurrentMonth(Math.max(1, today.getDate() - 1)),
         time: "18:00",
         href: "/eventos/carnavales/",
         status: "past",
         location: "Calahorra",
       },
     ],
-    initialMonth: "2026-02",
+    initialMonth: toIsoMonth(currentMonth),
   },
 };
 
@@ -118,21 +144,21 @@ export const LongTitles: Story = {
         id: "long-1",
         title:
           "Este es un título de evento extremadamente largo para probar el truncado en la cuadrícula mensual",
-        date: "2026-04-24",
+        date: dateInCurrentMonth(12),
         time: "17:00 - 20:00",
         href: "/eventos/titulo-largo/",
         status: "upcoming",
         location: "Calahorra",
       },
     ],
-    initialMonth: "2026-04",
+    initialMonth: toIsoMonth(currentMonth),
   },
 };
 
 export const Mobile: Story = {
   args: {
     events: EVENTS,
-    initialMonth: "2026-04",
+    initialMonth: toIsoMonth(currentMonth),
   },
   parameters: {
     viewport: {

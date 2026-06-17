@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, nextTick, ref } from "vue";
 import Button from "../ui/Button.vue";
 import Icon from "../ui/Icon.vue";
 import EmptyState from "./EmptyState.vue";
@@ -8,6 +8,7 @@ import {
   getMonthCalendarDays,
   parseIsoMonth,
   resolveInitialMonth,
+  toIsoDate,
   toIsoMonth,
   type CalendarEvent,
 } from "../../utils/calendar";
@@ -18,6 +19,7 @@ const props = withDefaults(
     initialMonth?: string;
     locale?: string;
     minMonth?: string;
+    todayLabel?: string;
     previousLabel?: string;
     nextLabel?: string;
   }>(),
@@ -25,6 +27,7 @@ const props = withDefaults(
     initialMonth: undefined,
     locale: "es-ES",
     minMonth: undefined,
+    todayLabel: "Hoy",
     previousLabel: "Mes anterior",
     nextLabel: "Mes siguiente",
   }
@@ -40,7 +43,10 @@ const WEEKDAYS = [
   { label: "Domingo", abbr: "Dom" },
 ];
 
+const today = new Date();
 const currentMonth = ref(resolveInitialMonth(props.initialMonth, props.events));
+const todayIsoDate = toIsoDate(today);
+const todayMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 
 const monthIndex = (date: Date) => date.getFullYear() * 12 + date.getMonth();
 
@@ -75,11 +81,26 @@ const calendarWeeks = computed(() => {
 
 const mobileEventDays = computed(() =>
   calendarDays.value.filter(
-    (day) => day.isCurrentMonth && day.events.length > 0
+    (day) =>
+      day.isCurrentMonth &&
+      (day.events.length > 0 || day.isoDate === todayIsoDate)
   )
 );
 
 const calendarId = computed(() => `calendar-${toIsoMonth(currentMonth.value)}`);
+
+const todayTargetId = (view: "desktop" | "mobile") =>
+  `${calendarId.value}-${view}-${todayIsoDate}-day`;
+
+const getVisibleTodayTarget = () => {
+  const view =
+    typeof window !== "undefined" &&
+    window.matchMedia("(min-width: 640px)").matches
+      ? "desktop"
+      : "mobile";
+
+  return document.getElementById(todayTargetId(view));
+};
 
 const goToPreviousMonth = () => {
   if (!canGoToPreviousMonth.value) return;
@@ -89,6 +110,13 @@ const goToPreviousMonth = () => {
 
 const goToNextMonth = () => {
   currentMonth.value = addMonths(currentMonth.value, 1);
+};
+
+const goToToday = async () => {
+  currentMonth.value = todayMonth;
+  await nextTick();
+
+  getVisibleTodayTarget()?.focus();
 };
 
 const formatDayLabel = (date: Date) =>
@@ -161,6 +189,9 @@ const hidePopover = (popoverId: string) => {
       </h2>
 
       <div class="flex gap-2">
+        <Button variant="outline" size="md" @click="goToToday">
+          {{ todayLabel }}
+        </Button>
         <Button
           variant="outline"
           size="md"
@@ -215,6 +246,7 @@ const hidePopover = (popoverId: string) => {
               :class="[
                 `border-border-default bg-surface-card h-32 border p-2 align-top
                 transition-colors`,
+                'calendar-day-cell',
                 day.events.length ? 'hover:bg-surface-subtle' : '',
                 !day.isCurrentMonth
                   ? 'bg-surface-muted/60 text-content-subtle'
@@ -222,10 +254,18 @@ const hidePopover = (popoverId: string) => {
               ]"
             >
               <time
+                :id="
+                  day.isoDate === todayIsoDate
+                    ? todayTargetId('desktop')
+                    : undefined
+                "
                 :datetime="day.isoDate"
+                :tabindex="day.isoDate === todayIsoDate ? -1 : undefined"
                 :class="[
-                  `inline-flex size-7 items-center justify-center rounded-full
-                  text-sm font-semibold`,
+                  `focus-visible:ring-ring-brand inline-flex size-7 items-center
+                  justify-center rounded-full text-sm font-semibold
+                  focus-visible:ring-2 focus-visible:ring-offset-2
+                  focus-visible:outline-none`,
                   day.events.length && day.isCurrentMonth
                     ? 'bg-surface-brand text-content-on-brand'
                     : 'text-content-body',
@@ -300,7 +340,15 @@ const hidePopover = (popoverId: string) => {
           :key="day.isoDate"
           class="border-border-subtle border-b pb-4 last:border-b-0 last:pb-0"
         >
-          <h3 class="text-content-heading text-sm font-bold capitalize">
+          <h3
+            :id="
+              day.isoDate === todayIsoDate ? todayTargetId('mobile') : undefined
+            "
+            :tabindex="day.isoDate === todayIsoDate ? -1 : undefined"
+            class="text-content-heading focus-visible:ring-ring-brand text-sm
+              font-bold capitalize focus-visible:ring-2
+              focus-visible:ring-offset-2 focus-visible:outline-none"
+          >
             <time :datetime="day.isoDate">{{ formatDayLabel(day.date) }}</time>
           </h3>
 
@@ -372,6 +420,17 @@ const hidePopover = (popoverId: string) => {
 </template>
 
 <style scoped>
+.calendar-day-cell:focus-within {
+  background: color-mix(
+    in srgb,
+    var(--color-surface-card) 88%,
+    var(--color-ring-brand)
+  );
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--color-ring-brand) 30%, transparent),
+    inset 0 0 0 999px rgb(255 255 255 / 0.72);
+}
+
 .calendar-event-popover {
   max-width: min(18rem, calc(100vw - 2rem));
   margin: 0;
