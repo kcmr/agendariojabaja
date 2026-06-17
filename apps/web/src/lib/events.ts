@@ -146,6 +146,15 @@ const getStaticEventDetailDateRange = (now: Date): EventDateRange => {
   };
 };
 
+const getCalendarEventDateRange = (now: Date): EventDateRange => {
+  const today = startOfDay(now);
+
+  return {
+    start: new Date(today.getFullYear(), today.getMonth(), 1),
+    end: addMonths(today, 2),
+  };
+};
+
 export const mapEventRowToWebEvent = (
   row: PublicEventRow,
   options: {
@@ -196,6 +205,7 @@ export const mapEventRowToWebEvent = (
 };
 
 let upcomingEventsPromise: Promise<WebEvent[]> | undefined;
+let calendarEventsPromise: Promise<WebEvent[]> | undefined;
 let staticEventDetailEventsPromise: Promise<WebEvent[]> | undefined;
 
 const fetchEventsInDateRange = async (
@@ -242,9 +252,24 @@ const fetchStaticEventDetailEvents = async (): Promise<WebEvent[]> => {
   );
 };
 
+const fetchCalendarEvents = async (): Promise<WebEvent[]> => {
+  const now = new Date();
+
+  return fetchEventsInDateRange(
+    getCalendarEventDateRange(now),
+    now,
+    "calendar events"
+  );
+};
+
 export const getUpcomingEvents = async (): Promise<WebEvent[]> => {
   upcomingEventsPromise ??= fetchUpcomingEvents();
   return upcomingEventsPromise;
+};
+
+export const getCalendarEvents = async (): Promise<WebEvent[]> => {
+  calendarEventsPromise ??= fetchCalendarEvents();
+  return calendarEventsPromise;
 };
 
 export const getStaticEventDetailEvents = async (): Promise<WebEvent[]> => {

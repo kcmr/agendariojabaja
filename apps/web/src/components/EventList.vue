@@ -18,6 +18,7 @@ import {
   getAgendaPageEvents,
   getAgendaTotalPages,
   getAgendaUrl,
+  localityIdForEvent,
   parseAgendaPath,
 } from "../lib/agenda";
 import { trackAnalyticsEvent } from "../scripts/analytics";
@@ -39,6 +40,7 @@ interface EventListItem {
 }
 
 const props = defineProps<{
+  calendarEvents: EventListItem[];
   events: EventListItem[];
   state: AgendaState;
 }>();
@@ -195,8 +197,16 @@ const paginatedEvents = computed(() =>
   getAgendaPageEvents(props.events, currentState.value),
 );
 
+const filteredCalendarEvents = computed(() =>
+  props.calendarEvents.filter(
+    (event) =>
+      currentState.value.locality === DEFAULT_AGENDA_LOCALITY ||
+      localityIdForEvent(event) === currentState.value.locality,
+  ),
+);
+
 const calendarEvents = computed(() =>
-  filteredEvents.value.map((event) => ({
+  filteredCalendarEvents.value.map((event) => ({
     id: event.id,
     title: event.title,
     date: event.date,
@@ -241,7 +251,10 @@ const pageTitle = computed(() => {
 
 const resultsAnnouncement = computed(() => {
   const view = activeView.value === "calendar" ? "calendario" : "lista";
-  const count = filteredEvents.value.length;
+  const count =
+    activeView.value === "calendar"
+      ? filteredCalendarEvents.value.length
+      : filteredEvents.value.length;
   const noun = count === 1 ? "evento" : "eventos";
 
   return `${count} ${noun} en ${selectedLocalityHeading.value}. Vista ${view}.`;

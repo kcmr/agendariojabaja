@@ -10,10 +10,15 @@ import {
   getAgendaUrl,
   type AgendaState,
 } from '../../lib/agenda';
-import { getUpcomingEvents, type WebEvent } from '../../lib/events';
+import {
+  getCalendarEvents,
+  getUpcomingEvents,
+  type WebEvent,
+} from '../../lib/events';
 
 export async function getStaticPaths() {
   const events = await getUpcomingEvents();
+  const calendarEvents = await getCalendarEvents();
 
   return getAgendaStaticStates(events)
     .filter(
@@ -25,16 +30,17 @@ export async function getStaticPaths() {
     )
     .map((state) => ({
       params: { state: getAgendaPathParam(state) },
-      props: { events, state },
+      props: { calendarEvents, events, state },
     }));
 }
 
 interface Props {
+  calendarEvents: WebEvent[];
   events: WebEvent[];
   state: AgendaState;
 }
 
-const { events, state } = Astro.props;
+const { calendarEvents, events, state } = Astro.props;
 const localities = getAgendaLocalities();
 const title = getAgendaPageTitle(state, localities);
 const description = getAgendaPageDescription(state, localities);
@@ -48,6 +54,7 @@ const description = getAgendaPageDescription(state, localities);
   <EventList
     client:load
     events={events}
+    calendarEvents={calendarEvents}
     state={state}
   />
 </BaseLayout>
