@@ -119,3 +119,17 @@ To inspect what Turbo is going to run:
 ```sh
 turbo build --dry-run
 ```
+
+## Agent Harness
+
+This repository includes a Codex-oriented engineering harness:
+
+- `AGENTS.md` is the short instruction index Codex loads for repo work.
+- `docs/agent-harness/` stores architecture, workflow, quality, and planning
+  guidance.
+- `.agents/skills/harness-engineering/` provides a repo skill that can be
+  invoked from Codex with `$harness-engineering`.
+
+Use the harness when a change depends on repository conventions, requires an
+execution plan, or should turn repeated feedback into durable docs, tests, or
+tooling.
