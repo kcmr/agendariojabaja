@@ -34,3 +34,7 @@ chore: add agent harness documentation
 When a commit touches both `apps/web` and `packages/components`, choose the scope
 that represents the primary behavior change. If neither package is primary,
 omit the scope and explain the affected areas in the commit body or PR summary.
+
+When publishing completed work, commit the scoped change before opening the PR so
+the branch history mirrors the repository convention instead of relying on a
+single unstructured squash title later.

@@ -67,6 +67,23 @@ Plan location:
 Plans should be updated as work progresses. If a plan becomes stale, either
 archive it with a note or replace it with a smaller current plan.
 
+## Publishing changes
+
+When the user asks Codex to finish work into the repository, publish the change
+explicitly instead of leaving it as an uncommitted local diff:
+
+1. Inspect `git status -sb` and confirm that the pending files all belong to the
+   requested scope.
+2. Commit the intended changes using the convention in
+   `docs/agent-harness/conventions.md`.
+3. Push the branch to the GitHub remote.
+4. Open a pull request against `main` unless the user specifies another base
+   branch.
+5. Include the relevant verification commands and manual checks in the PR body.
+
+If the working tree contains unrelated edits, stage only the files for the
+current task or ask the user before mixing scopes.
+
 ## Feedback loop
 
 When a task exposes missing context:
