@@ -155,14 +155,64 @@ const getPopoverElement = (id: string) => {
   };
 };
 
+const POPOVER_GAP_PX = 8;
+const POPOVER_VIEWPORT_PADDING_PX = 16;
+
+const clamp = (value: number, min: number, max: number) =>
+  Math.min(Math.max(value, min), max);
+
+const positionPopover = (source: HTMLElement, popover: HTMLElement) => {
+  const sourceRect = source.getBoundingClientRect();
+  const popoverRect = popover.getBoundingClientRect();
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const preferredLeft = sourceRect.left + sourceRect.width / 2;
+  const minLeft = POPOVER_VIEWPORT_PADDING_PX + popoverRect.width / 2;
+  const maxLeft =
+    viewportWidth - POPOVER_VIEWPORT_PADDING_PX - popoverRect.width / 2;
+  const left =
+    minLeft > maxLeft
+      ? viewportWidth / 2
+      : clamp(preferredLeft, minLeft, maxLeft);
+  const topSpace =
+    sourceRect.top - POPOVER_GAP_PX - POPOVER_VIEWPORT_PADDING_PX;
+  const bottomSpace =
+    viewportHeight -
+    sourceRect.bottom -
+    POPOVER_GAP_PX -
+    POPOVER_VIEWPORT_PADDING_PX;
+  const placeBelow = topSpace < popoverRect.height && bottomSpace > topSpace;
+  const preferredTop = placeBelow
+    ? sourceRect.bottom + POPOVER_GAP_PX
+    : sourceRect.top - popoverRect.height - POPOVER_GAP_PX;
+  const top = clamp(
+    preferredTop,
+    POPOVER_VIEWPORT_PADDING_PX,
+    Math.max(
+      POPOVER_VIEWPORT_PADDING_PX,
+      viewportHeight - popoverRect.height - POPOVER_VIEWPORT_PADDING_PX
+    )
+  );
+
+  popover.style.setProperty("--calendar-event-popover-left", `${left}px`);
+  popover.style.setProperty("--calendar-event-popover-top", `${top}px`);
+};
+
 const showPopover = (event: MouseEvent | FocusEvent, popoverId: string) => {
   const popover = getPopoverElement(popoverId);
   const source = event.currentTarget;
 
   if (!(source instanceof HTMLElement) || !popover) return;
-  if (popover.matches(":popover-open")) return;
 
-  popover.showPopover({ source });
+  if (!popover.matches(":popover-open")) {
+    popover.showPopover({ source });
+  }
+
+  requestAnimationFrame(() => {
+    if (popover.matches(":popover-open")) {
+      positionPopover(source, popover);
+    }
+  });
 };
 
 const hidePopover = (popoverId: string) => {
@@ -171,6 +221,8 @@ const hidePopover = (popoverId: string) => {
   if (!popover || !popover.matches(":popover-open")) return;
 
   popover.hidePopover();
+  popover.style.removeProperty("--calendar-event-popover-left");
+  popover.style.removeProperty("--calendar-event-popover-top");
 };
 </script>
 
@@ -449,8 +501,10 @@ const hidePopover = (popoverId: string) => {
 }
 
 .calendar-event-popover:popover-open {
-  inset: auto;
-  position-area: top;
+  inset: var(--calendar-event-popover-top, 1rem) auto auto
+    var(--calendar-event-popover-left, 50%);
+  position: fixed;
+  transform: translateX(-50%);
 }
 
 @supports not selector(:popover-open) {
