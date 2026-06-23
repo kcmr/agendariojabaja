@@ -4,10 +4,14 @@ import vue from '@astrojs/vue'
 import node from '@astrojs/node'
 import vercel from '@astrojs/vercel'
 
+import sitemap from '@astrojs/sitemap'
+
 const useNodeAdapter = process.env.ASTRO_ADAPTER === 'node'
+const siteUrl = process.env.PUBLIC_SITE_URL ?? 'https://agendariojabaja.com'
 
 // https://astro.build/config
 export default defineConfig({
+  site: siteUrl,
   adapter: useNodeAdapter ? node({ mode: 'standalone' }) : vercel(),
   env: {
     schema: {
@@ -71,7 +75,7 @@ export default defineConfig({
       }),
     },
   },
-  integrations: [vue()],
+  integrations: [vue(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
     ssr: {
